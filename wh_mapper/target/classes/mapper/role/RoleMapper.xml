@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wh.mapper.role.WhUserRoleMapper">
+    <!--<select id="selRids" resultType="com.wh.entity.role.WhUserRole">-->
+    <!--select GROUP_CONCAT(r.`r_id`) AS rIds ,GROUP_CONCAT(r.`r_name`)AS rName from wh_user_role AS r-->
+    <!--Left join wh_user_role_user AS ur on ur.r_id = r.r_id-->
+    <!--WHERE ur.u_id =#{uid}-->
+    <!--</select>-->
+
+</mapper>
