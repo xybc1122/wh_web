@@ -18,10 +18,6 @@ public class WhUserMenu extends ParentTree implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-    /**
-     * 访问地址
-     */
-    private String url;
 
     /**
      * 菜单图标
@@ -48,14 +44,6 @@ public class WhUserMenu extends ParentTree implements Serializable {
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getIcon() {

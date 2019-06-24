@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.wh.base.ResponseBase;
 import com.wh.entity.role.WhUserRole;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,11 +19,18 @@ public interface IWhUserRoleService extends IService<WhUserRole> {
 
 
     /**
-     * 添加角色  菜单 权限
+     * 添加角色 /菜单查看权限
      *
      * @return
      */
     ResponseBase serviceSaveRoleAndMenu(WhUserRole whUserRole);
+
+    /**
+     * 修改角色 /菜单查看权限
+     *
+     * @return
+     */
+    ResponseBase serviceUpRoleAndMenu(WhUserRole whUserRole);
 
 
     /**
@@ -31,5 +39,13 @@ public interface IWhUserRoleService extends IService<WhUserRole> {
      * @return
      */
     ResponseBase serviceSelRoleAndPerm(WhUserRole role);
+
+
+    /**
+     * 通过角色 删除以及下面的权限组
+     *
+     * @return
+     */
+    ResponseBase serviceDleRole(List<Integer> rids);
 
 }

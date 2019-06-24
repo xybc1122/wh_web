@@ -24,11 +24,5 @@ public interface IWhUserMenuService extends IService<WhUserMenu> {
     ResponseBase serviceSelTreeList();
 
 
-    /**
-     * 查询菜单下的权限展示
-     *
-     * @return
-     */
 
-    ResponseBase serviceSelMenuPerms(WhUserMenu whUserMenu);
 }

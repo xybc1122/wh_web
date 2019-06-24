@@ -5,6 +5,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
  * @ClassName ReqUtils
@@ -69,6 +70,59 @@ public class ReqUtils {
         }
         return null;
     }
+
+    /**
+     * 描述:获取 post 请求的 byte[] 数组
+     * <pre>
+     * 举例：
+     * </pre>
+     *
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    private static byte[] getRequestPostBytes(HttpServletRequest request)
+            throws IOException {
+        int contentLength = request.getContentLength();
+        if (contentLength < 0) {
+            return null;
+        }
+        byte buffer[] = new byte[contentLength];
+        for (int i = 0; i < contentLength; ) {
+
+            int read = request.getInputStream().read(buffer, i,
+                    contentLength - i);
+            if (read == -1) {
+                break;
+            }
+            i += read;
+        }
+        return buffer;
+    }
+
+    /**
+     * 描述:获取 post 请求内容
+     * <pre>
+     * 举例：
+     * </pre>
+     *
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    public static String getRequestPostStr(HttpServletRequest request)
+            throws IOException {
+        byte buffer[] = getRequestPostBytes(request);
+        if (buffer != null) {
+            String charEncoding = request.getCharacterEncoding();
+            if (charEncoding == null) {
+                charEncoding = "UTF-8";
+            }
+            return new String(buffer, charEncoding);
+        }
+        return null;
+    }
+
 
     /**
      * 设置request

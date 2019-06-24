@@ -1,4 +1,4 @@
-package com.wh.utils;
+package com.wh.base;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

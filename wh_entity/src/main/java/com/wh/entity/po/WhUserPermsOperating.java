@@ -3,9 +3,7 @@ package com.wh.entity.po;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.wh.entity.parent.ParentConfTable;
-
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * <p>
@@ -40,19 +38,6 @@ public class WhUserPermsOperating extends ParentConfTable implements Serializabl
      */
     private String apiUrl;
 
-    /**
-     * 前端接收对象存入List
-     */
-    private List<WhUserPermsOperating> permsOperatingList;
-
-
-    public List<WhUserPermsOperating> getPermsOperatingList() {
-        return permsOperatingList;
-    }
-
-    public void setPermsOperatingList(List<WhUserPermsOperating> permsOperatingList) {
-        this.permsOperatingList = permsOperatingList;
-    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

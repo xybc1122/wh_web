@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.wh.entity.parent.ParentConfTable;
+import com.wh.entity.po.WhUserPermsOperating;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -40,6 +42,25 @@ public class WhUserPerms extends ParentConfTable implements Serializable {
      */
     @TableField(exist = false)
     private String poApi;
+
+
+    /**
+     * 前端接收对象存入List
+     */
+    @TableField(exist = false)
+    private List<WhUserPermsOperating> permsOperatingList;
+
+
+
+    public List<WhUserPermsOperating> getPermsOperatingList() {
+        return permsOperatingList;
+    }
+
+    public void setPermsOperatingList(List<WhUserPermsOperating> permsOperatingList) {
+
+        this.permsOperatingList = permsOperatingList;
+    }
+
 
     public String getPoApi() {
         return poApi;

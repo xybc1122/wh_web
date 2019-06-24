@@ -23,12 +23,15 @@ public interface IWhUserRoleMenuService extends IService<WhUserRoleMenu> {
      * @param rid
      * @return
      */
-    ResponseBase setRoleMenu(Long rid, List<Integer> menus);
+    ResponseBase saveRoleMenu(Long rid, List<Integer> menus);
+
 
     /**
-     * 移除权限菜单
+     * 删除角色关联的菜单id
      *
+     * @param rid
      * @return
      */
-    ResponseBase delRoleMenu(List<Integer> rmIds);
+    ResponseBase delRoleMenu(Long rid);
+
 }

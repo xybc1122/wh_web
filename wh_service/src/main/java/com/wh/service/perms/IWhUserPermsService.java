@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.wh.base.ResponseBase;
 import com.wh.entity.perms.WhUserPerms;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -31,4 +32,12 @@ public interface IWhUserPermsService extends IService<WhUserPerms> {
      * @return
      */
     ResponseBase serviceGetPermissionAndOperating(WhUserPerms whUserPerms);
+
+
+    /**
+     * 删除权限 以及下面的权限操作
+     *
+     * @return
+     */
+    ResponseBase serviceDelPermissionAndOperating(List<Integer> pids);
 }

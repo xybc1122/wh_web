@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    master:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      jdbcUrl: jdbc:mysql://192.168.1.230:3306/rb_warehouse_1001?useUnicode=true&nullCatalogMeansCurrent=true&characterEncoding=utf-8&useSSL=false
+      username: root
+      password: root
+  redis:
+    database: 0
+    #连接的地址
+    host: 192.168.1.230
+    #超时时间：单位ms
+    timeout: 5000
+    #端口号
+    port: 6379
+    ##最大连接数：能够同时建立的“最大链接个数”
+    pool:
+      maxActive: 2000
+      #最大空闲数：空闲链接数大于maxIdle时，将进行回收
+      maxIdle: 200
+      #最小空闲数：低于minIdle时，将创建新的链接
+      minIdle: 200
+      #最大等待时间：单位ms
+      maxWait: 1000
+server:
+  port: 9000
+#page分页配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+sso.server: http://192.168.208.109:9001
+sso.login.path: /api/v1/sso/login
+sso.logout.path: /api/v1/sso/logout

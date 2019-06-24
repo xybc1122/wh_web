@@ -2,6 +2,8 @@ package com.wh.service.po;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wh.base.ResponseBase;
+import com.wh.entity.dto.DelIdsDto;
+import com.wh.entity.perms.WhUserPerms;
 import com.wh.entity.po.WhUserPermsOperating;
 
 /**
@@ -18,9 +20,15 @@ public interface IWhUserPermsOperatingService extends IService<WhUserPermsOperat
     /**
      * 添加操作权限下面的 增删改信息
      *
-     * @param permsOperating
      * @return
      */
-    ResponseBase serviceSavePermsOperating(WhUserPermsOperating permsOperating);
+    ResponseBase serviceSavePermsOperating(WhUserPerms userPerms);
 
+
+    /**
+     * 修改操作权限下面的 增删改信息
+     *
+     * @return
+     */
+    ResponseBase serviceUpPermsAndOperating(WhUserPerms userPerms);
 }

@@ -100,6 +100,7 @@ public class UserInfo extends ParentConfTable implements Serializable {
     /**
      * 创建时间
      */
+    @TableField(exist = false)
     private List<Long> createDates;
 
     public String getType() {

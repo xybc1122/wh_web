@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @ClassName ParentConfTable
@@ -56,6 +57,12 @@ public class ParentConfTable {
     @TableField(exist = false)
     private Integer pageSize;
 
+    /**
+     * 创建时间范围查询
+     */
+    @TableField(exist = false)
+    private List<Long> createDates;
+
     public void setCreate(String createUser) {
         this.createUser = createUser;
         this.createDate = new Date().getTime();
@@ -64,13 +71,22 @@ public class ParentConfTable {
     public void setModify(String createUser, Integer version) {
         this.modifyUser = createUser;
         this.modifyDate = new Date().getTime();
-        this.version = version + 1;
+        this.version = version == null ? 0 : +1;
     }
 
     /**
      * 版本标识
      */
     private Integer version;
+
+
+    public List<Long> getCreateDates() {
+        return createDates;
+    }
+
+    public void setCreateDates(List<Long> createDates) {
+        this.createDates = createDates;
+    }
 
     public String getRemark() {
         return remark;

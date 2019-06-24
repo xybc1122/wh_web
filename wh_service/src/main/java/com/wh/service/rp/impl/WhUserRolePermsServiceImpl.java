@@ -12,8 +12,7 @@ import com.wh.entity.rp.WhUserRolePerms;
 import com.wh.mapper.rp.WhUserRolePermsMapper;
 import com.wh.service.role.IWhUserRoleService;
 import com.wh.service.rp.IWhUserRolePermsService;
-import com.wh.utils.CheckUtils;
-import com.wh.utils.WrapperUtils;
+import com.wh.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,38 +34,47 @@ public class WhUserRolePermsServiceImpl extends ServiceImpl<WhUserRolePermsMappe
     @Autowired
     private IWhUserRoleService roleService;
 
-
     @Override
     @Transactional
-    public ResponseBase serviceSaveRoleAndPerms(WhUserRolePerms whUserRolePerms) {
-        if (StringUtils.isBlank(whUserRolePerms.getrName()) || whUserRolePerms.getPerms() == null || whUserRolePerms.getPerms().size() <= 0) {
+    public ResponseBase serviceSaveRoleAndPerms(WhUserRolePerms rolePerms) {
+        if (StringUtils.isBlank(rolePerms.getrName()) || rolePerms.getPerms() == null || rolePerms.getPerms().size() <= 0) {
             return JsonData.setResultError("参数 is null");
         }
         //先新增角色
         WhUserRole role = new WhUserRole();
-        role.setrName(whUserRolePerms.getrName());
+        role.setrName(rolePerms.getrName());
         boolean roleResult = roleService.save(role);
         CheckUtils.saveResult(roleResult);
-
-        List<WhUserRolePerms> rolePerms = new ArrayList<>();
-        for (Integer pid : whUserRolePerms.getPerms()) {
-            rolePerms.add(new WhUserRolePerms(role.getRid(), pid.longValue()));
-        }
-
-        boolean permResult = this.saveBatch(rolePerms);
-        CheckUtils.saveResult(permResult);
-
+        CheckUtils.saveResult(this.saveBatch(setWhUserRolePerms(rolePerms.getrId(), rolePerms.getPerms())));
         return JsonData.setResultSuccess("success");
     }
 
     @Override
-    public ResponseBase serviceDelRoleAndPerms(WhUserRolePerms whUserRolePerms) {
-        if (whUserRolePerms.getPerms() == null ||
-                whUserRolePerms.getPerms().size() <= 0) {
-            return JsonData.setResultError("参数 is null");
+    @Transactional
+    public ResponseBase serviceUpAdnDelRoleAndPerms(WhUserRolePerms rolePerms) {
+        if (rolePerms == null || rolePerms.getrId() == null) {
+            return JsonData.setResultError("参数is null");
         }
-        boolean result = this.removeByIds(whUserRolePerms.getPerms());
-        CheckUtils.saveResult(result);
+        //1 直接删除已经有的数据
+        QueryWrapper<WhUserRolePerms> query = WrapperUtils.getQuery();
+        query.eq("r_id", rolePerms.getrId());
+        CheckUtils.saveResult(this.remove(query));
+
+        if (rolePerms.getPerms() != null && rolePerms.getPerms().size() > 0) {
+            //2 然后  新增新数据
+            CheckUtils.saveResult(this.saveBatch(setWhUserRolePerms(rolePerms.getrId(), rolePerms.getPerms())));
+        }
         return JsonData.setResultSuccess("success");
     }
+
+    private List<WhUserRolePerms> setWhUserRolePerms(Long rid, List<Integer> perms) {
+        List<WhUserRolePerms> rPermsList = new ArrayList<>();
+        for (Integer pid : perms) {
+            WhUserRolePerms whUserRolePerms = new WhUserRolePerms(rid, pid.longValue());
+            whUserRolePerms.setCreate(ReqUtils.getUserName());
+            rPermsList.add(whUserRolePerms);
+        }
+        return rPermsList;
+    }
+
 }

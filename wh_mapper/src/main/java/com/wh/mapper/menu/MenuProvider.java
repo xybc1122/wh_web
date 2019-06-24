@@ -10,11 +10,11 @@ import org.apache.ibatis.jdbc.SQL;
 import java.util.Map;
 
 /**
- * video类构建动态sql语句
+ * 建动态sql语句
  */
 public class MenuProvider {
 
-    private final static String sql = "m.`menu_id`,m.`m_name`,m.`parent_id`,m.`url`,m.`icon`," +
+    private final static String sql = "m.`menu_id`,m.`m_name`,m.`parent_id`,m.`path`,m.`icon`," +
             "m.`menu_order`,m.`type`,m.`version`,m.`is_delete`,m.`is_parent_node`";
 
     public String findQueryMenuList(final Map<String, Object> objectMap) {

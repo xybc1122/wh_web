@@ -51,10 +51,24 @@ public class WhUserRole extends ParentConfTable implements Serializable {
     private String rIds;
 
     /**
-     * 接收权限列表
+     * 接收权限列表集合 ,号分割
      */
     @TableField(exist = false)
     private String pName;
+
+    /**
+     * 接收权限列表 id 集合  ,号分割
+     */
+    @TableField(exist = false)
+    private String pids;
+
+    public String getPids() {
+        return pids;
+    }
+
+    public void setPids(String pids) {
+        this.pids = pids;
+    }
 
     public String getpName() {
         return pName;

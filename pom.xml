@@ -8,7 +8,7 @@
         <module>wh_common</module>
         <module>wh_entity</module>
         <module>wh_mapper</module>
-        <module>wh_out_library</module>
+        <module>wh_projects</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -32,6 +32,15 @@
 
 
     <dependencies>
+
+        <!--&lt;!&ndash; 配置文件自动映射 &ndash;&gt;-->
+        <!--<dependency>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-configuration-processor</artifactId>-->
+        <!--<optional>true</optional>-->
+        <!--</dependency>-->
+
+
         <!-- 用于转换dto 跟 model层 深度拷贝 -->
         <dependency>
             <groupId>ma.glasnost.orika</groupId>
@@ -88,22 +97,16 @@
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.1.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.1.1</version>
-        </dependency>
 
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
-
 
         <dependency>
             <groupId>com.alibaba</groupId>

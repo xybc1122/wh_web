@@ -2,14 +2,14 @@ package com.wh.utils;
 
 
 import com.wh.exception.LsException;
+import com.wh.toos.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import com.wh.utils.UuIDUtils;
+
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -335,6 +335,17 @@ public class RedisUtils {
     // stringRedisTemplate.opsForSet();//操作set
     // stringRedisTemplate.opsForZSet();//操作有序set
 
+
+    /**
+     * 生成user key
+     *
+     * @param key
+     * @return
+     */
+    public static String redisTokenKey(String key, String tenant) {
+        return Constants.SSO_TOKEN + ":" + key + "_" + tenant;
+    }
+
     /**
      * 分布式 加锁
      *
@@ -474,7 +485,7 @@ public class RedisUtils {
 
 
     /**
-     * 取keys
+     * 设置 nx
      *
      * @param key
      * @return
@@ -485,6 +496,19 @@ public class RedisUtils {
         }
         return false;
     }
+
+    /**
+     * 设置 nx
+     *
+     * @param key
+     * @return
+     */
+    public void setEx(String key, Integer value) {
+        if (key != null) {
+            stringRedisTemplate.boundValueOps(key).increment(value);
+        }
+    }
+
 
     /**
      * 取keys

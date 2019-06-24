@@ -3,6 +3,10 @@ package com.wh.mapper.rp;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wh.entity.rp.WhUserRolePerms;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,8 +17,5 @@ import com.wh.entity.rp.WhUserRolePerms;
  * @since 2019-06-18
  */
 public interface WhUserRolePermsMapper extends BaseMapper<WhUserRolePerms> {
-
-
-
 
 }

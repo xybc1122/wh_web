@@ -3,10 +3,11 @@ package com.wh.service.init;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.wh.service.tenant.IWhWarehouseTenantService;
 import com.wh.dds.DynamicDataSource;
-import com.wh.utils.ApplicationContextRegister;
+import com.wh.base.ApplicationContextRegister;
 import com.wh.entity.tenant.WhWarehouseTenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
  * @Date 2019/6/12 14:36
  **/
 @Component
+@Order(2)
 public class InitTargetDataSources implements CommandLineRunner {
     
 

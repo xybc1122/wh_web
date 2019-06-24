@@ -33,9 +33,11 @@ public class WhUserRoleMenu extends ParentConfTable implements Serializable {
     private Long rid;
 
     /**
-     * 要设置的菜单s
+     * 要设置的菜单集合
      */
+    @TableField(exist = false)
     private List<Integer> menus;
+
 
     /**
      * 自增id
@@ -52,6 +54,8 @@ public class WhUserRoleMenu extends ParentConfTable implements Serializable {
         this.mid = mid;
         this.rid = rid;
     }
+
+
 
     public List<Integer> getMenus() {
         return menus;

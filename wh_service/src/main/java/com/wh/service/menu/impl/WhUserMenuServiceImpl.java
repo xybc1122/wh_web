@@ -32,9 +32,4 @@ public class WhUserMenuServiceImpl extends ServiceImpl<WhUserMenuMapper, WhUserM
         ));
     }
 
-    @Override
-    public ResponseBase serviceSelMenuPerms(WhUserMenu whUserMenu) {
-        PageInfoUtils.setPage(whUserMenu.getPageSize(), whUserMenu.getCurrentPage());
-        return PageInfoUtils.returnPage(menuMapper.selMenuPerms(whUserMenu));
-    }
 }
