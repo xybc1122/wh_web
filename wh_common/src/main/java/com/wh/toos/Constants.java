@@ -37,9 +37,14 @@ public interface Constants {
      * token
      */
     String SSO_TOKEN = "sso_token";
-
-
-
+    /**
+     * 最大等待时间 毫秒
+     */
+    long maxWait = 5000L;
+    /**
+     * 锁最大占用时间秒
+     */
+    long timeout = 20000L;
     /**
      * 管理员reid key
      */

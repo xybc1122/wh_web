@@ -32,6 +32,9 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
-sso.server: http://192.168.208.109:9001
+#sso.server: http://192.168.1.231:9001
+sso.server: http://192.168.208.110:9001
 sso.login.path: /api/v1/sso/login
 sso.logout.path: /api/v1/sso/logout
+sso.logout.workerId: 0
+sso.logout.datacenterId: 0

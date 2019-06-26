@@ -73,8 +73,8 @@ public class InterCenter implements HandlerInterceptor {
 
 
                 //如果是用户logout
-                if (request.getRequestURI().equals(SSOClientUtil.LOGOUT_PATH)) {
-                    response.sendRedirect(SSOClientUtil.SERVER_URL + SSOClientUtil.LOGOUT_PATH + "?uid=" + uid + "&tenant=" + tenant);
+                if (request.getRequestURI().equals(SSOClientUtils.LOGOUT_PATH)) {
+                    response.sendRedirect(SSOClientUtils.SERVER_URL + SSOClientUtils.LOGOUT_PATH + "?uid=" + uid + "&tenant=" + tenant);
                     return false;
                 }
                 //如果请求的是超级管理员配置接口

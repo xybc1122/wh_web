@@ -1,5 +1,10 @@
 package com.wh.utils;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -11,8 +16,6 @@ import static java.util.stream.Collectors.toList;
  * @Date 2019/6/19 14:38
  **/
 public class ListUtils {
-
-
 
 
     /**
@@ -27,7 +30,7 @@ public class ListUtils {
     }
 
     /**
-     *差集 (list1 - list2) 不一样的值
+     * 差集 (list1 - list2) 不一样的值
      *
      * @param oneList
      * @param twoList
@@ -42,6 +45,36 @@ public class ListUtils {
      */
     public static boolean isList(List<?> objList) {
         return objList != null && objList.size() > 0;
+    }
+
+
+    /**
+     * 设置in 查询  id 集合
+     *
+     * @param list
+     * @return
+     */
+    public static List<Long> setInList(List list) {
+        List<Long> idList = new ArrayList<>();
+        //这里设置 in 查询 id
+        try {
+            for (Object obj : list) {
+                Field[] fields = obj.getClass().getDeclaredFields();
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    Annotation[] annotations = field.getDeclaredAnnotations();
+                    for (Annotation ann : annotations) {
+                        if (ann instanceof TableId) {
+                            idList.add((Long) field.get(obj));
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return idList;
     }
 
 }

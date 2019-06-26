@@ -34,7 +34,7 @@ public class CORSFilter implements Filter {
         }
         resp.setHeader("Access-Control-Allow-Origin", origin);//这里不能写*，*代表接受所有域名访问，如写*则下面一行代码无效。谨记
         resp.setHeader("Access-Control-Allow-Credentials", "true");//true代表允许携带cookie
-        resp.setHeader("Access-Control-Allow-Headers", "*");
+        resp.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,sso_token");
         resp.setHeader("Access-Control-Allow-Methods", "POST, GET, PATCH, DELETE, PUT");
         resp.setHeader("Access-Control-Max-Age", "3600");//配置Access-Control-Max-Age来缓存预检测结果
         chain.doFilter(servletRequest, servletResponse);

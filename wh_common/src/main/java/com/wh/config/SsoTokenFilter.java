@@ -1,15 +1,9 @@
 package com.wh.config;
 
-import com.wh.utils.SSOClientUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -30,10 +24,10 @@ public class SsoTokenFilter implements Filter {
 //        HttpServletRequest request = (HttpServletRequest) servletRequest;
 //        HttpServletResponse response = (HttpServletResponse) servletResponse;
 //        //如果是用户登陆
-//        if (request.getRequestURI().equals(SSOClientUtil.LOGIN_PATH)) {
+//        if (request.getRequestURI().equals(SSOClientUtils.LOGIN_PATH)) {
 //            //重定向到sso登陆系统
 //            response.setStatus(HttpServletResponse.SC_TEMPORARY_REDIRECT);
-//            response.setHeader("Location", SSOClientUtil.SERVER_URL + SSOClientUtil.LOGIN_PATH);
+//            response.setHeader("Location", SSOClientUtils.SERVER_URL + SSOClientUtils.LOGIN_PATH);
 //            return;
 //        }
         chain.doFilter(servletRequest, servletResponse);

@@ -45,7 +45,7 @@ public class MenuProvider {
         /**
          * 菜单名称查询
          */
-        AppendSqlStore.sqlWhere(whUserMenu.getTreeName(), "`m_name` ", sql, Constants.SELECT, alias);
+        AppendSqlStore.sqlWhere(whUserMenu.getTreeName(), "`m_name` ", sql, alias);
 
         //创建时间 范围查询
         if (whUserMenu.getCreateDates() != null && (whUserMenu.getCreateDates().size() > 0)) {

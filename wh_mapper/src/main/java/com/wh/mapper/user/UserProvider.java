@@ -19,15 +19,15 @@ public class UserProvider {
         sql.LEFT_OUTER_JOIN("wh_user_role_user AS ur ON(ur.u_id=u.uid)");
         sql.LEFT_OUTER_JOIN("wh_user_role AS r ON(r.r_id=ur.r_id)");
         //用户类型
-        AppendSqlStore.sqlWhere(uInfo.getType(), "`type` ", sql, Constants.SELECT, alias);
+        AppendSqlStore.sqlWhere(uInfo.getType(), "`type` ", sql, alias);
         //用户账号
-        AppendSqlStore.sqlWhere(uInfo.getUserName(), "`user_name` ", sql, Constants.SELECT, alias);
+        AppendSqlStore.sqlWhere(uInfo.getUserName(), "`user_name` ", sql, alias);
         //用户名
-        AppendSqlStore.sqlWhere(uInfo.getName(), "`name`", sql, Constants.SELECT, alias);
+        AppendSqlStore.sqlWhere(uInfo.getName(), "`name`", sql,  alias);
         //角色名字
-        AppendSqlStore.sqlWhere(uInfo.getrName(), "r_name", sql, Constants.SELECT, "r");
+        AppendSqlStore.sqlWhere(uInfo.getrName(), "r_name", sql, "r");
         //用户状态
-        AppendSqlStore.sqlWhere(uInfo.getAccountStatus(), "account_status", sql, Constants.SELECT, "u");
+        AppendSqlStore.sqlWhere(uInfo.getAccountStatus(), "account_status", sql, alias);
         //创建时间
         if (uInfo.getCreateDates() != null && (uInfo.getCreateDates().size() > 0)) {
             sql.WHERE(alias + ".create_date BETWEEN  " + uInfo.getCreateDates().get(0) + " AND " + uInfo.getCreateDates().get(1) + "");

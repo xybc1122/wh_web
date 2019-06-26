@@ -4,6 +4,7 @@ package com.wh.service.user.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wh.customize.RedisLock;
 import com.wh.entity.ur.WhUserRoleUser;
 import com.wh.service.ur.IWhUserRoleUserService;
 import com.wh.service.user.UserService;
@@ -77,32 +78,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserInfo> implement
     }
 
     @Override
+    @RedisLock(key = Constants.SAVE_USER_ROLE, maxWait = Constants.maxWait, timeout = Constants.timeout)
     @Transactional
     public ResponseBase insertUserInfo(UserInfo user) {
         if (StringUtils.isBlank(user.getUserName()) || StringUtils.isBlank(user.getPwd())) {
             return JsonData.setResultError("用户名/密码不能为空");
         }
-        String identifier = null;
-        try {
-            identifier = redisUtils.lockRedis(Constants.SAVE_USER_ROLE, 5000L, 20000L);
-            //到这里先去查查看有没有名字相同的
-            if (userMapper.selUserIsDelete(user.getUserName()) != null) {
-                return JsonData.setResultError("添加名字重复");
-            }
-
-            user.setPwd(MD5Util.saltMd5(user.getUserName(), user.getPwd()));
-            user.setCreate(ReqUtils.getUserName());
-
-            //新增用户
-            CheckUtils.saveResult(userMapper.insert(user));
-            //新增角色
-            ruUserService.saveListRole(user.getUid(), user.getRids());
-            return JsonData.setResultSuccess("success");
-        } finally {
-            if (StringUtils.isNotBlank(identifier)) {
-                redisUtils.releaseLock(Constants.SAVE_USER_ROLE, identifier);
-            }
+        //到这里先去查查看有没有名字相同的
+        if (userMapper.selUserIsDelete(user.getUserName()) != null) {
+            return JsonData.setResultError("添加名字重复");
         }
+        user.setPwd(MD5Util.saltMd5(user.getUserName(), user.getPwd()));
+        user.setCreate(ReqUtils.getUserName());
+        //新增用户
+        CheckUtils.saveResult(userMapper.insert(user));
+        //新增角色
+        ruUserService.saveListRole(user.getUid(), user.getRids());
+        return JsonData.setResultSuccess("success");
     }
 
     @Override

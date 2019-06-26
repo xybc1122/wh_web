@@ -1,6 +1,6 @@
 package com.wh.config;
 
-import com.wh.utils.SSOClientUtil;
+import com.wh.utils.SSOClientUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -47,7 +47,7 @@ public class SsoYmlConfig {
 
     @PostConstruct
     public void init() {
-        SSOClientUtil.setParameter(this);
+        SSOClientUtils.setParameter(this);
     }
 
 }
