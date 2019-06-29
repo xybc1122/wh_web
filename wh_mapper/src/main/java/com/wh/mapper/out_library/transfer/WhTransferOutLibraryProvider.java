@@ -16,12 +16,14 @@ public class WhTransferOutLibraryProvider {
     public String selOutLibraryInfo(WhTransferOutLibrary outLibrary) {
         SQL sql = new SQL();
         String alias = "tol";
-        sql.SELECT("`id`,`t_number`,`r_war_id`,`m_i_war_id`,`type`,`status`," +
-                "`way_number`,`create_date`,`version` FROM `wh_transfer_out_library` AS " + alias + "");
-//        //查询移出仓库
-//        AppendSqlStore.sqlWhere(outLibrary.getrWarehouse(), "`r_warehouse` ", sql, alias);
-//        //查询移入仓库
-//        AppendSqlStore.sqlWhere(outLibrary.getmIWarehouse(), "`m_i_warehouse` ", sql, alias);
+        sql.SELECT("r.wh_name AS rWarName,m.wh_name AS mIWarName," + alias + ".`id`,`t_number`,`r_war_id`,`m_i_war_id`," + alias + ".`type`," + alias + ".`status`," +
+                "`way_number`," + alias + ".`create_date`," + alias + ".`version` FROM `wh_transfer_out_library` AS " + alias + "");
+        sql.LEFT_OUTER_JOIN("wh_base AS r on r.id = " + alias + ".r_war_id");
+        sql.LEFT_OUTER_JOIN("wh_base AS m on m.id = " + alias + ".m_i_war_id");
+        //查询移出仓库
+        AppendSqlStore.sqlWhere(outLibrary.getrWarName(), "wh_name", sql, "r");
+        //查询移入仓库
+        AppendSqlStore.sqlWhere(outLibrary.getmIWarName(), "wh_name", sql, "r");
         //查询调拨单号
         AppendSqlStore.sqlWhere(outLibrary.gettNumber(), "`t_number` ", sql, alias);
         //查询运单号

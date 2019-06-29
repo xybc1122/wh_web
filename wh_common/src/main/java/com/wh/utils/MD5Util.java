@@ -1,6 +1,7 @@
 package com.wh.utils;
 
 
+import com.wh.toos.StaticVariable;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import com.wh.toos.Constants;
@@ -50,7 +51,7 @@ public class MD5Util {
 
     public static void main(String[] args) {
         //C82BB40E3E1C6D1E880645353F6F53B8
-        String v = Constants.ADMIN + 1 + "tt";
+        String v = StaticVariable.ADMIN + 1 + "tt";
         System.out.println(MD5Util.MD5(v));
         //盐值加密
 //        ByteSource salt = ByteSource.Util.bytes("dd");

@@ -1,285 +1,5 @@
 [
   {
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "optional": false,
-            "field": "varname1",
-            "description": "<p>No type.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "varname2",
-            "description": "<p>With type.</p>"
-          }
-        ]
-      }
-    },
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "./apidoc/main.js",
-    "group": "E__dev3_wh_web_gitlab_apidoc_main_js",
-    "groupTitle": "E__dev3_wh_web_gitlab_apidoc_main_js",
-    "name": ""
-  },
-  {
-    "type": "POST",
-    "url": "api/v1/wh-fba-stocking/findByFbaAndEntry",
-    "title": "查询fba备货信息和箱号信息",
-    "header": {
-      "examples": [
-        {
-          "title": "请求头Header",
-          "content": "{\n\"token\":\"用户令牌\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "group": "__",
-    "version": "0.0.1",
-    "description": "<p>用于查询fba备货信息 And 箱号信息</p>",
-    "parameter": {
-      "examples": [
-        {
-          "title": "请求样例：",
-          "content": "{\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "success": [
-          {
-            "group": "success",
-            "type": "Object",
-            "optional": false,
-            "field": "data",
-            "description": "<p>请求的数据</p>"
-          },
-          {
-            "group": "success",
-            "type": "String",
-            "optional": false,
-            "field": "msg",
-            "description": "<p>信息</p>"
-          },
-          {
-            "group": "success",
-            "type": "int",
-            "optional": false,
-            "field": "code",
-            "description": "<p>-1 代表错误 200代表请求成功</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "成功返回样列:",
-          "content": "{\"code\":\"200\",\"msg\":\"success\",\"data\":\"{}\"}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "失败返回样例子:",
-          "content": "{\"code\":\"-1\",\"msg\":\"error\",\"data\":\"{}\"}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "./wh_projects/src/main/java/com/wh/controller/fba/WhFbaStockingController.java",
-    "groupTitle": "__",
-    "name": "PostApiV1WhFbaStockingFindbyfbaandentry"
-  },
-  {
-    "type": "PUT",
-    "url": "api/v1/wh-fba-stocking-entry/upOrDelFbaStockingEntry",
-    "title": "修改/删除 fba备货装箱信息",
-    "header": {
-      "examples": [
-        {
-          "title": "请求头Header",
-          "content": "{\n\"token\":\"用户令牌\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "group": "__",
-    "version": "0.0.1",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "List",
-            "optional": false,
-            "field": "delIds",
-            "description": "<p>传要删除的id集合</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "List",
-            "optional": false,
-            "field": "stockingEntry",
-            "description": "<p>传需要更新的List对象集合</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "请求样例：",
-          "content": "{\n\"delIds\":[1,2,3],\n\"stockingEntry\":[{\"fnSku\":\"测试\",\"id\":4,\"version\":0 必须填},{\"fnSku\":\"策划\",\"id\":5,\"version\":0}]\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "description": "<p>用于修改/删除 fba备货装箱信息</p>",
-    "success": {
-      "fields": {
-        "success": [
-          {
-            "group": "success",
-            "type": "Object",
-            "optional": false,
-            "field": "data",
-            "description": "<p>请求的数据</p>"
-          },
-          {
-            "group": "success",
-            "type": "String",
-            "optional": false,
-            "field": "msg",
-            "description": "<p>信息</p>"
-          },
-          {
-            "group": "success",
-            "type": "int",
-            "optional": false,
-            "field": "code",
-            "description": "<p>-1 代表错误 200代表请求成功</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "成功返回样列:",
-          "content": "{\"code\":\"200\",\"msg\":\"success\",\"data\":\"{}\"}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "失败返回样例子:",
-          "content": "{\"code\":\"-1\",\"msg\":\"error\",\"data\":\"{}\"}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "./wh_projects/src/main/java/com/wh/controller/fba/WhFbaStockingEntryController.java",
-    "groupTitle": "__",
-    "name": "PutApiV1WhFbaStockingEntryUpordelfbastockingentry"
-  },
-  {
-    "type": "PUT",
-    "url": "api/v1/wh-fba-stocking/upFbaStocking",
-    "title": "修改fba备货信息",
-    "header": {
-      "examples": [
-        {
-          "title": "请求头Header",
-          "content": "{\n\"token\":\"用户令牌\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "group": "__",
-    "version": "0.0.1",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Integer",
-            "optional": false,
-            "field": "id",
-            "description": "<p>更新id</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "Integer",
-            "optional": false,
-            "field": "version",
-            "description": "<p>更新版本</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "请求样例：",
-          "content": "{\n\"id\":1, 必须有\n\"version\":0, 必须有\n\"aNumber\":\"修改测试\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "description": "<p>用于修改fba备货信息</p>",
-    "success": {
-      "fields": {
-        "success": [
-          {
-            "group": "success",
-            "type": "Object",
-            "optional": false,
-            "field": "data",
-            "description": "<p>请求的数据</p>"
-          },
-          {
-            "group": "success",
-            "type": "String",
-            "optional": false,
-            "field": "msg",
-            "description": "<p>信息</p>"
-          },
-          {
-            "group": "success",
-            "type": "int",
-            "optional": false,
-            "field": "code",
-            "description": "<p>-1 代表错误 200代表请求成功</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "成功返回样列:",
-          "content": "{\"code\":\"200\",\"msg\":\"success\",\"data\":\"{}\"}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "失败返回样例子:",
-          "content": "{\"code\":\"-1\",\"msg\":\"error\",\"data\":\"{}\"}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "./wh_projects/src/main/java/com/wh/controller/fba/WhFbaStockingController.java",
-    "groupTitle": "__",
-    "name": "PutApiV1WhFbaStockingUpfbastocking"
-  },
-  {
     "type": "Delete",
     "url": "api/v1/admin/delPermsAndOperating",
     "title": "逻辑删除 权限/关联的权限操作/关联的角色",
@@ -292,7 +12,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "description": "<p>通过权限id去删除</p>",
     "parameter": {
@@ -359,7 +79,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "DeleteApiV1AdminDelpermsandoperating"
   },
   {
@@ -375,7 +95,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "description": "<p>通过用户id删除下面的角色信息</p>",
     "parameter": {
@@ -442,7 +162,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "DeleteApiV1AdminDeluserinfo"
   },
   {
@@ -458,7 +178,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "description": "<p>通过角色id 去删除</p>",
     "parameter": {
@@ -525,7 +245,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "DeleteApiV1AdminDlerole"
   },
   {
@@ -541,7 +261,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "description": "<p>用于获得所有角色信息</p>",
     "parameter": {
@@ -597,7 +317,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "GetApiV1AdminGetbyrolelist"
   },
   {
@@ -613,7 +333,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "description": "<p>用于权限列表</p>",
     "parameter": {
@@ -669,7 +389,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "GetApiV1AdminGetpermission"
   },
   {
@@ -685,7 +405,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "description": "<p>用于查询用户信息</p>",
     "parameter": {
@@ -773,7 +493,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "PostApiV1AdminGetbyuserinfolist"
   },
   {
@@ -789,7 +509,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "description": "<p>用于查询权限组里面的操作信息</p>",
     "parameter": {
@@ -845,7 +565,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "PostApiV1AdminGetpermissionandoperating"
   },
   {
@@ -861,7 +581,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "description": "<p>用于查询角色对应的权限</p>",
     "parameter": {
@@ -917,7 +637,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "PostApiV1AdminGetroleandperm"
   },
   {
@@ -933,7 +653,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "description": "<p>用于新增用户信息以及下面的角色信息</p>",
     "parameter": {
@@ -1014,7 +734,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "PostApiV1AdminInsertuserinfo"
   },
   {
@@ -1030,7 +750,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "parameter": {
       "fields": {
@@ -1111,7 +831,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "PostApiV1AdminSavepermissionoperating"
   },
   {
@@ -1127,7 +847,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "description": "<p>用于新增角色跟菜单查看权限</p>",
     "parameter": {
@@ -1201,7 +921,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "PostApiV1AdminSaveroleandmenu"
   },
   {
@@ -1217,7 +937,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "description": "<p>用于新增角色跟权限</p>",
     "parameter": {
@@ -1291,7 +1011,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "PostApiV1AdminSaveroleandperms"
   },
   {
@@ -1307,7 +1027,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "parameter": {
       "fields": {
@@ -1402,7 +1122,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "PostApiV1AdminUppermsandoperating"
   },
   {
@@ -1418,7 +1138,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "description": "<p>用角色id 去修改菜单信息</p>",
     "parameter": {
@@ -1506,7 +1226,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "PutApiV1AdminSaveroleandmenu"
   },
   {
@@ -1522,7 +1242,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "description": "<p>用于角色配置权限修改跟删除</p>",
     "parameter": {
@@ -1596,7 +1316,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "PutApiV1AdminUpanddelroleandperms"
   },
   {
@@ -1612,7 +1332,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "description": "<p>用于修改用户下面的角色信息</p>",
     "parameter": {
@@ -1686,7 +1406,7 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "PutApiV1AdminUpuserandrole"
   },
   {
@@ -1702,7 +1422,7 @@
         }
       ]
     },
-    "group": "admin",
+    "group": "Admin",
     "version": "0.0.1",
     "description": "<p>用于更新用户信息</p>",
     "parameter": {
@@ -1776,7 +1496,484 @@
       ]
     },
     "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
-    "groupTitle": "admin",
+    "groupTitle": "Admin",
     "name": "PutApiV1AdminUpuserinfo"
+  },
+  {
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "optional": false,
+            "field": "varname1",
+            "description": "<p>No type.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "varname2",
+            "description": "<p>With type.</p>"
+          }
+        ]
+      }
+    },
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "./apidoc/main.js",
+    "group": "E__dev3_wh_web_gitlab_apidoc_main_js",
+    "groupTitle": "E__dev3_wh_web_gitlab_apidoc_main_js",
+    "name": ""
+  },
+  {
+    "type": "POST",
+    "url": "api/v1/wh-fba-stocking/findByFbaAndEntry",
+    "title": "查询fba备货信息和箱号信息",
+    "header": {
+      "examples": [
+        {
+          "title": "请求头Header",
+          "content": "{\n\"token\":\"用户令牌\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "group": "FBA_Stocking",
+    "version": "0.0.1",
+    "description": "<p>用于查询fba备货信息 And 箱号信息</p>",
+    "parameter": {
+      "examples": [
+        {
+          "title": "请求样例：",
+          "content": "{\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "success": [
+          {
+            "group": "success",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>请求的数据</p>"
+          },
+          {
+            "group": "success",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>信息</p>"
+          },
+          {
+            "group": "success",
+            "type": "int",
+            "optional": false,
+            "field": "code",
+            "description": "<p>-1 代表错误 200代表请求成功</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功返回样列:",
+          "content": "{\"code\":\"200\",\"msg\":\"success\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败返回样例子:",
+          "content": "{\"code\":\"-1\",\"msg\":\"error\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out_library/fba/WhFbaStockingController.java",
+    "groupTitle": "FBA_Stocking",
+    "name": "PostApiV1WhFbaStockingFindbyfbaandentry"
+  },
+  {
+    "type": "POST",
+    "url": "api/v1/wh-fba-stocking/saveFbaAndEntry",
+    "title": "新增fba备货信息和箱号信息",
+    "header": {
+      "examples": [
+        {
+          "title": "请求头Header",
+          "content": "{\n\"token\":\"用户令牌\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "group": "FBA_Stocking",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "sku",
+            "description": "<p>sku</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "site",
+            "description": "<p>站点</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "shipMethods",
+            "description": "<p>物流方式/跟踪号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "dInformation",
+            "description": "<p>收货信息</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "quantity",
+            "description": "<p>数量</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "account",
+            "description": "<p>账号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "nOfBoxes",
+            "description": "<p>包装箱数量</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求样例：",
+          "content": "{\"entry\":[{\n\"fnSku\":\"1122KK\",\n\"fseName\":\"测试name\",\n\"quantity\":80,\n\"sku\":\"cccccc\"\n},{\n\"fnSku\":\"1122K2\",\n\"fseName\":\"测试name2\",\n\"quantity\":802,\n\"sku\":\"cccccc2\"\n}],\n\"site\":\"UA\",\n\"shipMethods\":\"测试\",\n\"dInformation\":\"测试1\",\n\"account\":\"cc\",\n\"nOfBoxes\":5\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.1",
+    "description": "<p>用于新增fba备货信息和箱号信息</p>",
+    "success": {
+      "fields": {
+        "success": [
+          {
+            "group": "success",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>请求的数据</p>"
+          },
+          {
+            "group": "success",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>信息</p>"
+          },
+          {
+            "group": "success",
+            "type": "int",
+            "optional": false,
+            "field": "code",
+            "description": "<p>-1 代表错误 200代表请求成功</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功返回样列:",
+          "content": "{\"code\":\"200\",\"msg\":\"success\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败返回样例子:",
+          "content": "{\"code\":\"-1\",\"msg\":\"error\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out_library/fba/WhFbaStockingController.java",
+    "groupTitle": "FBA_Stocking",
+    "name": "PostApiV1WhFbaStockingSavefbaandentry"
+  },
+  {
+    "type": "PUT",
+    "url": "api/v1/wh-fba-stocking-entry/upOrDelFbaStockingEntry",
+    "title": "修改/删除 fba备货装箱信息",
+    "header": {
+      "examples": [
+        {
+          "title": "请求头Header",
+          "content": "{\n\"token\":\"用户令牌\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "group": "FBA_Stocking",
+    "version": "0.0.1",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "List",
+            "optional": false,
+            "field": "delIds",
+            "description": "<p>传要删除的id集合</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "List",
+            "optional": false,
+            "field": "stockingEntry",
+            "description": "<p>传需要更新的List对象集合</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求样例：",
+          "content": "{\n\"delIds\":[1,2,3],\n\"stockingEntry\":[{\"fnSku\":\"测试\",\"id\":4,\"version\":0 必须填},{\"fnSku\":\"策划\",\"id\":5,\"version\":0}]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "description": "<p>用于修改/删除 fba备货装箱信息</p>",
+    "success": {
+      "fields": {
+        "success": [
+          {
+            "group": "success",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>请求的数据</p>"
+          },
+          {
+            "group": "success",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>信息</p>"
+          },
+          {
+            "group": "success",
+            "type": "int",
+            "optional": false,
+            "field": "code",
+            "description": "<p>-1 代表错误 200代表请求成功</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功返回样列:",
+          "content": "{\"code\":\"200\",\"msg\":\"success\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败返回样例子:",
+          "content": "{\"code\":\"-1\",\"msg\":\"error\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out_library/fba/WhFbaStockingEntryController.java",
+    "groupTitle": "FBA_Stocking",
+    "name": "PutApiV1WhFbaStockingEntryUpordelfbastockingentry"
+  },
+  {
+    "type": "PUT",
+    "url": "api/v1/wh-fba-stocking/upFbaStocking",
+    "title": "修改fba备货信息",
+    "header": {
+      "examples": [
+        {
+          "title": "请求头Header",
+          "content": "{\n\"token\":\"用户令牌\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "group": "FBA_Stocking",
+    "version": "0.0.1",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>更新id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "version",
+            "description": "<p>更新版本</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求样例：",
+          "content": "{\n\"id\":1, 必须有\n\"version\":0, 必须有\n\"aNumber\":\"修改测试\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "description": "<p>用于修改fba备货信息</p>",
+    "success": {
+      "fields": {
+        "success": [
+          {
+            "group": "success",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>请求的数据</p>"
+          },
+          {
+            "group": "success",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>信息</p>"
+          },
+          {
+            "group": "success",
+            "type": "int",
+            "optional": false,
+            "field": "code",
+            "description": "<p>-1 代表错误 200代表请求成功</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功返回样列:",
+          "content": "{\"code\":\"200\",\"msg\":\"success\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败返回样例子:",
+          "content": "{\"code\":\"-1\",\"msg\":\"error\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out_library/fba/WhFbaStockingController.java",
+    "groupTitle": "FBA_Stocking",
+    "name": "PutApiV1WhFbaStockingUpfbastocking"
+  },
+  {
+    "type": "POST",
+    "url": "api/v1/wh-transfer-out-library",
+    "title": "查询调拨出库跟条目",
+    "header": {
+      "examples": [
+        {
+          "title": "请求头Header",
+          "content": "{\n\"token\":\"用户令牌\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "group": "Transfer",
+    "version": "0.0.1",
+    "description": "<p>用于查询调拨出库跟条目</p>",
+    "parameter": {
+      "examples": [
+        {
+          "title": "请求样例：",
+          "content": "{\n\"tNumber\": \"DB6543380444191129600\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "success": [
+          {
+            "group": "success",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>请求的数据</p>"
+          },
+          {
+            "group": "success",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>信息</p>"
+          },
+          {
+            "group": "success",
+            "type": "int",
+            "optional": false,
+            "field": "code",
+            "description": "<p>-1 代表错误 200代表请求成功</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功返回样列:",
+          "content": "{\"code\":\"200\",\"msg\":\"success\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败返回样例子:",
+          "content": "{\"code\":\"-1\",\"msg\":\"error\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out_library/transfer/WhTransferOutLibraryController.java",
+    "groupTitle": "Transfer",
+    "name": "PostApiV1WhTransferOutLibrary"
   }
 ]

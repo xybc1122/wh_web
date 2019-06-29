@@ -1,12 +1,11 @@
 package com.wh.mapper.menu;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.wh.entity.meun.WhUserMenu;
+import com.wh.entity.menu.WhUserMenu;
 import com.wh.entity.parent.ParentTree;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>

@@ -1,42 +1,32 @@
 package com.wh.toos;
 
 
+/**
+ * @ClassName Constants
+ * Description TODO
+ * @Author 陈恩惠
+ * @Date 2019/6/29 9:14
+ * 一些常量配置
+ **/
 public interface Constants {
-//    /**
-//     * 保存webSocket连接对象 用户绑定
-//     */
-//    public static Map<Long, ChannelHandlerContext> onLineUserMap =
-//            new ConcurrentHashMap<Long, ChannelHandlerContext>();
-//
-//    /**
-//     * 保存webSocket 握手对象
-//     */
-//    public static Map<String, WebSocketServerHandshaker> webSocketHandShakerMap =
-//            new ConcurrentHashMap<String, WebSocketServerHandshaker>();
-//
-//    /**
-//     * 设置出库通知单 key
-//     */
-//    String SAVE_SHIP_NOTICE = "save_shipNotice";
-//
-//    /**
-//     * 设置采购订单 key
-//     */
-//    String SAVE_PURCHASE_PO_ORDER = "save_purchasePoOrder";
-//
+
     /**
      * redis设置新增用户的 key
      */
-    String SAVE_USER_ROLE = "saveUserRole";
-//
-//    /**
-//     * 设置外购入库 KEY
-//     */
-//    String SAVE_PURCHASE_ICB_STOCK = "save_purchase_icb_stock";
+    String SAVE_USER_ROLE = "save_user_role";
+
+
     /**
-     * token
+     * 设置调拨出库的 KEY
      */
-    String SSO_TOKEN = "sso_token";
+    String TRANSFER_KE = "transfer_ke";
+
+    /**
+     * 幂等key 到期时间
+     */
+    long EXPIRE_TIME_MINUTE = 60 * 3L;
+
+
     /**
      * 最大等待时间 毫秒
      */
@@ -45,10 +35,7 @@ public interface Constants {
      * 锁最大占用时间秒
      */
     long timeout = 20000L;
-    /**
-     * 管理员reid key
-     */
-    String ADMIN = "admin:";
+
 
     /**
      * 响应请求成功
@@ -67,11 +54,30 @@ public interface Constants {
      * 请求响应错误
      */
     Integer HTTP_RESP_CODE = -2;
-    /**
-     * 首次登陆返回状态码
-     */
 
-    String SELECT = "select";
+    /**
+     * 幂等请求aop  header类型
+     */
+    String IDEMPOTENT_CHECK_HEADER = "header";
+
+//权限一些操作配置
+    /**
+     * 查看
+     */
+    String VIEW = "GET";
+    /**
+     * 新增
+     */
+    String SAVE = "POST";
+    /**
+     * 修改
+     */
+    String MODIFY = "PUT";
+
+    /**
+     * 删除
+     */
+    String DELETE = "DELETE";
 
 
 }

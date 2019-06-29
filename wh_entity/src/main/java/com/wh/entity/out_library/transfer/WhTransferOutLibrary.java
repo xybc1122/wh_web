@@ -6,6 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.wh.entity.out_library.transfer.entry.WhTransferOutLibraryEntry;
 import com.wh.entity.parent.ParentConfTable;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -34,11 +38,13 @@ public class WhTransferOutLibrary extends ParentConfTable implements Serializabl
     /**
      * 移出仓
      */
+    @NotNull(message = "移出仓不能为空")
     private Integer rWarId;
 
     /**
      * 移入仓
      */
+    @NotNull(message = "移入仓不能为空")
     private Integer mIWarId;
 
     /**
@@ -54,6 +60,7 @@ public class WhTransferOutLibrary extends ParentConfTable implements Serializabl
     /**
      * 运单号
      */
+    @NotBlank(message = "运单号不能为空")
     private String wayNumber;
 
 
@@ -61,7 +68,44 @@ public class WhTransferOutLibrary extends ParentConfTable implements Serializabl
      * 条目表
      */
     @TableField(exist = false)
+    @Size(min = 1, message = "is null or length =0")
+    @Valid
     private List<WhTransferOutLibraryEntry> entry;
+    /**
+     * 移出仓库名
+     */
+    @TableField(exist = false)
+    private String rWarName;
+    /**
+     * 移入仓库名
+     */
+    @TableField(exist = false)
+    private String mIWarName;
+
+
+    public String getrWarName() {
+        return rWarName;
+    }
+
+    public void setrWarName(String rWarName) {
+        this.rWarName = rWarName;
+    }
+
+    public String getmIWarName() {
+        return mIWarName;
+    }
+
+    public void setmIWarName(String mIWarName) {
+        this.mIWarName = mIWarName;
+    }
+
+    public WhTransferOutLibrary() {
+
+    }
+
+    public WhTransferOutLibrary(String tNumber) {
+        this.tNumber = tNumber;
+    }
 
     public List<WhTransferOutLibraryEntry> getEntry() {
         return entry;

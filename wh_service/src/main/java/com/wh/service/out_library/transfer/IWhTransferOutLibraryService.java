@@ -3,7 +3,9 @@ package com.wh.service.out_library.transfer;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wh.base.ResponseBase;
 import com.wh.entity.out_library.transfer.WhTransferOutLibrary;
+import org.springframework.validation.BindingResult;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +24,7 @@ public interface IWhTransferOutLibraryService extends IService<WhTransferOutLibr
      * @param outLibrary
      * @return
      */
-    ResponseBase serviceSelOutLibraryInfo(WhTransferOutLibrary outLibrary);
+    List<WhTransferOutLibrary> serviceSelOutLibraryInfo(WhTransferOutLibrary outLibrary);
 
 
     /**
@@ -46,6 +48,6 @@ public interface IWhTransferOutLibraryService extends IService<WhTransferOutLibr
      * @param outLibrary
      * @return
      */
-    ResponseBase serviceSaveOutLibraryInfo(WhTransferOutLibrary outLibrary);
+    ResponseBase serviceSaveOutLibraryInfo(WhTransferOutLibrary outLibrary, BindingResult result);
 
 }

@@ -6,6 +6,7 @@ import com.wh.base.ApplicationContextRegister;
 import com.wh.base.JsonData;
 import com.wh.dds.DynamicDataSourceContextHolder;
 import com.wh.toos.Constants;
+import com.wh.toos.StaticVariable;
 import com.wh.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -40,10 +41,10 @@ public class InterCenter implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 
         //判斷地址栏中是否有携带token参数
-        String token = request.getHeader(Constants.SSO_TOKEN);
+        String token = request.getHeader(StaticVariable.SSO_TOKEN);
         if (token == null) {
             //尝试去参数里面获取看看
-            token = request.getParameter(Constants.SSO_TOKEN);
+            token = request.getParameter(StaticVariable.SSO_TOKEN);
         }
         if (token != null) {
             Map<String, Claim> claim = JwtUtils.verifyToken(token);
@@ -77,6 +78,7 @@ public class InterCenter implements HandlerInterceptor {
                     response.sendRedirect(SSOClientUtils.SERVER_URL + SSOClientUtils.LOGOUT_PATH + "?uid=" + uid + "&tenant=" + tenant);
                     return false;
                 }
+
                 //如果请求的是超级管理员配置接口
 //                if (request.getRequestURI().contains("/api/v1/admin")) {
 //                    String adminKey = redisService.getStringKey(Constants.ADMIN + uid);

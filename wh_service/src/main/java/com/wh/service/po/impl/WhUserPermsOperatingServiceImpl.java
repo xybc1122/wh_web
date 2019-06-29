@@ -68,7 +68,7 @@ public class WhUserPermsOperatingServiceImpl extends ServiceImpl<WhUserPermsOper
     @Override
     @Transactional
     public ResponseBase serviceUpPermsAndOperating(WhUserPerms userPerms) {
-        if (userPerms == null || userPerms.getpId() == null) {
+        if (userPerms == null || userPerms.getpId() == null || userPerms.getVersion() == null) {
             return JsonData.setResultError("参数 is null");
         }
         //1先更新 权限名称

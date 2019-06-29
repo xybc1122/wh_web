@@ -7,12 +7,15 @@ import com.wh.service.perms.IWhUserPermsService;
 import com.wh.utils.ReqUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -31,6 +34,7 @@ import java.util.Set;
 
 @Aspect
 @Component
+@Order(0)
 public class AopPermissionAspect {
 
     @Autowired
@@ -43,14 +47,14 @@ public class AopPermissionAspect {
     }
 
     //前置通知（不需要获取输入参数）
-    @Before("doAspect()")
-    public void doBefore(JoinPoint joinPoint) {
-        // system.out.println("开始前置通知");
-        //获取注解
-        String v = Objects.requireNonNull(giveController(joinPoint)).value();
-        //权限校验
-        permCheck(v);
-    }
+//    @Before("doAspect()")
+//    public void doBefore(JoinPoint joinPoint) {
+//        // system.out.println("开始前置通知");
+//        //获取注解
+//        String v = Objects.requireNonNull(giveController(joinPoint)).value();
+//        //权限校验
+//        permCheck(v);
+//    }
 
     //最终通知
 //    @After("doAspect()")
@@ -71,14 +75,19 @@ public class AopPermissionAspect {
 //        system.out.println("后置【catch】通知");
 //    }
 
-    //环绕通知
-//    @Around("doAspect()")
-//    public Object doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable {
-//        system.out.println("环绕通知进入方法");
-//        Object object = pjp.proceed();
-//        system.out.println("环绕通知退出方法");
-//        return object;
-//    }
+    // 环绕通知
+    @Around("doAspect()")
+    public Object doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable {
+        System.out.println("校验权限");
+        //获取注解
+        PermissionCheck permissionCheck = giveController(pjp);
+        if (permissionCheck == null) {
+            throw new LsException("permissionCheck is null");
+        }
+        //权限校验
+        permCheck(permissionCheck.type());
+        return pjp.proceed();
+    }
 
     /**
      * 权限校验

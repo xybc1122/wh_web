@@ -33,8 +33,30 @@ pagehelper:
   params: count=countSql
 
 #sso.server: http://192.168.1.231:9001
-sso.server: http://192.168.208.110:9001
-sso.login.path: /api/v1/sso/login
-sso.logout.path: /api/v1/sso/logout
-sso.logout.workerId: 0
-sso.logout.datacenterId: 0
+sso.server: http://192.168.208.109:9001 # sso登陆服务器
+sso.login.path: /api/v1/sso/login #登陆url
+sso.logout.path: /api/v1/sso/logout #登出url
+sso.logout.workerId: 0  #雪花算法机器标识
+sso.logout.datacenterId: 0 #雪花算法机器标识
+
+transfer.db: DB_ #调拨key
+fba: FBA_ # fba key
+token: TOKEN_IDE # 幂等token  key
+
+#静态常量 一些基本的配置文件
+static:
+  variable:
+    ssoToken: sso_token
+    maxWait: 5000
+    timeout: 20000
+    admin: admin
+    db: DB
+    dbEId: DBEID
+    fba: FBA
+    fbaEId: FBAEID
+    ideToken: ide_token
+
+
+
+
+

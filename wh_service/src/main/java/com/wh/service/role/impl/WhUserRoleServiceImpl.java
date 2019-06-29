@@ -75,7 +75,7 @@ public class WhUserRoleServiceImpl extends ServiceImpl<WhUserRoleMapper, WhUserR
     @Override
     @Transactional
     public ResponseBase serviceUpRoleAndMenu(WhUserRole whUserRole) {
-        if (whUserRole == null || whUserRole.getRid() == null) {
+        if (whUserRole == null || whUserRole.getRid() == null || whUserRole.getVersion() == null) {
             return JsonData.setResultError("参数 is null");
         }
         //1先更新 角色名称

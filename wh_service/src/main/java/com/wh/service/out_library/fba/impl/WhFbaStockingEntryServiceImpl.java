@@ -43,7 +43,7 @@ public class WhFbaStockingEntryServiceImpl extends ServiceImpl<WhFbaStockingEntr
                 CheckUtils.saveResult(this.remove(enQuery));
             }
         }
-        //2获得想要更新的 箱号id
+        //2获得想要更新的 箱号对象
         Object stockingEntry = objectMap.get("stockingEntry");
         if (stockingEntry instanceof List) {
             //拿到出库通知单的表体数据

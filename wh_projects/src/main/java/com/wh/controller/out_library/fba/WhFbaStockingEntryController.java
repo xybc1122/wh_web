@@ -32,7 +32,7 @@ public class WhFbaStockingEntryController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup 出库
+     * @apiGroup FBA_Stocking
      * @apiVersion 0.0.1
      * @apiParam {List} delIds 传要删除的id集合
      * @apiParam {List} stockingEntry 传需要更新的List对象集合
@@ -52,6 +52,7 @@ public class WhFbaStockingEntryController {
      */
     @PutMapping("/upOrDelFbaStockingEntry")
     public ResponseBase upFbaStocking(@RequestBody Map<String, Object> objectMap) {
+
         return entryService.upOrWhFbaStockingEntry(objectMap);
     }
 

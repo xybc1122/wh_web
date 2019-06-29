@@ -3,6 +3,7 @@ package com.wh.entity.parent;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 

@@ -27,12 +27,24 @@ public interface UserMapper extends BaseMapper<UserInfo> {
     List<UserInfo> selByUserList(UserDto UserDto);
 
     /**
-     * 通过唯一用户名去查询 是否被删除的单个用户
+     * 通过唯一用户名去查询 是否有重名
      *
      * @param userName
      * @return
      */
     @Select("SELECT `uid` FROM `wh_user_info` WHERE user_name=#{userName} AND is_delete=0")
     Long selUserIsDelete(@Param("userName") String userName);
+
+    /**
+     * 通过角色名字去查找用户信息
+     *
+     * @param rName
+     * @return
+     */
+    @Select("SELECT u.`uid`,u.`user_name`FROM `wh_user_info` AS u\n" +
+            "LEFT JOIN `wh_user_role_user`  AS ru ON ru.`u_id`=u.`uid`\n" +
+            "LEFT JOIN `wh_user_role` AS r ON r.`r_id`=ru.`r_id`\n" +
+            "WHERE r.`r_name`=#{rName}")
+    List<UserInfo> selUserByRName(@Param("rName") String rName);
 
 }

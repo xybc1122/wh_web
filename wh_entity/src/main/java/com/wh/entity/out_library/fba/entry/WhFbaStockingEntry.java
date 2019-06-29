@@ -1,10 +1,10 @@
 package com.wh.entity.out_library.fba.entry;
 
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.wh.entity.parent.ParentConfTable;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -21,39 +21,42 @@ public class WhFbaStockingEntry extends ParentConfTable implements Serializable 
     /**
      * 标识ID
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    private String id;
     /**
      * 产品sku
      */
+    @NotBlank(message = "sku不能为空")
     private String sku;
 
     /**
      * fn_sku
      */
+    @NotBlank(message = "fnSku不能为空")
     private String fnSku;
 
     /**
      * 名称
      */
+    @NotBlank(message = "名称不能为空")
     private String fseName;
 
     /**
      * 备货数量
      */
-    private Integer sQuantity;
+    @NotNull(message = "数量不能为空")
+    private Integer quantity;
 
     /**
      * fba备货id
      */
-    private Long fsId;
+    private String rNo;
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -85,19 +88,19 @@ public class WhFbaStockingEntry extends ParentConfTable implements Serializable 
         this.fseName = fseName;
     }
 
-    public Integer getsQuantity() {
-        return sQuantity;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setsQuantity(Integer sQuantity) {
-        this.sQuantity = sQuantity;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
-    public Long getFsId() {
-        return fsId;
+    public String getrNo() {
+        return rNo;
     }
 
-    public void setFsId(Long fsId) {
-        this.fsId = fsId;
+    public void setrNo(String rNo) {
+        this.rNo = rNo;
     }
 }

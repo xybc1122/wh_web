@@ -17,6 +17,6 @@ public @interface PermissionCheck {
      *
      * @return
      */
-    String value();
+    String type();
 
 }

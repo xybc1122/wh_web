@@ -2,9 +2,7 @@ package com.wh.service.menu;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wh.base.ResponseBase;
-import com.wh.entity.meun.WhUserMenu;
-
-import java.util.List;
+import com.wh.entity.menu.WhUserMenu;
 
 /**
  * <p>

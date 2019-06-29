@@ -64,7 +64,7 @@ public class WhUserRoleUserServiceImpl extends ServiceImpl<WhUserRoleUserMapper,
         if (user == null || user.getUid() == null) {
             return JsonData.setResultError("参数 is null");
         }
-        // 1 先更新 用户角色表的 用户id
+        // 1 先删除用户角色表的 用户id
         QueryWrapper<WhUserRoleUser> ruQuery = WrapperUtils.getQuery();
         ruQuery.eq("u_id", user.getUid());
         CheckUtils.saveResult(this.remove(ruQuery));

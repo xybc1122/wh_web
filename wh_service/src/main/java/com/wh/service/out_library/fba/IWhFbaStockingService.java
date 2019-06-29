@@ -4,6 +4,7 @@ package com.wh.service.out_library.fba;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wh.base.ResponseBase;
 import com.wh.entity.out_library.fba.WhFbaStocking;
+import org.springframework.validation.BindingResult;
 
 /**
  * <p>
@@ -31,4 +32,12 @@ public interface IWhFbaStockingService extends IService<WhFbaStocking> {
      * @return
      */
     ResponseBase serviceUpWhFbaStocking(WhFbaStocking whFbaStocking);
+
+    /**
+     * 系只能 fba 备货
+     *
+     * @param whFbaStocking
+     * @return
+     */
+    ResponseBase serviceSaveWhFbaStocking(WhFbaStocking whFbaStocking, BindingResult result);
 }

@@ -2,7 +2,6 @@ package com.wh.aop;
 
 import com.wh.customize.RedisLock;
 import com.wh.exception.LsException;
-import com.wh.toos.Constants;
 import com.wh.utils.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -28,19 +27,18 @@ import java.lang.reflect.Method;
  **/
 @Aspect
 @Component
-@Order(1)
+@Order(2)
 public class AopRedisLock {
     /**
      * 日志记录
      */
-    private final static Logger LOG = LoggerFactory.getLogger(AopRedisLock.class);
+//    private final static Logger LOG = LoggerFactory.getLogger(AopRedisLock.class);
 
     @Autowired
     private RedisUtils redisService;
 
     @Pointcut("@annotation(com.wh.customize.RedisLock)")
     public void addLockAnnotationPointcut() {
-
     }
 
 
@@ -59,7 +57,7 @@ public class AopRedisLock {
                 identifier = redisService.lockRedis(annotation.key(), annotation.maxWait(), annotation.timeout());
                 // 目标方法执行
                 if (StringUtils.isNotBlank(identifier)) {
-                    joinPoint.proceed();
+                    return joinPoint.proceed();
                 }
                 throw new LsException("请稍等");
             } finally {

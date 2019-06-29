@@ -14,6 +14,7 @@ import com.wh.entity.dto.UserDto;
 import com.wh.entity.user.UserInfo;
 import com.wh.mapper.user.UserMapper;
 import com.wh.toos.Constants;
+import com.wh.toos.StaticVariable;
 import com.wh.utils.*;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.commons.lang3.StringUtils;
@@ -42,6 +43,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserInfo> implement
     private IWhUserRoleUserService ruUserService;
 
     @Override
+    public ResponseBase serviceSelUserByRName(String rName) {
+        return JsonData.setResultSuccess(userMapper.selUserByRName(rName));
+    }
+
+
+    @Override
     public ResponseBase getByUserInfoList(UserDto userDto) {
         PageInfoUtils.setPage(userDto.getPageSize(), userDto.getCurrentPage());
         List<UserInfo> uList = userMapper.selByUserList(userDto);
@@ -55,13 +62,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserInfo> implement
      */
     @Override
     public ResponseBase upUserInfo(UserInfo user) {
+        if (user.getVersion() == null) {
+            return JsonData.setResultError("参数 is null");
+        }
         //这里有问题 修改状态以后不会踢出用户
-        if (user.getUserName() != null) {
+        if (StringUtils.isNotBlank(user.getUserName())) {
             return JsonData.setResultError("修改异常 不能修改用户账号");
         }
+        
+
         if (user.getAccountStatus() != null && user.getAccountStatus() == 1) {
             //踢出redis key 停用
-            redisUtils.delKey(Constants.SSO_TOKEN + ":" + user.getUid());
+            redisUtils.delKey(StaticVariable.SSO_TOKEN + ":" + user.getUid());
         }
         Integer version = user.getVersion();
         user.setModify(ReqUtils.getUserName(), version);

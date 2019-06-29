@@ -53,7 +53,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiDescription 用于查询用户信息
      * @apiParam {String} [name] 名称
@@ -88,7 +88,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiDescription 用于更新用户信息
      * @apiParam {Integer} uid 更新id
@@ -119,7 +119,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiDescription 用于修改用户下面的角色信息
      * @apiParam {Integer} uid 更新id
@@ -148,7 +148,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiDescription 通过用户id删除下面的角色信息
      * @apiParam {List} idDelList 删除的 用户 id
@@ -176,7 +176,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiDescription 用于新增用户信息以及下面的角色信息
      * @apiParam {String} userName 用户名
@@ -209,7 +209,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiDescription 用于获得所有角色信息
      * @apiParamExample {json} 请求样例：
@@ -236,7 +236,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiDescription 通过角色id 去删除
      * @apiParam {List} idDelList 删除的 角色 id
@@ -264,7 +264,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiDescription 用于新增角色跟菜单查看权限
      * @apiParam {String} rName 角色 名称
@@ -293,7 +293,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiDescription 用角色id 去修改菜单信息
      * @apiParam {Integer} rId 角色名称
@@ -327,7 +327,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiDescription 用于新增角色跟权限
      * @apiParam {String} rName 角色 名称
@@ -357,7 +357,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiDescription 用于角色配置权限修改跟删除
      * @apiParam {Integer} rId 角色 id
@@ -387,7 +387,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiDescription 用于查询权限组里面的操作信息
      * @apiParamExample {json} 请求样例：
@@ -413,7 +413,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiDescription 用于查询角色对应的权限
      * @apiParamExample {json} 请求样例：
@@ -440,7 +440,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiDescription 用于权限列表
      * @apiParamExample {json} 请求样例：
@@ -467,7 +467,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiDescription 通过权限id去删除
      * @apiParam {List} idDelList 删除的 权限 id
@@ -494,7 +494,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiParam {Integer} pId 权限id
      * @apiParam {String} apiUrl 对应的请求url
@@ -524,7 +524,7 @@ public class AdminController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup admin
+     * @apiGroup Admin
      * @apiVersion 0.0.1
      * @apiParam {Integer} pId 权限id
      * @apiParam {String} pName 修改的权限名称

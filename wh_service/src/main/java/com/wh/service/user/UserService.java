@@ -10,7 +10,13 @@ import java.util.List;
 
 
 public interface UserService extends IService<UserInfo> {
-
+    /**
+     * 通过角色名字去查找用户信息
+     *
+     * @param rName
+     * @return
+     */
+    ResponseBase serviceSelUserByRName(String rName);
 
     //查询用户信息
     ResponseBase getByUserInfoList(UserDto userDto);

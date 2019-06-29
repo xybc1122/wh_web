@@ -2,10 +2,16 @@ package com.wh.entity.out_library.fba;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.wh.entity.out_library.fba.entry.WhFbaStockingEntry;
 import com.wh.entity.parent.ParentConfTable;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -36,37 +42,45 @@ public class WhFbaStocking extends ParentConfTable implements Serializable {
     /**
      * 单号状态
      */
-    private String fsStatus;
+    private Integer fsState;
 
     /**
      * 站点
      */
+    @NotBlank(message = "is null")
     private String site;
 
     /**
      * 收货信息
      */
+    @NotBlank(message = "is null")
     private String dInformation;
 
     /**
      * 物流方式/跟踪号
      */
+    @NotBlank(message = "is null")
     private String shipMethods;
 
     /**
      * 包装数量
      */
+    @NotNull(message = "is null")
     private Integer nOfBoxes;
 
     /**
      * 账号
      */
-    private String aNumber;
+    @NotBlank(message = "is null")
+    private String account;
 
 
     /**
      * 条目表
      */
+    @TableField(exist = false)
+    @Size(min = 1, message = "is null or length =0")
+    @Valid
     private List<WhFbaStockingEntry> entry;
 
 
@@ -98,12 +112,12 @@ public class WhFbaStocking extends ParentConfTable implements Serializable {
         this.recordNo = recordNo;
     }
 
-    public String getFsStatus() {
-        return fsStatus;
+    public Integer getFsState() {
+        return fsState;
     }
 
-    public void setFsStatus(String fsStatus) {
-        this.fsStatus = fsStatus;
+    public void setFsState(Integer fsState) {
+        this.fsState = fsState;
     }
 
     public String getSite() {
@@ -138,11 +152,11 @@ public class WhFbaStocking extends ParentConfTable implements Serializable {
         this.nOfBoxes = nOfBoxes;
     }
 
-    public String getaNumber() {
-        return aNumber;
+    public String getAccount() {
+        return account;
     }
 
-    public void setaNumber(String aNumber) {
-        this.aNumber = aNumber;
+    public void setAccount(String account) {
+        this.account = account;
     }
 }

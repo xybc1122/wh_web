@@ -1,9 +1,8 @@
 package com.wh.mapper.menu;
 
 
-import com.wh.entity.meun.WhUserMenu;
+import com.wh.entity.menu.WhUserMenu;
 import com.wh.store.AppendSqlStore;
-import com.wh.toos.Constants;
 import com.wh.utils.StrUtils;
 import org.apache.ibatis.jdbc.SQL;
 

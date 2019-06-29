@@ -3,6 +3,7 @@ package com.wh.utils;
 
 import com.wh.exception.LsException;
 import com.wh.toos.Constants;
+import com.wh.toos.StaticVariable;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -123,15 +124,7 @@ public class RedisUtils {
 //        }
 //    }
 //
-//    /**
-//     * 判断缓存中是否有对应的value
-//     *
-//     * @param key
-//     * @return
-//     */
-//    public boolean exists(final String key) {
-//        return redisTemplate.hasKey(key);
-//    }
+
 //
 //    /**
 //     * 读取缓存
@@ -335,6 +328,19 @@ public class RedisUtils {
     // stringRedisTemplate.opsForSet();//操作set
     // stringRedisTemplate.opsForZSet();//操作有序set
 
+    /**
+     * 判断缓存中是否有对应的value
+     *
+     * @param key
+     * @return
+     */
+    public boolean exists(final String key) {
+        try {
+            return stringRedisTemplate.hasKey(key);
+        } catch (Exception e) {
+            throw new LsException("exists异常: key: " + key + ", cause: " + e.getMessage());
+        }
+    }
 
     /**
      * 生成user key
@@ -343,7 +349,7 @@ public class RedisUtils {
      * @return
      */
     public static String redisTokenKey(String key, String tenant) {
-        return Constants.SSO_TOKEN + ":" + key + "_" + tenant;
+        return StaticVariable.SSO_TOKEN + ":" + key + "_" + tenant;
     }
 
     /**
@@ -560,7 +566,7 @@ public class RedisUtils {
                 return stringRedisTemplate.delete(key);
             }
         } catch (Exception e) {
-            return false;
+            throw new LsException("delKey异常: key: " + key + ", cause: " + e.getMessage());
         }
         return false;
     }

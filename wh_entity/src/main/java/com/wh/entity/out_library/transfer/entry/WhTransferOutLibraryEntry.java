@@ -1,10 +1,10 @@
 package com.wh.entity.out_library.transfer.entry;
 
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.wh.entity.parent.ParentConfTable;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -21,31 +21,29 @@ public class WhTransferOutLibraryEntry extends ParentConfTable implements Serial
     /**
      * 标识ID
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
-    /**
-     * sku
-     */
-    private String sku;
-
+    private String id;
     /**
      * 数量
      */
+    @NotNull(message = "数量不能为空")
     private Integer quantity;
     /**
      * 调拨出库id
      */
-    private Long tId;
+    private String tNumber;
 
     /**
      * 仓位
      */
+    @NotBlank(message = "is null")
     private String position;
 
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
+    /**
+     * sku
+     */
+    @NotBlank(message = "sku 不能为空")
+    private String sku;
 
     public String getPosition() {
         return position;
@@ -55,19 +53,24 @@ public class WhTransferOutLibraryEntry extends ParentConfTable implements Serial
         this.position = position;
     }
 
-    public Long gettId() {
-        return tId;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
-    public void settId(Long tId) {
-        this.tId = tId;
+
+    public String gettNumber() {
+        return tNumber;
     }
 
-    public Long getId() {
+    public void settNumber(String tNumber) {
+        this.tNumber = tNumber;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -1,4 +1,4 @@
-package com.wh.entity.meun;
+package com.wh.entity.menu;
 
 import com.wh.entity.parent.ParentTree;
 
