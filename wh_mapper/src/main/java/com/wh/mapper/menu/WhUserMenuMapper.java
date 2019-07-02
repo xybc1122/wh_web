@@ -1,6 +1,7 @@
 package com.wh.mapper.menu;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.wh.entity.dto.TreeDto;
 import com.wh.entity.menu.WhUserMenu;
 import com.wh.entity.parent.ParentTree;
 import org.apache.ibatis.annotations.*;
@@ -29,7 +30,7 @@ public interface WhUserMenuMapper extends BaseMapper<WhUserMenu> {
             @Result(column = "m_name", property = "treeName"),
             @Result(column = "is_parent_node", property = "nextLevel"),
     })
-    List<ParentTree> selTreeList(@Param("rids") String rids);
+    List<TreeDto> selTreeList(@Param("rids") String rids);
 
 
     /**

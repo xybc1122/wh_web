@@ -41,7 +41,7 @@ public class ParentTree {
     private Integer treeId;
 
     /**
-     * 树节点ID
+     * 树节点名称
      */
     private String treeName;
     /**
@@ -50,10 +50,12 @@ public class ParentTree {
     @TableField(value = "is_delete")
     @TableLogic //逻辑删除
     private Integer delOrNot;
+
     /**
      * 版本标识
      */
     private Integer version;
+
     /**
      * 创建用户id
      */

@@ -2,7 +2,9 @@ package com.wh.controller.user;
 
 import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
+import com.wh.customize.PermissionCheck;
 import com.wh.service.user.UserService;
+import com.wh.toos.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,7 @@ public class WhUserController {
      * @return
      */
     @GetMapping("/findUserByRName")
+    @PermissionCheck(type = Constants.VIEW)
     public ResponseBase findUserByRName() {
         return userService.serviceSelUserByRName("采购员");
     }

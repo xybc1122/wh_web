@@ -1,6 +1,7 @@
 package com.wh.utils;
 
 import com.wh.exception.LsException;
+import org.apache.poi.ss.usermodel.Cell;
 
 import java.util.List;
 
@@ -43,6 +44,36 @@ public class StrUtils {
             }
         }
         return sb.substring(0, sb.length() - 1) + ")";
+    }
+
+    public static Integer cInt(Cell cell) {
+        String value = XlsUtils.getCellValue(cell);
+        if (value == null) {
+            return null;
+        }
+        return (int) Double.parseDouble(value);
+    }
+
+    public static Long cLon(Cell cell) {
+        String value = XlsUtils.getCellValue(cell);
+        if (value == null) {
+            return null;
+        }
+        return Long.parseLong(value);
+    }
+
+    /**
+     * 封装 String  类型转换
+     *
+     * @return
+     */
+
+    public static String cStr(Cell cell) {
+        String value = XlsUtils.getCellValue(cell);
+        if (value == null) {
+            return null;
+        }
+        return value;
     }
 
 }

@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * @Date 2019/6/12 14:36
  **/
 @Component
-@Order(2)
+@Order(0)
 public class InitTargetDataSources implements CommandLineRunner {
     
 

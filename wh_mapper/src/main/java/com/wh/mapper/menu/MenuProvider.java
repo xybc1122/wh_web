@@ -24,7 +24,6 @@ public class MenuProvider {
             LEFT_OUTER_JOIN("wh_user_role AS r ON r.r_id=rm.r_id");
             WHERE(StrUtils.in(rids, "rm.r_id"));
             ORDER_BY("m.`menu_order` asc");
-
             WHERE("m.is_delete =0");
         }}.toString();
     }

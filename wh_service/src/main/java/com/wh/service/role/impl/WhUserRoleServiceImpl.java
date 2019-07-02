@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
+import com.wh.customize.IdempotentCheck;
+import com.wh.customize.PermissionCheck;
 import com.wh.entity.rm.WhUserRoleMenu;
 import com.wh.entity.rp.WhUserRolePerms;
 import com.wh.entity.ur.WhUserRoleUser;
@@ -18,6 +20,7 @@ import com.wh.entity.role.WhUserRole;
 
 import com.wh.service.rp.IWhUserRolePermsService;
 import com.wh.service.ur.IWhUserRoleUserService;
+import com.wh.toos.Constants;
 import com.wh.utils.CheckUtils;
 import com.wh.utils.PageInfoUtils;
 import com.wh.utils.ReqUtils;

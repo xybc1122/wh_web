@@ -3,10 +3,13 @@ package com.wh.service.rm.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
+import com.wh.customize.IdempotentCheck;
+import com.wh.customize.PermissionCheck;
 import com.wh.entity.rm.WhUserRoleMenu;
 import com.wh.exception.LsException;
 import com.wh.mapper.rm.WhUserRoleMenuMapper;
 import com.wh.service.rm.IWhUserRoleMenuService;
+import com.wh.toos.Constants;
 import com.wh.utils.CheckUtils;
 import com.wh.utils.ReqUtils;
 import org.springframework.stereotype.Service;
@@ -28,7 +31,6 @@ public class WhUserRoleMenuServiceImpl extends ServiceImpl<WhUserRoleMenuMapper,
 
     @Override
     public ResponseBase saveRoleMenu(Long rid, List<Integer> menus) {
-        boolean isResult;
         WhUserRoleMenu whUserRoleUser;
         List<WhUserRoleMenu> roleMenuList = new ArrayList<>();
         //新增菜单
@@ -50,6 +52,7 @@ public class WhUserRoleMenuServiceImpl extends ServiceImpl<WhUserRoleMenuMapper,
     }
 
     @Override
+    @PermissionCheck(type = Constants.DELETE)
     public ResponseBase delRoleMenu(Long rid) {
 
         CheckUtils.saveResult(this.removeById(rid));

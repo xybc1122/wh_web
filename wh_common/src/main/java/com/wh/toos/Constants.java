@@ -80,4 +80,14 @@ public interface Constants {
     String DELETE = "DELETE";
 
 
+    /**
+     * 文件上传存放地址
+     */
+    String SAVE_FILE_PATH = "E:/file/";
+//    /**
+//     * Linux文件上传存放地址
+//     */
+//    String SAVE_FILE_PATH = "/usr/local/filter/filePath/";
+
+
 }

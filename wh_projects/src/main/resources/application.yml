@@ -6,6 +6,10 @@ spring:
       jdbcUrl: jdbc:mysql://192.168.1.230:3306/rb_warehouse_1001?useUnicode=true&nullCatalogMeansCurrent=true&characterEncoding=utf-8&useSSL=false
       username: root
       password: root
+  servlet:
+    multipart:
+      max-file-size:  100MB
+      max-request-size: 100MB
   redis:
     database: 0
     #连接的地址
@@ -23,6 +27,27 @@ spring:
       minIdle: 200
       #最大等待时间：单位ms
       maxWait: 1000
+#自定义负载均衡策略
+#product-service:
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+#feign hystrix 熔断的超时时间
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 2000
+        readTimeout: 1000
+#设置超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000
 server:
   port: 9000
 #page分页配置

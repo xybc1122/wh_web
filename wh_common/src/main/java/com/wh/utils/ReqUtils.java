@@ -26,9 +26,9 @@ public class ReqUtils {
                 .getRequestAttributes();
         if (requestAttributes != null) {
             HttpServletRequest request = requestAttributes.getRequest();
-            Integer uId = (Integer) request.getAttribute("uid");
+            Long uId = (Long) request.getAttribute("uid");
             if (uId != null) {
-                return uId.longValue();
+                return uId;
             }
         }
         return null;

@@ -3,7 +3,10 @@ package com.wh.controller.user;
 
 import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
+import com.wh.customize.IdempotentCheck;
+import com.wh.customize.PermissionCheck;
 import com.wh.service.type.IWhTypeService;
+import com.wh.toos.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +33,7 @@ public class WhTypeController {
      * @return
      */
     @GetMapping("/getByWhTypeList")
+    @PermissionCheck(type = Constants.VIEW)
     public ResponseBase getByWhTypeList() {
         return JsonData.setResultSuccess(typeService.list());
     }

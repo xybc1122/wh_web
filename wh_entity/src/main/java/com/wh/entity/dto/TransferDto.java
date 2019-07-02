@@ -1,10 +1,5 @@
 package com.wh.entity.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.wh.entity.out_library.transfer.entry.WhTransferOutLibraryEntry;
-
 import java.util.List;
 
 /**

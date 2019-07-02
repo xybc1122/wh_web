@@ -32,6 +32,7 @@ public class JwtUtils {
             DecodedJWT jwt = verifier.verify(token);
             return jwt.getClaims();
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

@@ -29,18 +29,6 @@ public class WhUserMenu extends ParentTree implements Serializable {
      */
     private Integer menuOrder;
 
-    /**
-     * 菜单权限浏览
-     */
-    private String perms;
-
-    public String getPerms() {
-        return perms;
-    }
-
-    public void setPerms(String perms) {
-        this.perms = perms;
-    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

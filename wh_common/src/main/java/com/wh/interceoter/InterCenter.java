@@ -72,13 +72,6 @@ public class InterCenter implements HandlerInterceptor {
                 //切换租户
                 DynamicDataSourceContextHolder.setDataSourceKey(tenant);
 
-
-                //如果是用户logout
-                if (request.getRequestURI().equals(SSOClientUtils.LOGOUT_PATH)) {
-                    response.sendRedirect(SSOClientUtils.SERVER_URL + SSOClientUtils.LOGOUT_PATH + "?uid=" + uid + "&tenant=" + tenant);
-                    return false;
-                }
-
                 //如果请求的是超级管理员配置接口
 //                if (request.getRequestURI().contains("/api/v1/admin")) {
 //                    String adminKey = redisService.getStringKey(Constants.ADMIN + uid);
@@ -88,6 +81,14 @@ public class InterCenter implements HandlerInterceptor {
 //                        return false;
 //                    }
 //                }
+
+
+                //如果是用户logout
+                if (request.getRequestURI().equals(SSOClientUtils.LOGOUT_PATH)) {
+                    response.sendRedirect(SSOClientUtils.SERVER_URL + SSOClientUtils.LOGOUT_PATH + "?uid=" + uid + "&tenant=" + tenant);
+                    return false;
+                }
+
                 return true;
             }
             JsonUtils.sendJsonMsg(response, JsonData.setResultError(Constants.HTTP_RESP_CODE, "令牌转换异常,请重新登陆"));

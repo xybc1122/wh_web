@@ -1595,7 +1595,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "./wh_projects/src/main/java/com/wh/controller/out_library/fba/WhFbaStockingController.java",
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out/fba/WhFbaStockingController.java",
     "groupTitle": "FBA_Stocking",
     "name": "PostApiV1WhFbaStockingFindbyfbaandentry"
   },
@@ -1720,7 +1720,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "./wh_projects/src/main/java/com/wh/controller/out_library/fba/WhFbaStockingController.java",
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out/fba/WhFbaStockingController.java",
     "groupTitle": "FBA_Stocking",
     "name": "PostApiV1WhFbaStockingSavefbaandentry"
   },
@@ -1810,7 +1810,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "./wh_projects/src/main/java/com/wh/controller/out_library/fba/WhFbaStockingEntryController.java",
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out/fba/WhFbaStockingEntryController.java",
     "groupTitle": "FBA_Stocking",
     "name": "PutApiV1WhFbaStockingEntryUpordelfbastockingentry"
   },
@@ -1900,7 +1900,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "./wh_projects/src/main/java/com/wh/controller/out_library/fba/WhFbaStockingController.java",
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out/fba/WhFbaStockingController.java",
     "groupTitle": "FBA_Stocking",
     "name": "PutApiV1WhFbaStockingUpfbastocking"
   },
@@ -1972,7 +1972,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "./wh_projects/src/main/java/com/wh/controller/out_library/transfer/WhTransferOutLibraryController.java",
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out/transfer/WhTransferOutLibraryController.java",
     "groupTitle": "Transfer",
     "name": "PostApiV1WhTransferOutLibrary"
   }

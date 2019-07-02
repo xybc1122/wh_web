@@ -2,7 +2,9 @@ package com.wh.entity.user;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.wh.entity.parent.ParentConfTable;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.List;
 
@@ -27,6 +29,8 @@ public class UserInfo extends ParentConfTable implements Serializable {
     /**
      * 账号
      */
+    @NotBlank(message = "is null")
+    @Length(min = 6, max = 8, message = "账号长度只能 6-8位")
     private String userName;
     /**
      * 类型
@@ -36,6 +40,8 @@ public class UserInfo extends ParentConfTable implements Serializable {
     /**
      * 用户密码
      */
+    @NotBlank(message = "is null")
+    @Length(min = 6, max = 12, message = "密码长度只能 6-12位")
     private String pwd;
 
     /**

@@ -1,6 +1,7 @@
 package com.wh.store;
 
 
+import com.wh.entity.dto.TreeDto;
 import com.wh.entity.parent.ParentTree;
 
 import java.util.ArrayList;
@@ -20,13 +21,13 @@ public class TreeStructureStore {
      * @param result
      * @return
      */
-    public static List<ParentTree> getTree(List<ParentTree> result) {
+    public static List<TreeDto> getTree(List<TreeDto> result) {
         //一级目录
-        List<ParentTree> firstArrList = new ArrayList<>();
+        List<TreeDto> firstArrList = new ArrayList<>();
         //子目录
-        List<ParentTree> childArrList = new ArrayList<>();
+        List<TreeDto> childArrList = new ArrayList<>();
         if (result != null && result.size() > 0) {
-            for (ParentTree obj : result) {
+            for (TreeDto obj : result) {
                 if (obj.getParentId() != null) {
                     if (obj.getParentId() == 0) {
                         //是否为父目录
@@ -37,19 +38,19 @@ public class TreeStructureStore {
                 }
             }
             // 为一级目录设置子目录 getChild是递归调用的
-            for (ParentTree firs : firstArrList) {
+            for (TreeDto firs : firstArrList) {
                 firs.setChildNode(getChild(firs.getTreeId(), childArrList));
             }
         }
         return firstArrList;
     }
 
-    private static List<ParentTree> getChild(Integer treeId, List<ParentTree> childNodeList) {
-        List<ParentTree> childList = new ArrayList<>();
+    private static List<TreeDto> getChild(Integer treeId, List<TreeDto> childNodeList) {
+        List<TreeDto> childList = new ArrayList<>();
         // 遍历childNodeList，找出所有的根节点和非根节点
         if (childNodeList != null && childNodeList.size() > 0) {
             // 子菜单
-            for (ParentTree v : childNodeList) {
+            for (TreeDto v : childNodeList) {
                 //如果子跟父ID相同 就设置进去
                 if (treeId.equals(v.getParentId())) {
                     childList.add(v);
@@ -57,7 +58,7 @@ public class TreeStructureStore {
             }
         }
         //查询子节点
-        for (ParentTree childV : childList) {
+        for (TreeDto childV : childList) {
             //如果是true 说明下面还有子菜单
             if (childV.getNextLevel()) {
                 childV.setChildNode(getChild(childV.getTreeId(), childNodeList));
