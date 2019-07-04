@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -31,35 +32,38 @@ public class WhFbaStocking extends ParentConfTable implements Serializable {
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
-
+    /**
+     * 站点id
+     */
+    @NotNull(message = "is null")
+    private Integer siteId;
+    /**
+     * 账号ID
+     */
+    @NotNull(message = "is null")
+    private Integer accountId;
 
     /**
-     * 单号
+     * 记录号
      */
-    private String recordNo;
+    private String singleNumber;
 
     /**
      * 单号状态
      */
     private Integer fsState;
-
-    /**
-     * 站点
-     */
-    @NotBlank(message = "is null")
-    private String site;
-
     /**
      * 收货信息
      */
     @NotBlank(message = "is null")
     private String dInformation;
 
+
     /**
-     * 物流方式/跟踪号
+     * 物流id
      */
-    @NotBlank(message = "is null")
-    private String shipMethods;
+    @NotNull(message = "is null")
+    private Integer transportId;
 
     /**
      * 包装数量
@@ -67,21 +71,16 @@ public class WhFbaStocking extends ParentConfTable implements Serializable {
     @NotNull(message = "is null")
     private Integer nOfBoxes;
 
-    /**
-     * 账号
-     */
-    @NotBlank(message = "is null")
-    private String account;
 
     /**
      * 单据号
      */
-    private String documentNo;
+    private String recordNo;
 
     /**
      * 单据日期
      */
-    private Long  documentTime;
+    private Long documentTime;
     /**
      * 记录编号
      */
@@ -89,8 +88,17 @@ public class WhFbaStocking extends ParentConfTable implements Serializable {
     /**
      * 运送时间
      */
-    private Long  shippingTime;
+    private Long shippingTime;
 
+    /**
+     * 总量
+     */
+    private Integer totalAmount;
+
+    /**
+     * 总价
+     */
+    private BigDecimal totalPrice;
 
 
     /**
@@ -101,6 +109,87 @@ public class WhFbaStocking extends ParentConfTable implements Serializable {
     @Valid
     private List<WhFbaStockingEntry> entry;
 
+    /**
+     * 账号
+     */
+    @TableField(exist = false)
+    private String account;
+
+    /**
+     * 站点
+     */
+    @TableField(exist = false)
+    private String site;
+    /**
+     * 运输名
+     */
+    @TableField(exist = false)
+    private String transport;
+
+
+    public Integer getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Integer totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getTransport() {
+        return transport;
+    }
+
+    public void setTransport(String transport) {
+        this.transport = transport;
+    }
+
+    public Integer getTransportId() {
+        return transportId;
+    }
+
+    public void setTransportId(Integer transportId) {
+        this.transportId = transportId;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }
+
+    public Integer getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(Integer siteId) {
+        this.siteId = siteId;
+    }
+
+    public Integer getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
+    }
 
     public Long getDocumentTime() {
         return documentTime;
@@ -110,12 +199,12 @@ public class WhFbaStocking extends ParentConfTable implements Serializable {
         this.documentTime = documentTime;
     }
 
-    public String getDocumentNo() {
-        return documentNo;
+    public String getRecordNo() {
+        return recordNo;
     }
 
-    public void setDocumentNo(String documentNo) {
-        this.documentNo = documentNo;
+    public void setRecordNo(String recordNo) {
+        this.recordNo = recordNo;
     }
 
     public String getRecordNum() {
@@ -154,12 +243,12 @@ public class WhFbaStocking extends ParentConfTable implements Serializable {
         return serialVersionUID;
     }
 
-    public String getRecordNo() {
-        return recordNo;
+    public String getSingleNumber() {
+        return singleNumber;
     }
 
-    public void setRecordNo(String recordNo) {
-        this.recordNo = recordNo;
+    public void setSingleNumber(String singleNumber) {
+        this.singleNumber = singleNumber;
     }
 
     public Integer getFsState() {
@@ -170,13 +259,6 @@ public class WhFbaStocking extends ParentConfTable implements Serializable {
         this.fsState = fsState;
     }
 
-    public String getSite() {
-        return site;
-    }
-
-    public void setSite(String site) {
-        this.site = site;
-    }
 
     public String getdInformation() {
         return dInformation;
@@ -186,13 +268,6 @@ public class WhFbaStocking extends ParentConfTable implements Serializable {
         this.dInformation = dInformation;
     }
 
-    public String getShipMethods() {
-        return shipMethods;
-    }
-
-    public void setShipMethods(String shipMethods) {
-        this.shipMethods = shipMethods;
-    }
 
     public Integer getnOfBoxes() {
         return nOfBoxes;
@@ -202,11 +277,4 @@ public class WhFbaStocking extends ParentConfTable implements Serializable {
         this.nOfBoxes = nOfBoxes;
     }
 
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
 }

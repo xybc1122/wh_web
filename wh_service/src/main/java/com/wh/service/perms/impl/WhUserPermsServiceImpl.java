@@ -51,7 +51,7 @@ public class WhUserPermsServiceImpl extends ServiceImpl<WhUserPermsMapper, WhUse
     @Override
     public ResponseBase serviceGetPermissionAndOperating(WhUserPerms whUserPerms) {
         PageInfoUtils.setPage(whUserPerms.getPageSize(), whUserPerms.getCurrentPage());
-        return PageInfoUtils.returnPage(permsMapper.getPermissionAndOperating(whUserPerms));
+        return PageInfoUtils.pageResult(permsMapper.getPermissionAndOperating(whUserPerms), null);
     }
 
 

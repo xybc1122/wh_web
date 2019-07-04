@@ -51,11 +51,13 @@ public class InterCenter implements HandlerInterceptor {
             if (claim != null) {
                 Long uid = claim.get("uid").asLong();
 
-                String userName = claim.get("userName") == null ? null : claim.get("userName").asString();
+                Integer tid = claim.get("tid") == null ? 0 : claim.get("tid").asInt();
 
-                String tenant = claim.get("tenant") == null ? null : claim.get("tenant").asString();
+                String userName = claim.get("userName") == null ? "" : claim.get("userName").asString();
 
-                String rids = claim.get("rids") == null ? null : claim.get("rids").asString();
+                String tenant = claim.get("tenant") == null ? "" : claim.get("tenant").asString();
+
+                String rids = claim.get("rids") == null ? "" : claim.get("rids").asString();
 
                 String stringKey = redisService.getStringKey(RedisUtils.redisTokenKey(uid.toString(), tenant));
                 if (StringUtils.isBlank(stringKey) || !token.equals(stringKey)) {
@@ -67,9 +69,10 @@ public class InterCenter implements HandlerInterceptor {
                 if (!accessLimit(request, response, uid)) return false;
 
                 //设置局部request
-                ReqUtils.set(request, uid, userName, rids, tenant);
+                ReqUtils.set(request, uid, userName, rids, tenant, tid);
 
-                //切换租户
+
+                    //切换租户
                 DynamicDataSourceContextHolder.setDataSourceKey(tenant);
 
                 //如果请求的是超级管理员配置接口

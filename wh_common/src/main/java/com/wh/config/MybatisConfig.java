@@ -32,7 +32,7 @@ public class MybatisConfig {
 
 
     @Bean("master")
-    @ConfigurationProperties(prefix = "spring.datasource.master")
+    @ConfigurationProperties(prefix = "spring.datasource.the-host")
     public DataSource master() {
         return DataSourceBuilder.create().build();
     }

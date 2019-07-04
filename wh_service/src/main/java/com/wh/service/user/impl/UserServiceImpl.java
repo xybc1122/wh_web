@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserInfo> implements UserService {
@@ -56,10 +57,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserInfo> implement
     @Override
     @PermissionCheck(type = Constants.VIEW)
     public ResponseBase getByUserInfoList(UserDto userDto) {
+        //1
         PageInfoUtils.setPage(userDto.getPageSize(), userDto.getCurrentPage());
+        //2
         List<UserInfo> uList = userMapper.selByUserList(userDto);
-        return PageInfoUtils.returnPage(mapperFacade.mapAsList(uList, UserDto.class));
+        // 3
+        return PageInfoUtils.pageResult(uList, mapperFacade.mapAsList(uList, UserDto.class));
     }
+
 
     /**
      * 修改用户
@@ -109,11 +114,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserInfo> implement
         }
         user.setPwd(MD5Util.saltMd5(user.getUserName(), user.getPwd()));
         user.setCreate(ReqUtils.getUserName());
+        user.setTenant(ReqUtils.getTenant());
+        user.settId(ReqUtils.getTid());
         //新增用户
         CheckUtils.saveResult(userMapper.insert(user));
         //新增角色
         ruUserService.saveListRole(user.getUid(), user.getRids());
         return JsonData.setResultSuccess("success");
+    }
+
+    @Override
+    public String insertUserInfoAndTenant(UserInfo user, BindingResult bindingResult) {
+        //校验参数
+        String strBinding = BindingResultStore.bindingResult(bindingResult);
+        if (strBinding != null) return strBinding;
+        if (user.gettId() == null || StringUtils.isBlank(user.getTenant())) {
+
+            return "租户id/租户标识 is null";
+        }
+        //到这里先去查查看有没有名字相同的
+        if (userMapper.selUserIsDelete(user.getUserName()) != null) {
+            return "添加名字重复";
+        }
+
+        //新增用户
+        CheckUtils.saveResult(userMapper.insert(user));
+
+        return null;
     }
 
     @Override

@@ -54,6 +54,9 @@ public class AdminController {
     @Autowired
     private IWhUserPermsOperatingService permsOperatingService;
 
+
+
+
     /**
      * @api {POST} api/v1/admin/getByUserInfoList 查询用户信息
      * @apiHeaderExample {json} 请求头Header
@@ -211,7 +214,7 @@ public class AdminController {
     @PostMapping("/insertUserInfo")
     @IdempotentCheck(type = Constants.IDEMPOTENT_CHECK_HEADER)
     @PermissionCheck(type = Constants.SAVE)
-    @RedisLock(key = Constants.SAVE_USER_ROLE, maxWait = Constants.maxWait, timeout = Constants.timeout)
+    @RedisLock(key = Constants.SAVE_USER, maxWait = Constants.maxWait, timeout = Constants.timeout)
     public ResponseBase insertUserInfo(@Valid @RequestBody UserInfo userInfo, BindingResult bindingResult) {
         return userService.insertUserInfo(userInfo, bindingResult);
     }
@@ -573,6 +576,7 @@ public class AdminController {
      * @apiSuccess (success) {int} code -1 代表错误 200代表请求成功
      * @apiSuccessExample {json} 成功返回样列:
      * {"code":"200","msg":"success","data":"{}"}
+     * @apiErrorExample {json} 失败返回样例子:
      * @apiErrorExample {json} 失败返回样例子:
      * {"code":"-1","msg":"error","data":"{}"}
      */

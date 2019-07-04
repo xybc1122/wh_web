@@ -21,4 +21,18 @@ public interface IWhSiteService extends IService<WhSite> {
      */
     ResponseBase serviceGetSite();
 
+
+    /**
+     * 通过 site 名查询站点 id
+     *
+     * @param site
+     * @return
+     */
+    Integer serviceSelIdByName(String site);
+
+
+
+
+
+
 }

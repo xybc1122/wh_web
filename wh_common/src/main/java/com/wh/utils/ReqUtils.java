@@ -33,10 +33,43 @@ public class ReqUtils {
         }
         return null;
     }
-
+    /**
+     * 获得租户标识
+     *
+     * @return
+     */
+    public static String getTenant() {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes();
+        if (requestAttributes != null) {
+            HttpServletRequest request = requestAttributes.getRequest();
+            String tenant = (String) request.getAttribute("tenant");
+            if (tenant != null) {
+                return tenant;
+            }
+        }
+        return null;
+    }
+    /**
+     * 获得租户id
+     *
+     * @return
+     */
+    public static Integer getTid() {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes();
+        if (requestAttributes != null) {
+            HttpServletRequest request = requestAttributes.getRequest();
+            Integer tId = (Integer) request.getAttribute("tid");
+            if (tId != null) {
+                return tId;
+            }
+        }
+        return null;
+    }
 
     /**
-     * 获得用户ID
+     * 获得用户名称
      *
      * @return
      */
@@ -131,10 +164,11 @@ public class ReqUtils {
      * @param uId
      * @param uName
      */
-    public static void set(HttpServletRequest request, Long uId, String uName, String rId, String tenant) {
+    public static void set(HttpServletRequest request, Long uId, String uName, String rId, String tenant, Integer tId) {
         request.setAttribute("uid", uId);
         request.setAttribute("userName", uName);
         request.setAttribute("rids", rId);
         request.setAttribute("tenant", tenant);
+        request.setAttribute("tid", tId);
     }
 }

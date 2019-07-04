@@ -1,6 +1,6 @@
 spring:
   datasource:
-    master:
+    the-host:
       driver-class-name: com.mysql.cj.jdbc.Driver
       type: com.alibaba.druid.pool.DruidDataSource
       jdbcUrl: jdbc:mysql://192.168.1.230:3306/rb_warehouse_1001?useUnicode=true&nullCatalogMeansCurrent=true&characterEncoding=utf-8&useSSL=false
@@ -71,7 +71,7 @@ token: TOKEN_IDE # 幂等token  key
 #静态常量 一些基本的配置文件
 static:
   variable:
-    ssoToken: sso_token
+    ssoToken: sso-token
     maxWait: 5000
     timeout: 20000
     admin: admin
@@ -79,7 +79,7 @@ static:
     dbEId: DBEID
     fba: FBA
     fbaEId: FBAEID
-    ideToken: ide_token
+    ideToken: ide-token
 
 
 

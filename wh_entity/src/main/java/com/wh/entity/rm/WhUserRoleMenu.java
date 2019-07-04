@@ -45,16 +45,34 @@ public class WhUserRoleMenu extends ParentConfTable implements Serializable {
     @TableId(value = "rm_id", type = IdType.AUTO)
     private Long rmId;
 
+    /**
+     * 租户id
+     */
+    private Integer tId;
+
+    public Integer gettId() {
+        return tId;
+    }
+
+    public void settId(Integer tId) {
+        this.tId = tId;
+    }
 
     public WhUserRoleMenu() {
 
     }
 
+    public WhUserRoleMenu(Long mid, Long rid, Integer tId) {
+        this.mid = mid;
+        this.rid = rid;
+        this.tId = tId;
+    }
+
+
     public WhUserRoleMenu(Long mid, Long rid) {
         this.mid = mid;
         this.rid = rid;
     }
-
 
 
     public List<Integer> getMenus() {

@@ -52,7 +52,7 @@ public class WhUserUpload extends ParentConfTable implements Serializable {
     /**
      * 处理 0代表成功,1代表失败
      */
-    private Integer deStatus;
+    private Integer dwStatus;
 
     /**
      * ftp图片url
@@ -140,12 +140,12 @@ public class WhUserUpload extends ParentConfTable implements Serializable {
         this.uStatus = uStatus;
     }
 
-    public Integer getDeStatus() {
-        return deStatus;
+    public Integer getDwStatus() {
+        return dwStatus;
     }
 
-    public void setDeStatus(Integer deStatus) {
-        this.deStatus = deStatus;
+    public void setDwStatus(Integer dwStatus) {
+        this.dwStatus = dwStatus;
     }
 
     public String getUrl() {

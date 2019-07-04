@@ -1,7 +1,11 @@
 package com.wh.service.tenant;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wh.base.ResponseBase;
+import com.wh.entity.role.WhUserRole;
 import com.wh.entity.tenant.WhWarehouseTenant;
+import com.wh.entity.user.UserInfo;
+import org.springframework.validation.BindingResult;
 
 /**
  * <p>
@@ -13,4 +17,27 @@ import com.wh.entity.tenant.WhWarehouseTenant;
  */
 public interface IWhWarehouseTenantService extends IService<WhWarehouseTenant> {
 
+
+    /**
+     * 超级管理员 查询租户的角色表
+     */
+    ResponseBase selTenantRole(Integer tId);
+
+    /**
+     * 超级管理员新增租户
+     */
+
+    ResponseBase saveTenant(WhWarehouseTenant tenant, BindingResult bindingResult);
+
+
+    /**
+     * 超级管理员新增租户 admin
+     */
+    ResponseBase saveTenantAdmin(UserInfo user, BindingResult bindingResult);
+
+
+    /**
+     * 超级管理员创建  租户 admin 关联的  菜单查看信息
+     */
+    ResponseBase saveTenantAndMenu(WhUserRole whUserRole, BindingResult bindingResult);
 }

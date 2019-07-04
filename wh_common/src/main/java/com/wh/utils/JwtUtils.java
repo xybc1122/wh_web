@@ -16,6 +16,7 @@ public class JwtUtils {
 
     private static final String APP_SECRET = "wh-df2e8562-49f5-48bf-a554-806efd5f2fe7";
 
+    private static final String SERVICE = "sso_server";
     /**
      * 校验token 解密
      *
@@ -27,7 +28,7 @@ public class JwtUtils {
             Algorithm algorithm = Algorithm.HMAC256(APP_SECRET);
             JWTVerifier verifier = JWT.require(algorithm)
                     .withSubject(SUBJECT)
-                    .withIssuer("SERVICE")
+                    .withIssuer(SERVICE)
                     .build();
             DecodedJWT jwt = verifier.verify(token);
             return jwt.getClaims();

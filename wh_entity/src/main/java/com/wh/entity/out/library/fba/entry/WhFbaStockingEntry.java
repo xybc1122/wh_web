@@ -50,7 +50,8 @@ public class WhFbaStockingEntry extends ParentConfTable implements Serializable 
     /**
      * fba备货id
      */
-    private String rNo;
+    @TableField(value = "s_n")
+    private String sn;
     /**
      * 亚马逊单号
      */
@@ -65,6 +66,31 @@ public class WhFbaStockingEntry extends ParentConfTable implements Serializable 
      */
     private Integer actualQuantity;
 
+    /**
+     * 跟踪号
+     */
+    private String trackingNumber;
+    /**
+     * 规格
+     */
+    private String specification;
+
+
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setTrackingNumber(String trackingNumber) {
+        this.trackingNumber = trackingNumber;
+    }
+
+    public String getSpecification() {
+        return specification;
+    }
+
+    public void setSpecification(String specification) {
+        this.specification = specification;
+    }
 
     public Integer getInStock() {
         return inStock;
@@ -134,11 +160,11 @@ public class WhFbaStockingEntry extends ParentConfTable implements Serializable 
         this.quantity = quantity;
     }
 
-    public String getrNo() {
-        return rNo;
+    public String getSn() {
+        return sn;
     }
 
-    public void setrNo(String rNo) {
-        this.rNo = rNo;
+    public void setSn(String sn) {
+        this.sn = sn;
     }
 }

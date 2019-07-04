@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.wh.entity.parent.ParentConfTable;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -28,23 +29,43 @@ public class WhWarehouseTenant extends ParentConfTable implements Serializable {
     /**
      * 租户名称
      */
+    @NotBlank(message = "is null")
     private String tenantName;
     /**
      * db url
      */
+    @NotBlank(message = "is null")
     private String dbUrl;
     /**
      * db 姓名
      */
+    @NotBlank(message = "is null")
     private String dbName;
     /**
      * db密码
      */
+    @NotBlank(message = "is null")
     private String dbPwd;
     /**
      * 标识
      */
+    @NotBlank(message = "is null")
     private String tenant;
+
+
+    /**
+     * 租户状态
+     */
+    private Integer tStatus;
+
+
+    public Integer gettStatus() {
+        return tStatus;
+    }
+
+    public void settStatus(Integer tStatus) {
+        this.tStatus = tStatus;
+    }
 
     public String getDbUrl() {
         return dbUrl;

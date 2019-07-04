@@ -25,13 +25,4 @@ public interface WhUserRoleMapper extends BaseMapper<WhUserRole> {
     @SelectProvider(type = WhUserRoleProvider.class, method = "selRoleAndPerm")
     List<WhUserRole> selRoleAndPerm(WhUserRole role);
 
-
-    /**
-     * 查询角色为采购员的
-     *
-     * @return
-     */
-
-//    List<WhUserRole> selRoleAndPerm(WhUserRole role);
-
 }

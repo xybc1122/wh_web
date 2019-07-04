@@ -25,6 +25,15 @@ public interface IWhUserRoleMenuService extends IService<WhUserRoleMenu> {
      */
     ResponseBase saveRoleMenu(Long rid, List<Integer> menus);
 
+    /**
+     * 超级管理员设置 租户配置查看菜单权限
+     *
+     * @param rid
+     * @param menus
+     * @param tid
+     * @return
+     */
+    ResponseBase saveTenantRoleMenu(Long rid, List<Integer> menus, Integer tid);
 
     /**
      * 删除角色关联的菜单id

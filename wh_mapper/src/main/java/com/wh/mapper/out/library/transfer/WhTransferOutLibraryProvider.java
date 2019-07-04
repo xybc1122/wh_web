@@ -18,8 +18,8 @@ public class WhTransferOutLibraryProvider {
         String alias = "tol";
         sql.SELECT("r.wh_name AS rWarName,m.wh_name AS mIWarName," + alias + ".`id`,`t_number`,`r_war_id`,`m_i_war_id`," + alias + ".`type`," + alias + ".`status`," +
                 "`way_number`," + alias + ".`create_date`," + alias + ".`version` FROM `wh_transfer_out_library` AS " + alias + "");
-        sql.LEFT_OUTER_JOIN("wh_base AS r on r.id = " + alias + ".r_war_id");
-        sql.LEFT_OUTER_JOIN("wh_base AS m on m.id = " + alias + ".m_i_war_id");
+        sql.LEFT_OUTER_JOIN("(SELECT `id`,wh_name FROM `wh_base` WHERE is_delete=0) AS r on r.id = " + alias + ".r_war_id");
+        sql.LEFT_OUTER_JOIN("(SELECT `id`,wh_name FROM `wh_base` WHERE is_delete=0) AS m on m.id = " + alias + ".m_i_war_id");
         //查询移出仓库
         AppendSqlStore.sqlWhere(outLibrary.getrWarName(), "wh_name", sql, "r");
         //查询移入仓库

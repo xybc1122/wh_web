@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
+import com.wh.entity.dto.FbaStockingDto;
+import com.wh.entity.dto.FbaStockingEntryDto;
 import com.wh.entity.out.library.fba.WhFbaStocking;
 import com.wh.entity.out.library.fba.entry.WhFbaStockingEntry;
 import com.wh.mapper.out.library.fba.WhFbaStockingMapper;
@@ -13,6 +15,7 @@ import com.wh.service.out.library.fba.IWhFbaStockingService;
 import com.wh.store.BindingResultStore;
 import com.wh.toos.StaticVariable;
 import com.wh.utils.*;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,40 +46,42 @@ public class WhFbaStockingServiceImpl extends ServiceImpl<WhFbaStockingMapper, W
 
 
     @Override
-    public ResponseBase serviceSelListWhFbaStocking(WhFbaStocking whFbaStocking) {
+    public List<WhFbaStocking> serviceSelListWhFbaStocking(WhFbaStocking whFbaStocking) {
         PageInfoUtils.setPage(whFbaStocking.getPageSize(), whFbaStocking.getCurrentPage());
         //1查询fba表体
         List<WhFbaStocking> whFbaStockings = stockingMapper.selFbaInfo(whFbaStocking);
+
         // 2 判断是否 有数据
         if (!ListUtils.isList(whFbaStockings)) {
-            return PageInfoUtils.returnPage(whFbaStockings);
+            return whFbaStockings;
         }
+
         List<String> fidList = new ArrayList<>();
         for (WhFbaStocking fba : whFbaStockings) {
-            fidList.add(fba.getRecordNo());
+            fidList.add(fba.getSingleNumber());
         }
 
         //3 条目表 in 查询
         QueryWrapper<WhFbaStockingEntry> eQuery = WrapperUtils.getQuery();
-        eQuery.in("r_no", fidList).select(WhFbaStockingEntry.class, info -> !info.getColumn().equals("remark"));
+        eQuery.in("s_n", fidList).select(WhFbaStockingEntry.class, info -> !info.getColumn().equals("remark"));
         List<WhFbaStockingEntry> stockingEntries = entryService.list(eQuery);
 
         //4继续判断 条目表是否有数据
         if (!ListUtils.isList(stockingEntries)) {
-            return PageInfoUtils.returnPage(whFbaStockings);
+            return whFbaStockings;
         }
         //5设置属性 返回集合
         for (int i = 0; i < fidList.size(); i++) {
             List<WhFbaStockingEntry> listNe = new ArrayList<>();
             String nid = fidList.get(i);
             for (WhFbaStockingEntry se : stockingEntries) {
-                if (nid.equals(se.getrNo())) {
+                if (nid.equals(se.getSn())) {
                     listNe.add(se);
                 }
             }
             whFbaStockings.get(i).setEntry(listNe);
         }
-        return PageInfoUtils.returnPage(whFbaStockings);
+        return whFbaStockings;
     }
 
 
@@ -116,7 +121,7 @@ public class WhFbaStockingServiceImpl extends ServiceImpl<WhFbaStockingMapper, W
 
     private void saveWhFbaStocking(WhFbaStocking whFbaStocking) {
         //1新增FBA主表
-        whFbaStocking.setRecordNo(StaticVariable.FBA + snowflakeUtils.nextId());
+        whFbaStocking.setSingleNumber(StaticVariable.FBA + snowflakeUtils.nextId());
         whFbaStocking.setCreate(ReqUtils.getUserName());
         CheckUtils.saveResult(this.save(whFbaStocking));
         //2 新增 FBA箱号
@@ -124,9 +129,8 @@ public class WhFbaStockingServiceImpl extends ServiceImpl<WhFbaStockingMapper, W
         for (WhFbaStockingEntry e : entryList) {
             e.setId(StaticVariable.FBA_E_ID + snowflakeUtils.nextId());
             e.setCreate(ReqUtils.getUserName());
-            e.setrNo(whFbaStocking.getRecordNo());
+            e.setSn(whFbaStocking.getSingleNumber());
         }
-        System.out.println("不足的存入数据库");
         CheckUtils.saveResult(entryService.saveBatch(entryList));
     }
 

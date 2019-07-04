@@ -14,17 +14,17 @@ public class WhUserPermsProvider {
 
         SQL sql = new SQL();
         sql.SELECT("po.`po_name` FROM `wh_user_perms` AS p");
-        sql.LEFT_OUTER_JOIN("`wh_user_perms_operating` AS po ON po.`p_id` = p.`p_id`");
-        sql.LEFT_OUTER_JOIN("`wh_user_role_perms` AS rp ON rp.`p_id` =p.`p_id`");
+        sql.LEFT_OUTER_JOIN("(SELECT po_name,`p_id`,api_url FROM `wh_user_perms_operating` WHERE is_delete=0) AS po ON po.`p_id` = p.`p_id`");
+        sql.LEFT_OUTER_JOIN("(SELECT r_id,p_id FROM `wh_user_role_perms` WHERE is_delete=0) AS rp ON rp.`p_id` =p.`p_id`");
         sql.WHERE("po.api_url=" + "'" + apiUrl + "'");
         return sql.toString() + " AND " + StrUtils.in(rids, "rp.`r_id`") + "AND " + ALIAS + ".is_delete=0";
     }
 
     public String getPermissionAndOperating() {
         SQL sql = new SQL();
-        sql.SELECT(" p.`p_id`,p.`p_name`,GROUP_CONCAT(po.`po_name`) AS poName, " +
+        sql.SELECT("p.version,p.`p_id`,p.`p_name`,GROUP_CONCAT(po.`po_name`) AS poName, " +
                 "GROUP_CONCAT(po.api_url) AS poApi FROM `wh_user_perms`AS " + ALIAS + "");
-        sql.LEFT_OUTER_JOIN("`wh_user_perms_operating` AS po ON po.`p_id`= p.`p_id`");
+        sql.LEFT_OUTER_JOIN("(SELECT p_id,po_name,api_url FROM `wh_user_perms_operating` WHERE is_delete=0) AS po ON po.`p_id`= p.`p_id`");
         sql.GROUP_BY(ALIAS + ".`p_id`");
         sql.WHERE(ALIAS + ".is_delete=0");
         return sql.toString();

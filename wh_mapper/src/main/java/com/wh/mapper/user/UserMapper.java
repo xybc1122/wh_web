@@ -42,8 +42,8 @@ public interface UserMapper extends BaseMapper<UserInfo> {
      * @return
      */
     @Select("SELECT u.`uid`,u.`user_name`FROM `wh_user_info` AS u\n" +
-            "LEFT JOIN `wh_user_role_user`  AS ru ON ru.`u_id`=u.`uid`\n" +
-            "LEFT JOIN `wh_user_role` AS r ON r.`r_id`=ru.`r_id`\n" +
+            "LEFT JOIN (SELECT u_id,r_id FROM `wh_user_role_user` WHERE is_delete=0) AS ru ON ru.`u_id`=u.`uid`\n" +
+            "LEFT JOIN (SELECT r_id,r_name FROM `wh_user_role` WHERE is_delete=0) AS r ON r.`r_id`=ru.`r_id`\n" +
             "WHERE r.`r_name`=#{rName}")
     List<UserInfo> selUserByRName(@Param("rName") String rName);
 

@@ -21,9 +21,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class WhSiteServiceImpl extends ServiceImpl<WhSiteMapper, WhSite> implements IWhSiteService {
 
+    @Autowired
+    private WhSiteMapper siteMapper;
 
     @Override
     public ResponseBase serviceGetSite() {
         return JsonData.setResultSuccess(this.list());
+    }
+
+    @Override
+    public Integer serviceSelIdByName(String site) {
+        return siteMapper.selIdByName(site);
     }
 }

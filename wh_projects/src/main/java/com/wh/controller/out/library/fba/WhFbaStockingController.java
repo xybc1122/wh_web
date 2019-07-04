@@ -1,17 +1,22 @@
 package com.wh.controller.out.library.fba;
 
 
+import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
 import com.wh.customize.IdempotentCheck;
 import com.wh.customize.PermissionCheck;
+import com.wh.entity.dto.FbaStockingDto;
 import com.wh.entity.out.library.fba.WhFbaStocking;
 import com.wh.service.out.library.fba.IWhFbaStockingService;
 import com.wh.toos.Constants;
+import com.wh.utils.PageInfoUtils;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <p>
@@ -27,7 +32,11 @@ public class WhFbaStockingController {
 
     @Autowired
     private IWhFbaStockingService stockingService;
-
+    /**
+     * dto 转换工具
+     */
+    @Autowired
+    private MapperFacade mapperFacade;
 
     /**
      * @api {POST} api/v1/wh-fba-stocking/findByFbaAndEntry 查询fba备货信息和箱号信息
@@ -52,7 +61,11 @@ public class WhFbaStockingController {
     @PostMapping("/findByFbaAndEntry")
     @PermissionCheck(type = Constants.VIEW)
     public ResponseBase findByFbaAndEntry(@RequestBody WhFbaStocking stocking) {
-        return stockingService.serviceSelListWhFbaStocking(stocking);
+        List<WhFbaStocking> whFbaStockings = stockingService.serviceSelListWhFbaStocking(stocking);
+        //这里转换成DTO
+        List<FbaStockingDto> fbaStockingDtoList = mapperFacade.mapAsList(whFbaStockings, FbaStockingDto.class);
+
+        return PageInfoUtils.pageResult(whFbaStockings, fbaStockingDtoList);
     }
 
     /**

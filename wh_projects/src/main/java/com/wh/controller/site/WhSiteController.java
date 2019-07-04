@@ -26,7 +26,7 @@ public class WhSiteController {
 
 
     /**
-     * 创建幂等token
+     * 获得站点
      *
      * @return
      */

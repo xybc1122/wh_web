@@ -25,7 +25,7 @@ public interface IWhFbaStockingService extends IService<WhFbaStocking> {
      * @param whFbaStocking
      * @return
      */
-    ResponseBase serviceSelListWhFbaStocking(WhFbaStocking whFbaStocking);
+    List<WhFbaStocking> serviceSelListWhFbaStocking(WhFbaStocking whFbaStocking);
 
     /**
      * 修改 fba 备货

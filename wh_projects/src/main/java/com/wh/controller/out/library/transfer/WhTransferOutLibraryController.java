@@ -58,7 +58,7 @@ public class WhTransferOutLibraryController {
     @PostMapping("/findByTransferInfo")
     @PermissionCheck(type = Constants.VIEW)
     public ResponseBase findByTransferInfo(@RequestBody WhTransferOutLibrary outLibrary) {
-        return PageInfoUtils.returnPage(outLibraryService.serviceSelOutLibraryInfo(outLibrary));
+        return PageInfoUtils.pageResult(outLibraryService.serviceSelOutLibraryInfo(outLibrary), null);
     }
 
     /**

@@ -30,18 +30,7 @@ public interface WhUserMenuMapper extends BaseMapper<WhUserMenu> {
             @Result(column = "m_name", property = "treeName"),
             @Result(column = "is_parent_node", property = "nextLevel"),
     })
-    List<TreeDto> selTreeList(@Param("rids") String rids);
+    List<TreeDto> selTreeList(@Param("rids") String rids, @Param("tid") Integer tid);
 
 
-    /**
-     * 查询菜单下的权限展示
-     *
-     * @return
-     */
-    @SelectProvider(type = MenuProvider.class, method = "findMenuPerms")
-    @Results({
-            @Result(column = "menu_id", property = "treeId"),
-            @Result(column = "m_name", property = "treeName"),
-    })
-    List<WhUserMenu> selMenuPerms(WhUserMenu whUserMenu);
 }

@@ -1,6 +1,8 @@
 package com.wh.fiter;
 
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.*;
@@ -36,9 +38,16 @@ public class CORSFilter implements Filter {
         }
         resp.setHeader("Access-Control-Allow-Origin", origin);//这里不能写*，*代表接受所有域名访问，如写*则下面一行代码无效。谨记
         resp.setHeader("Access-Control-Allow-Credentials", "true");//true代表允许携带cookie
-        resp.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,sso_token,ide_token");
-        resp.setHeader("Access-Control-Allow-Methods", "POST, GET,DELETE, PUT");
+        resp.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,sso-token,ide-token");
+        resp.setHeader("Access-Control-Allow-Methods", "POST, GET,DELETE, PUT,OPTIONS");
         resp.setHeader("Access-Control-Max-Age", "3600");//配置Access-Control-Max-Age来缓存预检测结果
+
+        // 如果是OPTIONS则结束请求
+        if (HttpMethod.OPTIONS.toString().equals(req.getMethod())) {
+            resp.setStatus(HttpStatus.NO_CONTENT.value());
+            return;
+        }
+
         chain.doFilter(servletRequest, servletResponse);
     }
 

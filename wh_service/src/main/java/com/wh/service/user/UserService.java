@@ -28,6 +28,8 @@ public interface UserService extends IService<UserInfo> {
     //新增 用户信息
     ResponseBase insertUserInfo(UserInfo user, BindingResult bindingResult);
 
+    String insertUserInfoAndTenant(UserInfo user, BindingResult bindingResult);
+
     //删除 用户信息
     ResponseBase delUserInfo(List<Integer> uids);
 

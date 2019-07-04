@@ -105,7 +105,7 @@ public class WhUserRoleServiceImpl extends ServiceImpl<WhUserRoleMapper, WhUserR
     @Override
     public ResponseBase serviceSelRoleAndPerm(WhUserRole role) {
         PageInfoUtils.setPage(role.getPageSize(), role.getCurrentPage());
-        return PageInfoUtils.returnPage(roleMapper.selRoleAndPerm(role));
+        return PageInfoUtils.pageResult(roleMapper.selRoleAndPerm(role), null);
     }
 
     @Override

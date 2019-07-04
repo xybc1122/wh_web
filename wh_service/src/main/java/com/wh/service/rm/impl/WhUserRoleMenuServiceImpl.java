@@ -30,6 +30,31 @@ import java.util.List;
 public class WhUserRoleMenuServiceImpl extends ServiceImpl<WhUserRoleMenuMapper, WhUserRoleMenu> implements IWhUserRoleMenuService {
 
     @Override
+    public ResponseBase saveTenantRoleMenu(Long rid, List<Integer> menus, Integer tid) {
+        WhUserRoleMenu whUserRoleUser;
+        List<WhUserRoleMenu> roleMenuList = new ArrayList<>();
+        //新增菜单
+        if (rid != null && menus != null && menus.size() > 0) {
+            //如果有多个
+            for (Integer mid : menus) {
+                whUserRoleUser = new WhUserRoleMenu(mid.longValue(), rid, tid);
+
+                whUserRoleUser.setCreate(ReqUtils.getUserName());
+
+                roleMenuList.add(whUserRoleUser);
+            }
+            CheckUtils.saveResult(this.saveBatch(roleMenuList));
+
+
+            return JsonData.setResultSuccess("success");
+        }
+        throw new LsException("参数 is null");
+    }
+
+
+
+
+    @Override
     public ResponseBase saveRoleMenu(Long rid, List<Integer> menus) {
         WhUserRoleMenu whUserRoleUser;
         List<WhUserRoleMenu> roleMenuList = new ArrayList<>();

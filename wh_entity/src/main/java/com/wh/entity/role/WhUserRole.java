@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.wh.entity.parent.ParentConfTable;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -25,6 +28,7 @@ public class WhUserRole extends ParentConfTable implements Serializable {
      * 角色id
      */
     @TableId(value = "r_id", type = IdType.AUTO)
+    @NotNull(message = "is null")
     private Long rid;
 
     /**
@@ -41,6 +45,8 @@ public class WhUserRole extends ParentConfTable implements Serializable {
      * 配置菜单 id 集合
      */
     @TableField(exist = false)
+    @Size(min = 1, message = "is null or length =0")
+    @NotNull(message = "is null")
     private List<Integer> menus;
 
 
@@ -61,6 +67,20 @@ public class WhUserRole extends ParentConfTable implements Serializable {
      */
     @TableField(exist = false)
     private String pids;
+    /**
+     * 租户id
+     */
+    @TableField(exist = false)
+    private Integer tId;
+
+
+    public Integer gettId() {
+        return tId;
+    }
+
+    public void settId(Integer tId) {
+        this.tId = tId;
+    }
 
     public String getPids() {
         return pids;

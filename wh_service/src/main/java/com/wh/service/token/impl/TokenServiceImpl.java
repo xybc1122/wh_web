@@ -42,7 +42,7 @@ public class TokenServiceImpl implements TokenService {
         if (StringUtils.isBlank(token)) {// header中不存在token
             token = request.getParameter(StaticVariable.IDE_TOKEN);
             if (StringUtils.isBlank(token)) {// parameter中也不存在token
-                throw new LsException("ideToken is null");
+                throw new LsException("ide-token is null");
             }
         }
         if (!redisUtils.exists(token)) {
@@ -50,7 +50,7 @@ public class TokenServiceImpl implements TokenService {
         }
         //这里一定要判断 不然就会出现并发重复提交的问题
         if (!redisUtils.delKey(token)) {
-            throw new LsException("token删除失败");
+            throw new LsException("ide-token删除失败");
         }
         System.out.println("接口幂等校验成功");
     }

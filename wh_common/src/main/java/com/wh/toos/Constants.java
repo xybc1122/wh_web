@@ -13,9 +13,12 @@ public interface Constants {
     /**
      * redis设置新增用户的 key
      */
-    String SAVE_USER_ROLE = "save_user_role";
+    String SAVE_USER = "save_user";
 
-
+    /**
+     * redis设置新增用户的 key
+     */
+    String SAVE_TENANT = "save_tenant";
     /**
      * 设置调拨出库的 KEY
      */

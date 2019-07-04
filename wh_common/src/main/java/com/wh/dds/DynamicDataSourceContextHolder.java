@@ -1,6 +1,8 @@
 package com.wh.dds;
 
+import com.wh.exception.LsException;
 import org.apache.commons.lang3.StringUtils;
+import sun.util.locale.LocaleSyntaxException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +22,7 @@ public class DynamicDataSourceContextHolder {
          */
         @Override
         protected String initialValue() {
-            return "master";
+            return "the-host";
         }
     };
 
@@ -39,7 +41,9 @@ public class DynamicDataSourceContextHolder {
         //如果不是null 切换
         if (StringUtils.isNotBlank(key)) {
             contextHolder.set(key);
+            return;
         }
+        throw new LsException("租户标识 is null 切换失败");
     }
 
     /**

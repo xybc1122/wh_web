@@ -6,8 +6,10 @@ import com.wh.entity.out.library.fba.WhFbaStocking;
 import com.wh.entity.out.library.fba.entry.WhFbaStockingEntry;
 import com.wh.entity.upload.WhUserUpload;
 import com.wh.exception.LsException;
+import com.wh.service.account.IWhSellerAccountService;
 import com.wh.service.file.FileDealWithService;
 import com.wh.service.out.library.fba.IWhFbaStockingService;
+import com.wh.service.site.IWhSiteService;
 import com.wh.service.upload.IWhUserUploadService;
 import com.wh.utils.StrUtils;
 import com.wh.utils.XlsUtils;
@@ -41,6 +43,11 @@ public class FileDealWithServiceImpl implements FileDealWithService {
 
     @Autowired
     private IWhFbaStockingService stockingService;
+
+    @Autowired
+    private IWhSiteService siteService;
+    @Autowired
+    private IWhSellerAccountService accountService;
 
     @Override
     public List<ResponseBase> serviceFileDealWith(WhUserUpload upload) {
@@ -87,7 +94,7 @@ public class FileDealWithServiceImpl implements FileDealWithService {
          * 多线程返回接收
          */
         return new AsyncResult<>(threadXls(upload.getUuidName()
-                , upload.getFilePath(), upload.getName(), upload.getUid(), upload.getId()
+                , upload.getFilePath(), upload.getId()
         ));
     }
 
@@ -95,7 +102,8 @@ public class FileDealWithServiceImpl implements FileDealWithService {
     /**
      * 处理xls 表 封装
      */
-    private ResponseBase threadXls(String uuIdName, String saveFilePath, String fileName, Long uid, Long id) throws
+    @Transactional
+    public ResponseBase threadXls(String uuIdName, String saveFilePath, Long id) throws
             Exception {
         // 开始时间
         Long begin = new Date().getTime();
@@ -137,9 +145,11 @@ public class FileDealWithServiceImpl implements FileDealWithService {
                 stocking.setEntry(newEntry);
             }
             //这里存入数据库
-            if (stockingService.serviceXlsSaveWhFbaStocking(stockingList))
+            if (stockingService.serviceXlsSaveWhFbaStocking(stockingList)) {
+                //更新导入状态 success
+                upMsg(null, id, 0);
                 return JsonData.setResultSuccess("success");
-
+            }
             return JsonData.setResultError("error");
         }
     }
@@ -155,10 +165,10 @@ public class FileDealWithServiceImpl implements FileDealWithService {
             Cell cell = row.getCell(j);
             //这里设置对象
             if (xlsListHead.get(j).equals("账号")) {
-                fbaStocking.setAccount(StrUtils.cStr(cell));
-
+                fbaStocking.setAccountId(accountService.serviceSelIdByName(StrUtils.cStr(cell)));
             } else if (xlsListHead.get(j).equals("站点")) {
-                fbaStocking.setSite(StrUtils.cStr(cell));
+
+                fbaStocking.setSiteId(siteService.serviceSelIdByName(StrUtils.cStr(cell)));
 
             } else if (xlsListHead.get(j).equals("FNSKU")) {
                 stockingEntry.setFnSku(StrUtils.cStr(cell));
@@ -170,7 +180,7 @@ public class FileDealWithServiceImpl implements FileDealWithService {
                 fbaStocking.setDocumentTime(StrUtils.cLon(cell));
 
             } else if (xlsListHead.get(j).equals("单据号")) {
-                fbaStocking.setDocumentNo(StrUtils.cStr(cell));
+                fbaStocking.setRecordNo(StrUtils.cStr(cell));
 
             } else if (xlsListHead.get(j).equals("recordNum")) {
                 fbaStocking.setRecordNum(StrUtils.cStr(cell));
@@ -194,7 +204,7 @@ public class FileDealWithServiceImpl implements FileDealWithService {
      */
     private ResponseBase setErrorInfo(Long recordingId, String msg, String data) {
         //更新上传信息
-        upErr(msg, recordingId);
+        upMsg(msg, recordingId, 1);
         if (StringUtils.isEmpty(data)) {
             return JsonData.setResultError(msg);
         }
@@ -206,10 +216,10 @@ public class FileDealWithServiceImpl implements FileDealWithService {
      *
      * @param msg
      */
-    private void upErr(String msg, Long id) {
+    private void upMsg(String msg, Long id, Integer dwStatus) {
         WhUserUpload userUpload = new WhUserUpload();
         userUpload.setId(id);
-        userUpload.setDeStatus(1);
+        userUpload.setDwStatus(dwStatus);
         userUpload.setRemark(msg);
         userUploadService.updateById(userUpload);
     }

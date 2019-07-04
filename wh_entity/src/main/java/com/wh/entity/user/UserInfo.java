@@ -82,9 +82,13 @@ public class UserInfo extends ParentConfTable implements Serializable {
     private String imageUrl;
 
     /**
-     * 商户ID
+     * 商户标识
      */
     private String tenant;
+    /**
+     * 商户id
+     */
+    private Integer tId;
 
     /**
      * 角色id 集合
@@ -108,6 +112,14 @@ public class UserInfo extends ParentConfTable implements Serializable {
      */
     @TableField(exist = false)
     private List<Long> createDates;
+
+    public Integer gettId() {
+        return tId;
+    }
+
+    public void settId(Integer tId) {
+        this.tId = tId;
+    }
 
     public String getType() {
         return type;

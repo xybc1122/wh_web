@@ -63,7 +63,6 @@ public class WhTransferOutLibraryServiceImpl extends ServiceImpl<WhTransferOutLi
     private MapperFacade mapperFacade;
 
     @Override
-    @PermissionCheck(type = Constants.VIEW)
     public List<WhTransferOutLibrary> serviceSelOutLibraryInfo(WhTransferOutLibrary outLibrary) {
         PageInfoUtils.setPage(outLibrary.getPageSize(), outLibrary.getCurrentPage());
         //1查询调拨出库表体
