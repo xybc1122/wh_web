@@ -1,8 +1,8 @@
 package com.wh.service.init;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.wh.service.tenant.IWhWarehouseTenantService;
 import com.wh.dds.DynamicDataSource;
+import com.wh.service.tenant.IWhWarehouseTenantService;
 import com.wh.base.ApplicationContextRegister;
 import com.wh.entity.tenant.WhWarehouseTenant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Component
 @Order(0)
 public class InitTargetDataSources implements CommandLineRunner {
-    
+
 
     @Autowired
     private IWhWarehouseTenantService tenantService;
@@ -45,7 +45,7 @@ public class InitTargetDataSources implements CommandLineRunner {
                     return druidDataSource;
                 }
         ));
-        dynamicDataSource.setTargetDataSources(dataSourceMap);
+        dynamicDataSource.setDataSources(dataSourceMap);
         dynamicDataSource.afterPropertiesSet();
         System.out.println(dynamicDataSource);
     }
