@@ -24,10 +24,13 @@ public class WhFbaStockingProvider {
         sql.LEFT_OUTER_JOIN("(SELECT `id`,`transport` FROM `wh_logistics` WHERE is_delete=0) AS l on l.id=" + alias + ".transport_id");
         //查询站点
         AppendSqlStore.sqlWhere(whFbaStocking.getSite(), "`site` ", sql, "s");
+
         //查询账号
         AppendSqlStore.sqlWhere(whFbaStocking.getAccount(), "`account` ", sql, "a");
-
         //查询单号
+        AppendSqlStore.sqlWhere(whFbaStocking.getSingleNumber(), "`single_number` ", sql, alias);
+
+        //查询单据号
         AppendSqlStore.sqlWhere(whFbaStocking.getRecordNo(), "`record_no` ", sql, alias);
 
         //查询状态

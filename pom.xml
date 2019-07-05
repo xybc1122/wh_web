@@ -9,6 +9,7 @@
         <module>wh_entity</module>
         <module>wh_mapper</module>
         <module>wh_projects</module>
+        <module>wh_core</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

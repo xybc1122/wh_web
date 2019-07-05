@@ -101,7 +101,7 @@ public class AopPermissionAspect {
             if (requestAttributes != null) {
                 HttpServletRequest request = requestAttributes.getRequest();
                 // System.out.println(request.getRequestURI());
-                //先去查一下是不是admin
+                //先去查一下是不是admin  这里到时候都要写到缓存
                 Set<String> permsSetAdmin = permsService.serviceGetPermission(ReqUtils.getRoleId(), "/*");
                 if (permsSetAdmin != null && permsSetAdmin.size() > 0) {
                     for (String p : permsSetAdmin) {
@@ -148,9 +148,8 @@ public class AopPermissionAspect {
                 }
                 throw new LsException("无权操作");
             }
-            throw new LsException("request is Null");
         }
-        throw new LsException("权限参数 is Null");
+        throw new LsException("request is Null");
 
     }
 

@@ -60,7 +60,6 @@ public class WhTransferOutLibrary extends ParentConfTable implements Serializabl
     /**
      * 运单号
      */
-    @NotBlank(message = "运单号不能为空")
     private String wayNumber;
 
 

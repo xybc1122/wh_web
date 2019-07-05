@@ -33,6 +33,7 @@ public class ReqUtils {
         }
         return null;
     }
+
     /**
      * 获得租户标识
      *
@@ -50,6 +51,7 @@ public class ReqUtils {
         }
         return null;
     }
+
     /**
      * 获得租户id
      *
@@ -164,11 +166,12 @@ public class ReqUtils {
      * @param uId
      * @param uName
      */
-    public static void set(HttpServletRequest request, Long uId, String uName, String rId, String tenant, Integer tId) {
+    public static void set(HttpServletRequest request, Long uId, String uName, String rId, String tenant, Integer tId, boolean cAdmin) {
         request.setAttribute("uid", uId);
         request.setAttribute("userName", uName);
         request.setAttribute("rids", rId);
         request.setAttribute("tenant", tenant);
         request.setAttribute("tid", tId);
+        request.setAttribute("cAdmin", cAdmin);
     }
 }

@@ -3,9 +3,12 @@ package com.wh.mapper.role;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wh.entity.role.WhUserRole;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -23,6 +26,12 @@ public interface WhUserRoleMapper extends BaseMapper<WhUserRole> {
      * @return
      */
     @SelectProvider(type = WhUserRoleProvider.class, method = "selRoleAndPerm")
-    List<WhUserRole> selRoleAndPerm(WhUserRole role);
+    List<WhUserRole> selRoleAndPerm(@Param("entity") WhUserRole role, @Param("rids") String rids);
 
+
+    @SelectProvider(type = WhUserRoleProvider.class, method = "selRole")
+    List<WhUserRole> selRole(@Param("uid") Long uid, @Param("tid") Integer tid);
+
+    @SelectProvider(type = WhUserRoleProvider.class, method = "selSignList")
+    Set<String> selSignList(String rids);
 }

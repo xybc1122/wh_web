@@ -447,7 +447,7 @@ require([
         // call scrollspy refresh method
         $(window).scrollspy('refresh');
 
-        // init modules
+        // com.wh.init modules
         sampleRequest.initDynamic();
     }
     initDynamic();

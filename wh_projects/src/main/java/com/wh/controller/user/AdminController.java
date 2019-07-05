@@ -55,8 +55,6 @@ public class AdminController {
     private IWhUserPermsOperatingService permsOperatingService;
 
 
-
-
     /**
      * @api {POST} api/v1/admin/getByUserInfoList 查询用户信息
      * @apiHeaderExample {json} 请求头Header
@@ -244,7 +242,7 @@ public class AdminController {
     @GetMapping("/getByRoleList")
     @PermissionCheck(type = Constants.VIEW)
     public ResponseBase getByRoleList() {
-        return JsonData.setResultSuccess(roleService.list());
+        return roleService.serviceSelRole();
     }
 
 
@@ -464,7 +462,7 @@ public class AdminController {
 
 
     /**
-     * @api {GET} api/v1/admin/getPermission 查询权限列表
+     * @api {GET} api/v1/admin/findByRoleQueryPermission 查询 通过角色获得权限列表
      * @apiHeaderExample {json} 请求头Header
      * {
      * "token":"用户令牌"
@@ -484,10 +482,10 @@ public class AdminController {
      * @apiErrorExample {json} 失败返回样例子:
      * {"code":"-1","msg":"error","data":"{}"}
      */
-    @GetMapping("/getPermission")
+    @GetMapping("/findByRoleQueryPermission")
     @PermissionCheck(type = Constants.VIEW)
-    public ResponseBase getPermission() {
-        return JsonData.setResultSuccess(permsService.lambdaQuery().select(WhUserPerms::getpId, WhUserPerms::getpName).list());
+    public ResponseBase roleQueryPermission() {
+        return permsService.serviceRoleQueryPermission();
     }
 
 
@@ -576,7 +574,6 @@ public class AdminController {
      * @apiSuccess (success) {int} code -1 代表错误 200代表请求成功
      * @apiSuccessExample {json} 成功返回样列:
      * {"code":"200","msg":"success","data":"{}"}
-     * @apiErrorExample {json} 失败返回样例子:
      * @apiErrorExample {json} 失败返回样例子:
      * {"code":"-1","msg":"error","data":"{}"}
      */

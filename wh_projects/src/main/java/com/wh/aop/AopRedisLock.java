@@ -2,7 +2,7 @@ package com.wh.aop;
 
 import com.wh.customize.RedisLock;
 import com.wh.exception.LsException;
-import com.wh.utils.RedisUtils;
+import com.wh.service.redis.RedisService;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -10,8 +10,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
@@ -35,7 +33,7 @@ public class AopRedisLock {
 //    private final static Logger LOG = LoggerFactory.getLogger(AopRedisLock.class);
 
     @Autowired
-    private RedisUtils redisService;
+    private RedisService redisService;
 
     @Pointcut("@annotation(com.wh.customize.RedisLock)")
     public void addLockAnnotationPointcut() {

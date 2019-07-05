@@ -10,7 +10,9 @@ import com.wh.base.ResponseBase;
 import com.wh.entity.out.library.fba.entry.WhFbaStockingEntry;
 import com.wh.mapper.out.library.fba.WhFbaStockingEntryMapper;
 import com.wh.service.out.library.fba.IWhFbaStockingEntryService;
+import com.wh.toos.StaticVariable;
 import com.wh.utils.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +29,8 @@ import java.util.Map;
  */
 @Service
 public class WhFbaStockingEntryServiceImpl extends ServiceImpl<WhFbaStockingEntryMapper, WhFbaStockingEntry> implements IWhFbaStockingEntryService {
-
+    @Autowired
+    private SnowflakeUtils snowflakeUtils;
 
     @Override
     @Transactional
@@ -53,10 +56,16 @@ public class WhFbaStockingEntryServiceImpl extends ServiceImpl<WhFbaStockingEntr
                 WhFbaStockingEntry entry = (WhFbaStockingEntry) JsonUtils.objConversion(obj, WhFbaStockingEntry.class);
                 Integer version = entry.getVersion();
                 entry.setModify(ReqUtils.getUserName(), version);
-                // 循环更新数据库
-                UpdateWrapper<WhFbaStockingEntry> upWrapper = new UpdateWrapper<>();
-                upWrapper.eq("id", entry.getId()).eq("version", version);
-                CheckUtils.saveResult(this.update(entry, upWrapper));
+                if (entry.getId() != null) {
+                    // 更新
+                    UpdateWrapper<WhFbaStockingEntry> upWrapper = new UpdateWrapper<>();
+                    upWrapper.eq("id", entry.getId()).eq("version", version);
+                    CheckUtils.saveResult(this.update(entry, upWrapper));
+                } else {
+                    //新增
+                    entry.setId(StaticVariable.FBA_E_ID + snowflakeUtils.nextId());
+                    CheckUtils.saveResult(this.save(entry));
+                }
             }
         }
         return JsonData.setResultSuccess("success");

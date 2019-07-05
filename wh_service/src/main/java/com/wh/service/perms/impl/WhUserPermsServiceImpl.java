@@ -4,19 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
-import com.wh.customize.PermissionCheck;
 import com.wh.entity.perms.WhUserPerms;
 import com.wh.entity.po.WhUserPermsOperating;
-import com.wh.entity.role.WhUserRole;
 import com.wh.entity.rp.WhUserRolePerms;
 import com.wh.mapper.perms.WhUserPermsMapper;
 import com.wh.service.perms.IWhUserPermsService;
 import com.wh.service.po.IWhUserPermsOperatingService;
-import com.wh.service.role.IWhUserRoleService;
 import com.wh.service.rp.IWhUserRolePermsService;
-import com.wh.toos.Constants;
 import com.wh.utils.CheckUtils;
 import com.wh.utils.PageInfoUtils;
+import com.wh.utils.ReqUtils;
 import com.wh.utils.WrapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +41,13 @@ public class WhUserPermsServiceImpl extends ServiceImpl<WhUserPermsMapper, WhUse
     private IWhUserPermsOperatingService permsOperatingService;
 
     @Override
+    public ResponseBase serviceRoleQueryPermission() {
+
+
+        return JsonData.setResultSuccess(permsMapper.roleQueryPermission(ReqUtils.getRoleId()));
+    }
+
+    @Override
     public Set<String> serviceGetPermission(String rids, String apiUrl) {
         return permsMapper.getPermission(rids, apiUrl);
     }
@@ -51,7 +55,7 @@ public class WhUserPermsServiceImpl extends ServiceImpl<WhUserPermsMapper, WhUse
     @Override
     public ResponseBase serviceGetPermissionAndOperating(WhUserPerms whUserPerms) {
         PageInfoUtils.setPage(whUserPerms.getPageSize(), whUserPerms.getCurrentPage());
-        return PageInfoUtils.pageResult(permsMapper.getPermissionAndOperating(whUserPerms), null);
+        return PageInfoUtils.pageResult(permsMapper.getPermissionAndOperating(whUserPerms, ReqUtils.getRoleId()), null);
     }
 
 

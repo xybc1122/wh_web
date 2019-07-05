@@ -35,7 +35,7 @@ public class TenantController {
      * {
      * "token":"用户令牌"
      * }
-     * @apiGroup Admin
+     * @apiGroup super-admin
      * @apiVersion 0.0.1
      * @apiDescription 用于新增用户信息以及下面的角色信息
      * @apiParamExample {json} 请求样例：
@@ -63,11 +63,28 @@ public class TenantController {
     }
 
     /**
-     * 超级管理员创建 存入 租户admin  自己的用户表 跟 租户的用户表
-     *
-     * @param userInfo
-     * @param bindingResult
-     * @return
+     * @api {Post} api/v1/super-admin/insertTenantAndUser 超级管理员创建新增租户admin自己的用户表 跟 租户的用户表
+     * @apiHeaderExample {json} 请求头Header
+     * {
+     * "token":"用户令牌"
+     * }
+     * @apiGroup super-admin
+     * @apiVersion 0.0.1
+     * @apiDescription 用于超级管理员创建新增租户admin自己的用户表 跟 租户的用户表
+     * @apiParamExample {json} 请求样例：
+     * {
+     * "pwd":"123456",
+     * "userName":"admin1",
+     * "tId":1,
+     * "tenant":"tenant1"
+     * }
+     * @apiSuccess (success) {Object} data 请求的数据
+     * @apiSuccess (success) {String} msg 信息
+     * @apiSuccess (success) {int} code -1 代表错误 200代表请求成功
+     * @apiSuccessExample {json} 成功返回样列:
+     * {"code":"200","msg":"success","data":"{}"}
+     * @apiErrorExample {json} 失败返回样例子:
+     * {"code":"-1","msg":"error","data":"{}"}
      */
     @PostMapping("/insertTenantAndUser")
     @IdempotentCheck(type = Constants.IDEMPOTENT_CHECK_HEADER)
@@ -75,6 +92,15 @@ public class TenantController {
     @RedisLock(key = Constants.SAVE_USER, maxWait = Constants.maxWait, timeout = Constants.timeout)
     public ResponseBase insertTenant(@Valid @RequestBody UserInfo userInfo, BindingResult bindingResult) {
         return tenantService.saveTenantAdmin(userInfo, bindingResult);
+    }
+
+    /**
+     * 超级管理员查询租户表里的超级管理员 菜单信息
+     */
+    @GetMapping("/selTenantMenu")
+    @PermissionCheck(type = Constants.VIEW)
+    public ResponseBase selTenantMenu(@RequestParam("tid") Integer tid) {
+        return tenantService.selTenantMenu(tid);
     }
 
 
@@ -87,11 +113,29 @@ public class TenantController {
         return tenantService.selTenantRole(tid);
     }
 
+
     /**
-     * 超级管理员新增 租户的菜单关联
-     * @param whUserRole
-     * @param bindingResult
-     * @return
+     * @api {Post} api/v1/super-admin/insertTenantAndMen 超级管理员新增租户的菜单关联
+     * @apiHeaderExample {json} 请求头Header
+     * {
+     * "token":"用户令牌"
+     * }
+     * @apiGroup super-admin
+     * @apiVersion 0.0.1
+     * @apiDescription 用于超级管理员新增租户的菜单关联
+     * @apiParamExample {json} 请求样例：
+     * {
+     * "rid":1,
+     * "menus":[10,11,12,13,14,15,16,17,18],
+     * "tId":1
+     * }
+     * @apiSuccess (success) {Object} data 请求的数据
+     * @apiSuccess (success) {String} msg 信息
+     * @apiSuccess (success) {int} code -1 代表错误 200代表请求成功
+     * @apiSuccessExample {json} 成功返回样列:
+     * {"code":"200","msg":"success","data":"{}"}
+     * @apiErrorExample {json} 失败返回样例子:
+     * {"code":"-1","msg":"error","data":"{}"}
      */
     @PostMapping("/insertTenantAndMen")
     @IdempotentCheck(type = Constants.IDEMPOTENT_CHECK_HEADER)
@@ -99,4 +143,30 @@ public class TenantController {
     public ResponseBase insertTenantAndMen(@Valid @RequestBody WhUserRole whUserRole, BindingResult bindingResult) {
         return tenantService.saveTenantAndMenu(whUserRole, bindingResult);
     }
+
+
+    /**
+     * @api {GET} /api/v1/super-admin/selTenantPermission 超级管理员查询租户权限列表进行配置
+     * @apiHeaderExample {json} 请求头Header
+     * {
+     * "token":"用户令牌"
+     * }
+     * @apiGroup super-admin
+     * @apiVersion 0.0.1
+     * @apiDescription 用于超级管理员查询租户权限列表进行配置
+     * @apiSuccess (success) {Object} data 请求的数据
+     * @apiSuccess (success) {String} msg 信息
+     * @apiSuccess (success) {int} code -1 代表错误 200代表请求成功
+     * @apiSuccessExample {json} 成功返回样列:
+     * {"code":"200","msg":"success","data":"{}"}
+     * @apiErrorExample {json} 失败返回样例子:
+     * {"code":"-1","msg":"error","data":"{}"}
+     */
+    @GetMapping("/selTenantPermission")
+    @PermissionCheck(type = Constants.VIEW)
+    public ResponseBase tenantPermission(@RequestParam("tid") Integer tid) {
+        return tenantService.selTenantPermission(tid);
+    }
+
+
 }

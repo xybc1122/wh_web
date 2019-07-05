@@ -82,7 +82,7 @@ public interface Constants {
      */
     String DELETE = "DELETE";
 
-
+    String SUPER_ADMIN = "super-admin";
     /**
      * 文件上传存放地址
      */

@@ -49,6 +49,7 @@ public class MD5Util {
         return null;
     }
 
+
     public static void main(String[] args) {
         //C82BB40E3E1C6D1E880645353F6F53B8
         String v = StaticVariable.ADMIN + 1 + "tt";

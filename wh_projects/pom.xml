@@ -18,7 +18,11 @@
             <groupId>com.web</groupId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
+        <dependency>
+            <artifactId>wh_core</artifactId>
+            <groupId>com.web</groupId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <artifactId>wh_service</artifactId>
             <groupId>com.web</groupId>

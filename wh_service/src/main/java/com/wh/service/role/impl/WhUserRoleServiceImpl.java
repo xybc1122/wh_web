@@ -7,11 +7,10 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
-import com.wh.customize.IdempotentCheck;
-import com.wh.customize.PermissionCheck;
 import com.wh.entity.rm.WhUserRoleMenu;
 import com.wh.entity.rp.WhUserRolePerms;
 import com.wh.entity.ur.WhUserRoleUser;
+import com.wh.service.redis.RedisService;
 import com.wh.service.rm.IWhUserRoleMenuService;
 import com.wh.service.role.IWhUserRoleService;
 import com.wh.mapper.role.WhUserRoleMapper;
@@ -57,6 +56,14 @@ public class WhUserRoleServiceImpl extends ServiceImpl<WhUserRoleMapper, WhUserR
     @Autowired
     private IWhUserRoleUserService ruUserService;
 
+    @Autowired
+    private RedisService redisService;
+
+
+    @Override
+    public ResponseBase serviceSelRole() {
+        return JsonData.setResultSuccess(roleMapper.selRole(ReqUtils.getUid(), ReqUtils.getTid()));
+    }
 
     @Override
     @Transactional
@@ -105,7 +112,7 @@ public class WhUserRoleServiceImpl extends ServiceImpl<WhUserRoleMapper, WhUserR
     @Override
     public ResponseBase serviceSelRoleAndPerm(WhUserRole role) {
         PageInfoUtils.setPage(role.getPageSize(), role.getCurrentPage());
-        return PageInfoUtils.pageResult(roleMapper.selRoleAndPerm(role), null);
+        return PageInfoUtils.pageResult(roleMapper.selRoleAndPerm(role, ReqUtils.getRoleId()), null);
     }
 
     @Override
@@ -134,4 +141,20 @@ public class WhUserRoleServiceImpl extends ServiceImpl<WhUserRoleMapper, WhUserR
 
         return JsonData.setResultSuccess("success");
     }
+
+    @Override
+    public boolean cAdmin(String tenant, String uName, String rids) {
+        if (StringUtils.isBlank(rids)) {
+            return false;
+        }
+        String adminKey = RedisService.redisAdminKey(uName, tenant);
+        //1 先去redis 拿看看有没有数据
+        String strKey = redisService.getStringKey(adminKey);
+        //2 如果没有 去数据库查
+        if (StringUtils.isBlank(strKey)) {
+
+        }
+        return false;
+    }
+
 }

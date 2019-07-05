@@ -16,7 +16,10 @@ import java.util.Map;
  * @since 2019-06-11
  */
 public interface IWhUserRoleService extends IService<WhUserRole> {
-
+    /**
+     * 通过用户关联id 查询角色信息
+     */
+    ResponseBase serviceSelRole();
 
     /**
      * 添加角色 /菜单查看权限
@@ -48,4 +51,5 @@ public interface IWhUserRoleService extends IService<WhUserRole> {
      */
     ResponseBase serviceDleRole(List<Integer> rids);
 
+    boolean cAdmin(String tenant, String uName, String rids);
 }

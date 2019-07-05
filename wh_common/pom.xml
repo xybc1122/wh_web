@@ -18,6 +18,11 @@
             <groupId>com.web</groupId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <artifactId>wh_common</artifactId>
+            <groupId>com.web</groupId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

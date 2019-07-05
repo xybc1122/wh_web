@@ -35,7 +35,6 @@ public class WhTransferOutLibraryEntry extends ParentConfTable implements Serial
     /**
      * 仓位
      */
-    @NotBlank(message = "is null")
     private String position;
 
 

@@ -249,6 +249,78 @@
     "name": "DeleteApiV1AdminDlerole"
   },
   {
+    "type": "GET",
+    "url": "api/v1/admin/findByRoleQueryPermission",
+    "title": "查询 通过角色获得权限列表",
+    "header": {
+      "examples": [
+        {
+          "title": "请求头Header",
+          "content": "{\n\"token\":\"用户令牌\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "group": "Admin",
+    "version": "0.0.1",
+    "description": "<p>用于权限列表</p>",
+    "parameter": {
+      "examples": [
+        {
+          "title": "请求样例：",
+          "content": "{\n不需要参数\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "success": [
+          {
+            "group": "success",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>请求的数据</p>"
+          },
+          {
+            "group": "success",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>信息</p>"
+          },
+          {
+            "group": "success",
+            "type": "int",
+            "optional": false,
+            "field": "code",
+            "description": "<p>-1 代表错误 200代表请求成功</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功返回样列:",
+          "content": "{\"code\":\"200\",\"msg\":\"success\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败返回样例子:",
+          "content": "{\"code\":\"-1\",\"msg\":\"error\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
+    "groupTitle": "Admin",
+    "name": "GetApiV1AdminFindbyrolequerypermission"
+  },
+  {
     "type": "get",
     "url": "api/v1/admin/getByRoleList",
     "title": "查询所有角色信息",
@@ -322,8 +394,8 @@
   },
   {
     "type": "GET",
-    "url": "api/v1/admin/getPermission",
-    "title": "查询权限列表",
+    "url": "/api/v1/super-admin/selPermission",
+    "title": "超级管理员查询租户权限列表进行配置",
     "header": {
       "examples": [
         {
@@ -388,9 +460,9 @@
         }
       ]
     },
-    "filename": "./wh_projects/src/main/java/com/wh/controller/user/AdminController.java",
+    "filename": "./wh_projects/src/main/java/com/wh/controller/tenant/TenantController.java",
     "groupTitle": "Admin",
-    "name": "GetApiV1AdminGetpermission"
+    "name": "GetApiV1SuperAdminSelpermission"
   },
   {
     "type": "POST",
@@ -1126,6 +1198,78 @@
     "name": "PostApiV1AdminUppermsandoperating"
   },
   {
+    "type": "Post",
+    "url": "api/v1/super-admin/insertTenant",
+    "title": "新增创建租户信息",
+    "header": {
+      "examples": [
+        {
+          "title": "请求头Header",
+          "content": "{\n\"token\":\"用户令牌\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "group": "Admin",
+    "version": "0.0.1",
+    "description": "<p>用于新增用户信息以及下面的角色信息</p>",
+    "parameter": {
+      "examples": [
+        {
+          "title": "请求样例：",
+          "content": "{\n\"dbPwd\":\"root\",\n\"tenantName\":\"浙江创业3\",\n\"dbName\":\"root\",\n\"dbUrl\":\"192.168.1.230:3306/db3\",\n\"tenant\":\"tenant3\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "success": [
+          {
+            "group": "success",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>请求的数据</p>"
+          },
+          {
+            "group": "success",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>信息</p>"
+          },
+          {
+            "group": "success",
+            "type": "int",
+            "optional": false,
+            "field": "code",
+            "description": "<p>-1 代表错误 200代表请求成功</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功返回样列:",
+          "content": "{\"code\":\"200\",\"msg\":\"success\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败返回样例子:",
+          "content": "{\"code\":\"-1\",\"msg\":\"error\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./wh_projects/src/main/java/com/wh/controller/tenant/TenantController.java",
+    "groupTitle": "Admin",
+    "name": "PostApiV1SuperAdminInserttenant"
+  },
+  {
     "type": "PUT",
     "url": "api/v1/admin/saveRoleAndMenu",
     "title": "修改角色/菜单查看权限",
@@ -1595,7 +1739,7 @@
         }
       ]
     },
-    "filename": "./wh_projects/src/main/java/com/wh/controller/out_library/fba/WhFbaStockingController.java",
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out/library/fba/WhFbaStockingController.java",
     "groupTitle": "FBA_Stocking",
     "name": "PostApiV1WhFbaStockingFindbyfbaandentry"
   },
@@ -1720,7 +1864,7 @@
         }
       ]
     },
-    "filename": "./wh_projects/src/main/java/com/wh/controller/out_library/fba/WhFbaStockingController.java",
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out/library/fba/WhFbaStockingController.java",
     "groupTitle": "FBA_Stocking",
     "name": "PostApiV1WhFbaStockingSavefbaandentry"
   },
@@ -1810,7 +1954,7 @@
         }
       ]
     },
-    "filename": "./wh_projects/src/main/java/com/wh/controller/out_library/fba/WhFbaStockingEntryController.java",
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out/library/fba/WhFbaStockingEntryController.java",
     "groupTitle": "FBA_Stocking",
     "name": "PutApiV1WhFbaStockingEntryUpordelfbastockingentry"
   },
@@ -1900,13 +2044,175 @@
         }
       ]
     },
-    "filename": "./wh_projects/src/main/java/com/wh/controller/out_library/fba/WhFbaStockingController.java",
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out/library/fba/WhFbaStockingController.java",
     "groupTitle": "FBA_Stocking",
     "name": "PutApiV1WhFbaStockingUpfbastocking"
   },
   {
     "type": "POST",
-    "url": "api/v1/wh-transfer-out-library",
+    "url": "api/v1/file/fileDealWith",
+    "title": "xlsx 表处理数据处理接口",
+    "header": {
+      "examples": [
+        {
+          "title": "请求头Header",
+          "content": "{\n\"sso_token\":\"用户令牌\"\n\"ide_token\":\"接口幂等令牌\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "group": "File",
+    "version": "0.0.1",
+    "description": "<p>用于xlsx 表处理数据处理接口</p>",
+    "parameter": {
+      "examples": [
+        {
+          "title": "请求样例：",
+          "content": "需要上传成功后的文件对象\n{\"uploadSuccessList\": [\n{\n\"remark\": \"上传成功\",\n\"createDate\": 1561974431274,\n\"createUser\": \"eeee\",\n\"modifyDate\": null,\n\"modifyUser\": null,\n\"delOrNot\": null,\n\"currentPage\": null,\n\"pageSize\": null,\n\"createDates\": null,\n\"version\": null,\n\"id\": 4,\n\"uid\": 406,\n\"uuidName\": \"01e57f3d94ee49cf86d6b37826b96d6b.xlsx\",\n\"name\": \"新建 Microsoft Excel 工作表.xlsx\",\n\"filePath\": \"E:/file/\",\n\"uStatus\": 0,\n\"deStatus\": null,\n\"url\": null,\n\"uploadSuccessList\": null\n}\n]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "success": [
+          {
+            "group": "success",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>请求的数据</p>"
+          },
+          {
+            "group": "success",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>信息</p>"
+          },
+          {
+            "group": "success",
+            "type": "int",
+            "optional": false,
+            "field": "code",
+            "description": "<p>-1 代表错误 200代表请求成功</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功返回样列:",
+          "content": "{\"code\":\"200\",\"msg\":\"success\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败返回样例子:",
+          "content": "{\"code\":\"-1\",\"msg\":\"error\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./wh_projects/src/main/java/com/wh/controller/file/FileDealWithController.java",
+    "groupTitle": "File",
+    "name": "PostApiV1FileFiledealwith"
+  },
+  {
+    "type": "POST",
+    "url": "api/v1/wh-transfer-out-library/delTransferInfo",
+    "title": "删除调拨出库跟条目",
+    "header": {
+      "examples": [
+        {
+          "title": "请求头Header",
+          "content": "{\n\"sso-token\":\"用户令牌\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "group": "Transfer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "tNumber",
+            "description": "<p>主表单 id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "List",
+            "optional": false,
+            "field": "eIds",
+            "description": "<p>子表单集合</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求样例：",
+          "content": "{\"tNumber\":\"DB6543380444191129600\",\n\"eIds\":[1,2,3,4]\n注: 如果你只传一个tNumber 这里会帮你你全部删除以及下面字表信息\n如果你传了tNumber 跟 eIds[] 只会删除 字表里面的数据\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.1",
+    "description": "<p>用于删除调拨出库跟条目</p>",
+    "success": {
+      "fields": {
+        "success": [
+          {
+            "group": "success",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>请求的数据</p>"
+          },
+          {
+            "group": "success",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>信息</p>"
+          },
+          {
+            "group": "success",
+            "type": "int",
+            "optional": false,
+            "field": "code",
+            "description": "<p>-1 代表错误 200代表请求成功</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功返回样列:",
+          "content": "{\"code\":\"200\",\"msg\":\"success\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败返回样例子:",
+          "content": "{\"code\":\"-1\",\"msg\":\"error\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out/library/transfer/WhTransferOutLibraryController.java",
+    "groupTitle": "Transfer",
+    "name": "PostApiV1WhTransferOutLibraryDeltransferinfo"
+  },
+  {
+    "type": "POST",
+    "url": "api/v1/wh-transfer-out-library/findByTransferInfo",
     "title": "查询调拨出库跟条目",
     "header": {
       "examples": [
@@ -1972,8 +2278,195 @@
         }
       ]
     },
-    "filename": "./wh_projects/src/main/java/com/wh/controller/out_library/transfer/WhTransferOutLibraryController.java",
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out/library/transfer/WhTransferOutLibraryController.java",
     "groupTitle": "Transfer",
-    "name": "PostApiV1WhTransferOutLibrary"
+    "name": "PostApiV1WhTransferOutLibraryFindbytransferinfo"
+  },
+  {
+    "type": "POST",
+    "url": "api/v1/wh-transfer-out-library/saveTransferInfo",
+    "title": "新增调拨出库跟条目",
+    "header": {
+      "examples": [
+        {
+          "title": "请求头Header",
+          "content": "{\n\"sso-token\":\"用户令牌\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "group": "Transfer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "wayNumber",
+            "description": "<p>运单号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "mIWarId",
+            "description": "<p>移入仓 id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "rWarId",
+            "description": "<p>移出仓 id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求样例：",
+          "content": "{\n\"wayNumber\":\"运单号\",\n\"rWarId\":22,\n\"mIWarId\":2\t,\n\"entry\":[{\"sku\":\"BOFGDMHB30\",\"quantity\":80,\"position\":\"A仓\"}..以及一些属性]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.1",
+    "description": "<p>用于新增调拨出库跟条目</p>",
+    "success": {
+      "fields": {
+        "success": [
+          {
+            "group": "success",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>请求的数据</p>"
+          },
+          {
+            "group": "success",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>信息</p>"
+          },
+          {
+            "group": "success",
+            "type": "int",
+            "optional": false,
+            "field": "code",
+            "description": "<p>-1 代表错误 200代表请求成功</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功返回样列:",
+          "content": "{\"code\":\"200\",\"msg\":\"success\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败返回样例子:",
+          "content": "{\"code\":\"-1\",\"msg\":\"error\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out/library/transfer/WhTransferOutLibraryController.java",
+    "groupTitle": "Transfer",
+    "name": "PostApiV1WhTransferOutLibrarySavetransferinfo"
+  },
+  {
+    "type": "POST",
+    "url": "api/v1/wh-transfer-out-library/upTransferState",
+    "title": "更新标记发货",
+    "header": {
+      "examples": [
+        {
+          "title": "请求头Header",
+          "content": "{\n\"sso-token\":\"用户令牌\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "group": "Transfer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "tNumber",
+            "description": "<p>更新单号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "version",
+            "description": "<p>版本</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求样例：",
+          "content": "{\n\"tNumber\":\"DB6544000455125499904\",\n\"version\":0 必传\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.1",
+    "description": "<p>用于更新标记发货</p>",
+    "success": {
+      "fields": {
+        "success": [
+          {
+            "group": "success",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>请求的数据</p>"
+          },
+          {
+            "group": "success",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>信息</p>"
+          },
+          {
+            "group": "success",
+            "type": "int",
+            "optional": false,
+            "field": "code",
+            "description": "<p>-1 代表错误 200代表请求成功</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "成功返回样列:",
+          "content": "{\"code\":\"200\",\"msg\":\"success\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "失败返回样例子:",
+          "content": "{\"code\":\"-1\",\"msg\":\"error\",\"data\":\"{}\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./wh_projects/src/main/java/com/wh/controller/out/library/transfer/WhTransferOutLibraryController.java",
+    "groupTitle": "Transfer",
+    "name": "PostApiV1WhTransferOutLibraryUptransferstate"
   }
 ]

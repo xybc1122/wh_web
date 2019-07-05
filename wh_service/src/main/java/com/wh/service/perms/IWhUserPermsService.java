@@ -18,7 +18,12 @@ import java.util.Set;
 public interface IWhUserPermsService extends IService<WhUserPerms> {
 
     /**
-     * 通过角色 api url 去查询对应的 菜单权限
+     * 通过角色去查询对应的权限
+     */
+    ResponseBase serviceRoleQueryPermission();
+
+    /**
+     * 通过角色 api url 去查询对应的 操作权限
      *
      * @param rids
      * @return

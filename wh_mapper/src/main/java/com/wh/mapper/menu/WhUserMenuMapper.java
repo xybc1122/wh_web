@@ -30,7 +30,7 @@ public interface WhUserMenuMapper extends BaseMapper<WhUserMenu> {
             @Result(column = "m_name", property = "treeName"),
             @Result(column = "is_parent_node", property = "nextLevel"),
     })
-    List<TreeDto> selTreeList(@Param("rids") String rids, @Param("tid") Integer tid);
+    List<TreeDto> selTreeList();
 
 
 }

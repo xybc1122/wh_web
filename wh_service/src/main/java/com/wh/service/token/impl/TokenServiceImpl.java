@@ -3,10 +3,10 @@ package com.wh.service.token.impl;
 import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
 import com.wh.exception.LsException;
+import com.wh.service.redis.RedisService;
 import com.wh.service.token.TokenService;
 import com.wh.toos.Constants;
 import com.wh.toos.StaticVariable;
-import com.wh.utils.RedisUtils;
 import com.wh.utils.SnowflakeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +26,13 @@ public class TokenServiceImpl implements TokenService {
     private SnowflakeUtils snowflakeUtils;
 
     @Autowired
-    private RedisUtils redisUtils;
+    private RedisService redisService;
 
     @Override
     public ResponseBase createToken() {
         String ideToken = StaticVariable.IDE_TOKEN + snowflakeUtils.nextId();
         //这里设置3分钟
-        redisUtils.setString(ideToken, ideToken, Constants.EXPIRE_TIME_MINUTE);
+        redisService.setString(ideToken, ideToken, Constants.EXPIRE_TIME_MINUTE);
         return JsonData.setResultSuccess("success", ideToken);
     }
 
@@ -45,11 +45,11 @@ public class TokenServiceImpl implements TokenService {
                 throw new LsException("ide-token is null");
             }
         }
-        if (!redisUtils.exists(token)) {
+        if (!redisService.exists(token)) {
             throw new LsException("请勿重复提交");
         }
         //这里一定要判断 不然就会出现并发重复提交的问题
-        if (!redisUtils.delKey(token)) {
+        if (!redisService.delKey(token)) {
             throw new LsException("ide-token删除失败");
         }
         System.out.println("接口幂等校验成功");

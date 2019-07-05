@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wh.customize.IdempotentCheck;
 import com.wh.customize.PermissionCheck;
-import com.wh.customize.RedisLock;
+
 import com.wh.entity.ur.WhUserRoleUser;
+import com.wh.service.redis.RedisService;
+import com.wh.service.role.IWhUserRoleService;
 import com.wh.service.ur.IWhUserRoleUserService;
 import com.wh.service.user.UserService;
 import com.wh.base.JsonData;
@@ -36,12 +38,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserInfo> implement
     private UserMapper userMapper;
 
     @Autowired
-    private RedisUtils redisUtils;
+    private RedisService redisService;
     /**
      * dto 转换工具
      */
     @Autowired
     private MapperFacade mapperFacade;
+
 
 
     @Autowired
@@ -61,7 +64,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserInfo> implement
         PageInfoUtils.setPage(userDto.getPageSize(), userDto.getCurrentPage());
         //2
         List<UserInfo> uList = userMapper.selByUserList(userDto);
-        // 3
+        //3
         return PageInfoUtils.pageResult(uList, mapperFacade.mapAsList(uList, UserDto.class));
     }
 
@@ -84,7 +87,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserInfo> implement
 
         if (user.getAccountStatus() != null && user.getAccountStatus() == 1) {
             //踢出redis key 停用
-            redisUtils.delKey(StaticVariable.SSO_TOKEN + ":" + user.getUid());
+            redisService.delKey(StaticVariable.SSO_TOKEN + ":" + user.getUid());
         }
         Integer version = user.getVersion();
         user.setModify(ReqUtils.getUserName(), version);
@@ -106,7 +109,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserInfo> implement
         //校验参数
         String strBinding = BindingResultStore.bindingResult(bindingResult);
         if (strBinding != null) return JsonData.setResultError(strBinding);
-
 
         //到这里先去查查看有没有名字相同的
         if (userMapper.selUserIsDelete(user.getUserName()) != null) {

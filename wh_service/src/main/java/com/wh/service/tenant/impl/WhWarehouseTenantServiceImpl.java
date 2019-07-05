@@ -6,8 +6,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
 import com.wh.dds.DynamicDataSourceContextHolder;
+import com.wh.entity.perms.WhUserPerms;
 import com.wh.entity.role.WhUserRole;
 import com.wh.entity.user.UserInfo;
+import com.wh.exception.LsException;
+import com.wh.service.menu.IWhUserMenuService;
+import com.wh.service.perms.IWhUserPermsService;
 import com.wh.service.rm.IWhUserRoleMenuService;
 import com.wh.service.role.IWhUserRoleService;
 import com.wh.service.tenant.IWhWarehouseTenantService;
@@ -20,6 +24,9 @@ import com.wh.utils.WrapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import sun.util.locale.LocaleSyntaxException;
+
+import java.util.List;
 
 /**
  * <p>
@@ -40,20 +47,36 @@ public class WhWarehouseTenantServiceImpl extends ServiceImpl<WhWarehouseTenantM
     @Autowired
     private IWhUserRoleMenuService roleMenuService;
 
+    @Autowired
+    private IWhUserPermsService permsService;
+
+    @Autowired
+    private IWhUserMenuService menuService;
+
     private static String URL = "jdbc:mysql://%s?useUnicode=true&nullCatalogMeansCurrent=true&characterEncoding=utf-8&useSSL=false";
 
 
     @Override
     public ResponseBase selTenantRole(Integer tId) {
-        //1 通过 tid 查询租户
-        QueryWrapper<WhWarehouseTenant> tQuery = WrapperUtils.getQuery();
-        tQuery.eq("tenant_id", tId);
-        WhWarehouseTenant tOne = this.getOne(tQuery);
-        //2切换租户
-        DynamicDataSourceContextHolder.setDataSourceKey(tOne.getTenant());
+        switchTenant(tId);
         //3 查询角色信息返回
 
         return JsonData.setResultSuccess(roleService.list());
+    }
+
+    @Override
+    public ResponseBase selTenantPermission(Integer tId) {
+        switchTenant(tId);
+        List<WhUserPerms> pList = permsService.lambdaQuery().select(WhUserPerms::getpId, WhUserPerms::getpName).list();
+        return JsonData.setResultSuccess(pList);
+    }
+
+    @Override
+    public ResponseBase selTenantMenu(Integer tId) {
+        switchTenant(tId);
+        menuService.serviceSelTreeList();
+
+        return null;
     }
 
     @Override
@@ -90,6 +113,7 @@ public class WhWarehouseTenantServiceImpl extends ServiceImpl<WhWarehouseTenantM
         DynamicDataSourceContextHolder.setDataSourceKey(user.getTenant());
 
         result = userService.insertUserInfoAndTenant(user, bindingResult);
+
         if (result != null) {
             return JsonData.setResultError(result);
         }
@@ -112,11 +136,22 @@ public class WhWarehouseTenantServiceImpl extends ServiceImpl<WhWarehouseTenantM
         //2切换租户
         DynamicDataSourceContextHolder.setDataSourceKey(tOne.getTenant());
         //2 设置角色菜单
-        roleMenuService.saveTenantRoleMenu(whUserRole.getRid(), whUserRole.getMenus(), whUserRole.gettId());
+        roleMenuService.saveRoleMenu(whUserRole.getRid(), whUserRole.getMenus());
 
         return JsonData.setResultSuccess("success");
     }
 
+    public void switchTenant(Integer tId) {
+        //1 通过 tid 查询租户
+        QueryWrapper<WhWarehouseTenant> tQuery = WrapperUtils.getQuery();
+        tQuery.eq("tenant_id", tId);
+        WhWarehouseTenant tOne = this.getOne(tQuery);
+        if (tOne == null) {
+            throw new LsException("找不到租户信息");
+        }
+        //2切换租户
+        DynamicDataSourceContextHolder.setDataSourceKey(tOne.getTenant());
+    }
 
     public static void main(String[] args) {
         System.out.println(String.format(URL, "192.168.1.230:3306/db2"));

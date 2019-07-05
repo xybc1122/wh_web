@@ -33,7 +33,7 @@ public class WhUserMenuServiceImpl extends ServiceImpl<WhUserMenuMapper, WhUserM
 
     @Override
     public ResponseBase serviceSelTreeList() {
-        return JsonData.setResultSuccess(TreeStructureStore.getTree(menuMapper.selTreeList(ReqUtils.getRoleId(), ReqUtils.getTid())));
+        return JsonData.setResultSuccess(TreeStructureStore.getTree(menuMapper.selTreeList()));
     }
 
 }

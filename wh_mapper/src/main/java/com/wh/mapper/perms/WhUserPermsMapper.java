@@ -36,6 +36,16 @@ public interface WhUserPermsMapper extends BaseMapper<WhUserPerms> {
      * @return
      */
     @SelectProvider(type = WhUserPermsProvider.class, method = "getPermissionAndOperating")
-    List<WhUserPerms> getPermissionAndOperating(WhUserPerms whUserPerms);
+    List<WhUserPerms> getPermissionAndOperating(@Param("entity") WhUserPerms whUserPerms, @Param("rids") String rids);
+
+
+    /**
+     * 查询 权限配置组
+     *
+     * @return
+     */
+    @SelectProvider(type = WhUserPermsProvider.class, method = "roleQueryPermission")
+    List<WhUserPerms> roleQueryPermission(@Param("rids") String rids);
+
 
 }

@@ -23,6 +23,17 @@ public interface IWhWarehouseTenantService extends IService<WhWarehouseTenant> {
      */
     ResponseBase selTenantRole(Integer tId);
 
+
+    /**
+     * 超级管理员查询租户权限列表进行配置
+     */
+    ResponseBase selTenantPermission(Integer tId);
+
+    /**
+     * 超级管理员查询租户的菜单
+     */
+    ResponseBase selTenantMenu(Integer tId);
+
     /**
      * 超级管理员新增租户
      */

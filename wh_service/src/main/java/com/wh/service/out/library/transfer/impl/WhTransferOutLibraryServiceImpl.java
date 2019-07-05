@@ -18,6 +18,7 @@ import com.wh.mapper.out.library.transfer.WhTransferOutLibraryMapper;
 import com.wh.service.feign.PhpFeignClient;
 import com.wh.service.out.library.transfer.IWhTransferOutLibraryEntryService;
 import com.wh.service.out.library.transfer.IWhTransferOutLibraryService;
+import com.wh.service.redis.RedisService;
 import com.wh.store.BindingResultStore;
 import com.wh.toos.Constants;
 import com.wh.toos.StaticVariable;
@@ -51,7 +52,7 @@ public class WhTransferOutLibraryServiceImpl extends ServiceImpl<WhTransferOutLi
     private IWhTransferOutLibraryEntryService outLibraryEntryService;
 
     @Autowired
-    private RedisUtils redisService;
+    private RedisService redisService;
 
     @Autowired
     private PhpFeignClient feignService;
@@ -107,7 +108,6 @@ public class WhTransferOutLibraryServiceImpl extends ServiceImpl<WhTransferOutLi
     }
 
     @Override
-    @PermissionCheck(type = Constants.DELETE)
     public ResponseBase serviceDelOutLibraryInfo(Map<String, Object> objectMap) {
         //1 是否全部删除
         String tNumber = (String) objectMap.get("tNumber");
@@ -178,7 +178,7 @@ public class WhTransferOutLibraryServiceImpl extends ServiceImpl<WhTransferOutLi
             UpdateWrapper<WhTransferOutLibrary> upWrapper = new UpdateWrapper<>();
             final Integer version = outLibrary.getVersion();
 
-            upWrapper.set("status", outLibrary.getStatus()).set("modify_user", ReqUtils.getUserName()).
+            upWrapper.set("status", 1).set("modify_user", ReqUtils.getUserName()).
                     set("modify_date", new Date().getTime()).set("version", version + 1).set("execution_status", 1);
             upWrapper.eq("t_number", outLibrary.gettNumber()).eq("version", version);
             CheckUtils.saveResult(this.update(null, upWrapper));
@@ -204,9 +204,6 @@ public class WhTransferOutLibraryServiceImpl extends ServiceImpl<WhTransferOutLi
 
     }
 
-    @RedisLock(key = Constants.TRANSFER_KE, maxWait = Constants.maxWait, timeout = Constants.timeout)
-    @IdempotentCheck(type = Constants.IDEMPOTENT_CHECK_HEADER)
-    @PermissionCheck(type = Constants.SAVE)
     @Override
     @Transactional
     public ResponseBase serviceSaveOutLibraryInfo(WhTransferOutLibrary outLibrary, BindingResult bindingResult) {
