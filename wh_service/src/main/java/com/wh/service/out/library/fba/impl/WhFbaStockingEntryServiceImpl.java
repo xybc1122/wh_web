@@ -40,7 +40,7 @@ public class WhFbaStockingEntryServiceImpl extends ServiceImpl<WhFbaStockingEntr
         if (delIds instanceof List) {
             List dList = (List) delIds;
             //判断是否长度为0
-            if (ListUtils.isList(dList)) {
+            if (CollectionUtils.isList(dList)) {
                 QueryWrapper<WhFbaStockingEntry> enQuery = WrapperUtils.getQuery();
                 enQuery.in("id", dList);
                 CheckUtils.saveResult(this.remove(enQuery));

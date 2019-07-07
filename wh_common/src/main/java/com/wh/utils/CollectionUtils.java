@@ -5,17 +5,39 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
 /**
- * @ClassName ListUtils
+ * @ClassName CollectionUtils
  * Description TODO
  * @Author 陈恩惠
  * @Date 2019/6/19 14:38
  **/
-public class ListUtils {
+public class CollectionUtils {
+
+
+    /**
+     * set Obj 转换 str
+     *
+     * @param set
+     */
+    public static Set<String> cStr(Set<Object> set) {
+        if (set == null || set.size() <= 0) {
+            return null;
+        }
+        Set<String> strSet = new HashSet<>();
+        for (Object obj : set) {
+            if (obj instanceof String) {
+                strSet.add((String) obj);
+            }
+
+        }
+        return strSet;
+    }
 
 
     /**

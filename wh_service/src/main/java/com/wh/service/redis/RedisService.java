@@ -7,11 +7,10 @@ import com.wh.toos.StaticVariable;
 import com.wh.utils.UuIDUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -63,24 +62,25 @@ public class RedisService {
 //    }
 //
 //
-//    /**
-//     * 写入缓存
-//     *
-//     * @param key
-//     * @param value
-//     * @return
-//     */
-//    public boolean set(final String key, Object value) {
-//        boolean result = false;
-//        try {
-//            ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
-//            operations.set(key, value);
-//            result = true;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return result;
-//    }
+
+    /**
+     * 写入缓存
+     *
+     * @param key
+     * @param value
+     * @return
+     */
+    public boolean setRt(final String key, Object value) {
+        boolean result = false;
+        try {
+            ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
+            operations.set(key, value);
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 //
 //    /**
 //     * 写入缓存设置时效时间
@@ -126,19 +126,19 @@ public class RedisService {
 //    }
 //
 
-//
-//    /**
-//     * 读取缓存
-//     *
-//     * @param key
-//     * @return
-//     */
-//    public Object get(final String key) {
-//        Object result = null;
-//        ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
-//        result = operations.get(key);
-//        return result;
-//    }
+
+    /**
+     * 读取缓存
+     *
+     * @param key
+     * @return
+     */
+    public Object getRt(final String key) {
+        Object result = null;
+        ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
+        result = operations.get(key);
+        return result;
+    }
 //
 //    /**
 //     * 哈希 添加
@@ -164,77 +164,78 @@ public class RedisService {
 //        return hash.get(key, hashKey);
 //    }
 //
-//    /**
-//     * 列表添加
-//     *
-//     * @param k
-//     * @param v
-//     */
-//    public void lPush(String k, Object v) {
-//        ListOperations<String, Object> list = redisTemplate.opsForList();
-//        list.rightPush(k, v);
-//    }
-//
-//    /**
-//     * 列表获取
-//     *
-//     * @param k
-//     * @param l
-//     * @param l1
-//     * @return
-//     */
-//    public List<Object> lRange(String k, long l, long l1) {
-//        ListOperations<String, Object> list = redisTemplate.opsForList();
-//        return list.range(k, l, l1);
-//    }
-//
-//    /**
-//     * 集合添加
-//     *
-//     * @param key
-//     * @param value
-//     */
-//    public void add(String key, Object value) {
-//        SetOperations<String, Object> set = redisTemplate.opsForSet();
-//        set.add(key, value);
-//    }
-//
-//    /**
-//     * 集合获取
-//     *
-//     * @param key
-//     * @return
-//     */
-//    public Set<Object> setMembers(String key) {
-//        SetOperations<String, Object> set = redisTemplate.opsForSet();
-//        return set.members(key);
-//    }
-//
-//    /**
-//     * 有序集合添加
-//     *
-//     * @param key
-//     * @param value
-//     * @param scoure
-//     */
-//    public void zAdd(String key, Object value, double scoure) {
-//        ZSetOperations<String, Object> zset = redisTemplate.opsForZSet();
-//        zset.add(key, value, scoure);
-//    }
-//
-//    /**
-//     * 有序集合获取
-//     *
-//     * @param key
-//     * @param scoure
-//     * @param scoure1
-//     * @return
-//     */
-//    public Set<Object> rangeByScore(String key, double scoure, double scoure1) {
-//        ZSetOperations<String, Object> zset = redisTemplate.opsForZSet();
-//        redisTemplate.opsForValue();
-//        return zset.rangeByScore(key, scoure, scoure1);
-//    }
+
+    /**
+     * 列表添加
+     *
+     * @param k
+     * @param v
+     */
+    public void lPush(String k, Object v) {
+        ListOperations<String, Object> list = redisTemplate.opsForList();
+        list.rightPush(k, v);
+    }
+
+    /**
+     * 列表获取
+     *
+     * @param k
+     * @param l
+     * @param l1
+     * @return
+     */
+    public List<Object> lRange(String k, long l, long l1) {
+        ListOperations<String, Object> list = redisTemplate.opsForList();
+        return list.range(k, l, l1);
+    }
+
+    /**
+     * 集合set添加
+     *
+     * @param key
+     * @param value
+     */
+    public void sPush(String key, Object value) {
+        SetOperations<String, Object> set = redisTemplate.opsForSet();
+        set.add(key, value);
+    }
+
+    /**
+     * set集合获取
+     *
+     * @param key
+     * @return
+     */
+    public Set<Object> setMembers(String key) {
+        SetOperations<String, Object> set = redisTemplate.opsForSet();
+        return set.members(key);
+    }
+
+    /**
+     * 有序集合添加
+     *
+     * @param key
+     * @param value
+     * @param scoure
+     */
+    public void zAdd(String key, Object value, double scoure) {
+        ZSetOperations<String, Object> zset = redisTemplate.opsForZSet();
+        zset.add(key, value, scoure);
+    }
+
+    /**
+     * 有序集合获取
+     *
+     * @param key
+     * @param scoure
+     * @param scoure1
+     * @return
+     */
+    public Set<Object> rangeByScore(String key, double scoure, double scoure1) {
+        ZSetOperations<String, Object> zset = redisTemplate.opsForZSet();
+        redisTemplate.opsForValue();
+        return zset.rangeByScore(key, scoure, scoure1);
+    }
 //
 //
 //    //第一次加载的时候将数据加载到redis中

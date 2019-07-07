@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
-import com.wh.entity.dto.FbaStockingDto;
-import com.wh.entity.dto.FbaStockingEntryDto;
 import com.wh.entity.out.library.fba.WhFbaStocking;
 import com.wh.entity.out.library.fba.entry.WhFbaStockingEntry;
 import com.wh.mapper.out.library.fba.WhFbaStockingMapper;
@@ -15,7 +13,6 @@ import com.wh.service.out.library.fba.IWhFbaStockingService;
 import com.wh.store.BindingResultStore;
 import com.wh.toos.StaticVariable;
 import com.wh.utils.*;
-import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +49,7 @@ public class WhFbaStockingServiceImpl extends ServiceImpl<WhFbaStockingMapper, W
         List<WhFbaStocking> whFbaStockings = stockingMapper.selFbaInfo(whFbaStocking);
 
         // 2 判断是否 有数据
-        if (!ListUtils.isList(whFbaStockings)) {
+        if (!CollectionUtils.isList(whFbaStockings)) {
             return whFbaStockings;
         }
 
@@ -67,7 +64,7 @@ public class WhFbaStockingServiceImpl extends ServiceImpl<WhFbaStockingMapper, W
         List<WhFbaStockingEntry> stockingEntries = entryService.list(eQuery);
 
         //4继续判断 条目表是否有数据
-        if (!ListUtils.isList(stockingEntries)) {
+        if (!CollectionUtils.isList(stockingEntries)) {
             return whFbaStockings;
         }
         //5设置属性 返回集合

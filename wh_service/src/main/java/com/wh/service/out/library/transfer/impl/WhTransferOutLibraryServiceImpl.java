@@ -7,9 +7,6 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
-import com.wh.customize.IdempotentCheck;
-import com.wh.customize.PermissionCheck;
-import com.wh.customize.RedisLock;
 import com.wh.entity.dto.TransferDto;
 import com.wh.entity.out.library.transfer.WhTransferOutLibrary;
 import com.wh.entity.out.library.transfer.entry.WhTransferOutLibraryEntry;
@@ -31,7 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -70,7 +66,7 @@ public class WhTransferOutLibraryServiceImpl extends ServiceImpl<WhTransferOutLi
         List<WhTransferOutLibrary> outLibraryList = outLibraryMapper.selOutLibraryInfo(outLibrary);
 
         // 2判断是否有数据
-        if (!ListUtils.isList(outLibraryList)) {
+        if (!CollectionUtils.isList(outLibraryList)) {
             return outLibraryList;
         }
 
@@ -88,7 +84,7 @@ public class WhTransferOutLibraryServiceImpl extends ServiceImpl<WhTransferOutLi
 
 
         //4继续判断 条目表是否有数据
-        if (!ListUtils.isList(outLibraryEntries)) {
+        if (!CollectionUtils.isList(outLibraryEntries)) {
             return outLibraryList;
         }
 

@@ -79,6 +79,7 @@ public class InterCenter implements HandlerInterceptor {
 
                 boolean cAdmin = false;
 
+
                 String stringKey = interCenter.redisService.getStringKey(RedisService.redisTokenKey(uid.toString(), tenant));
                 if (StringUtils.isBlank(stringKey) || !token.equals(stringKey)) {
                     JsonUtils.sendJsonMsg(response, JsonData.
@@ -88,35 +89,32 @@ public class InterCenter implements HandlerInterceptor {
                 //这里判断频繁请求 api  限制
                 if (!accessLimit(request, response, uid)) return false;
 
-                // 这里校验是否是admin 如果返回是true 那就是说明他说admin
-                //里面逻辑还没写 下周在写
-                if (interCenter.roleService.cAdmin(tenant, userName, rids)) {
-                    cAdmin = true;
-                }
-
-                //设置局部request
-                ReqUtils.set(request, uid, userName, rids, tenant, tid, cAdmin);
-
-                if (!tenant.equals("the-host")) {
-                    //切换租户
-                    DynamicDataSourceContextHolder.setDataSourceKey(tenant);
-                }
-
-                //如果请求的是超级管理员配置接口
-//                if (request.getRequestURI().contains("/api/v1/admin")) {
-//                    String adminKey = redisService.getStringKey(Constants.ADMIN + uid);
-//                    if (StringUtils.isBlank(adminKey) && adminKey.equals("success")) {
-//                        //这里做控制
-//                        JsonUtils.sendJsonMsg(response, JsonData.setResultError(Constants.HTTP_RESP_CODE, "你不是admin/无权操作"));
-//                        return false;
-//                    }
-//                }
-
-
                 //如果是用户logout
                 if (request.getRequestURI().equals(SSOClientUtils.LOGOUT_PATH)) {
                     response.sendRedirect(SSOClientUtils.SERVER_URL + SSOClientUtils.LOGOUT_PATH + "?uid=" + uid + "&tenant=" + tenant);
                     return false;
+                }
+
+                // 这里校验是否是admin 如果返回是true 那就是说明他说admin
+                //里面逻辑还没写 下周验证
+                if (interCenter.roleService.cAdmin(tenant, userName, rids)) {
+                    cAdmin = true;
+                }
+                //设置局部request
+                ReqUtils.set(request, uid, userName, rids, tenant, tid, cAdmin);
+
+                //如果请求的是超级管理员配置接口
+                if (request.getRequestURI().contains("/api/v1/admin") ||
+                        request.getRequestURI().contains("/api/v1/super-admin")) {
+                    if (!cAdmin) {
+                        //这里做控制
+                        JsonUtils.sendJsonMsg(response, JsonData.setResultError(Constants.HTTP_RESP_CODE, "你不是admin/无权操作"));
+                        return false;
+                    }
+                }
+                if (!tenant.equals("the-host")) {
+                    //切换租户
+                    DynamicDataSourceContextHolder.setDataSourceKey(tenant);
                 }
 
                 return true;

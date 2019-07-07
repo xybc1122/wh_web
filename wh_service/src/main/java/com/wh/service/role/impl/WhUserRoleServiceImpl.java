@@ -19,11 +19,7 @@ import com.wh.entity.role.WhUserRole;
 
 import com.wh.service.rp.IWhUserRolePermsService;
 import com.wh.service.ur.IWhUserRoleUserService;
-import com.wh.toos.Constants;
-import com.wh.utils.CheckUtils;
-import com.wh.utils.PageInfoUtils;
-import com.wh.utils.ReqUtils;
-import com.wh.utils.WrapperUtils;
+import com.wh.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * <p>
@@ -144,15 +141,28 @@ public class WhUserRoleServiceImpl extends ServiceImpl<WhUserRoleMapper, WhUserR
 
     @Override
     public boolean cAdmin(String tenant, String uName, String rids) {
+        Set<String> setRole;
         if (StringUtils.isBlank(rids)) {
             return false;
         }
         String adminKey = RedisService.redisAdminKey(uName, tenant);
-        //1 先去redis 拿看看有没有数据
-        String strKey = redisService.getStringKey(adminKey);
-        //2 如果没有 去数据库查
-        if (StringUtils.isBlank(strKey)) {
-
+        //TODO 1 先去redis 拿看看有没有数据
+        setRole = CollectionUtils.cStr(redisService.setMembers(adminKey));
+        // TODO 2 如果没有 去数据库查
+        if (setRole == null) {
+            //查询数据库
+            setRole = roleMapper.selSignList(rids);
+            if (setRole == null) {
+                return false;
+            }
+            //放到redis
+            redisService.sPush(adminKey, setRole);
+        }
+        for (String sign : setRole) {
+            //拿到之后比较是否是超级管理员
+            if (sign.equals("superAdmin")) {
+                return true;
+            }
         }
         return false;
     }

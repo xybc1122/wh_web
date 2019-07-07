@@ -71,6 +71,21 @@ public class ReqUtils {
     }
 
     /**
+     * 获得是否是超级管理员
+     *
+     * @return
+     */
+    public static boolean getCAdmin() {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes();
+        if (requestAttributes != null) {
+            HttpServletRequest request = requestAttributes.getRequest();
+            return (boolean) request.getAttribute("cAdmin");
+        }
+        return false;
+    }
+
+    /**
      * 获得用户名称
      *
      * @return

@@ -51,5 +51,13 @@ public interface IWhUserRoleService extends IService<WhUserRole> {
      */
     ResponseBase serviceDleRole(List<Integer> rids);
 
+    /**
+     * 判断是否是admin
+     *
+     * @param tenant
+     * @param uName
+     * @param rids
+     * @return
+     */
     boolean cAdmin(String tenant, String uName, String rids);
 }
