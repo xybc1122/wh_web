@@ -16,12 +16,6 @@ import java.util.Set;
  * @since 2019-06-17
  */
 public interface IWhUserPermsService extends IService<WhUserPerms> {
-
-    /**
-     * 通过角色去查询对应的权限
-     */
-    ResponseBase serviceRoleQueryPermission();
-
     /**
      * 通过角色 api url 去查询对应的 操作权限
      *
@@ -29,6 +23,12 @@ public interface IWhUserPermsService extends IService<WhUserPerms> {
      * @return
      */
     Set<String> serviceGetPermission(String rids, String apiUrl);
+
+
+    /**
+     * 通过角色去查询对应的权限
+     */
+    ResponseBase serviceRoleQueryPermission();
 
 
     /**

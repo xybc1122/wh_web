@@ -47,7 +47,44 @@ public class ConstantsConfig {
      * 幂等token 头标识
      */
     private String ideToken;
+    /**
+     * 文件上传路径
+     */
+    private String saveFilePath;
 
+    /**
+     * windows Linux 模板路径
+     */
+    private String fileW;
+    /**
+     * windows Linux 模板路径
+     */
+    private String fileL;
+
+
+    public String getFileW() {
+        return fileW;
+    }
+
+    public void setFileW(String fileW) {
+        this.fileW = fileW;
+    }
+
+    public String getFileL() {
+        return fileL;
+    }
+
+    public void setFileL(String fileL) {
+        this.fileL = fileL;
+    }
+
+    public String getSaveFilePath() {
+        return saveFilePath;
+    }
+
+    public void setSaveFilePath(String saveFilePath) {
+        this.saveFilePath = saveFilePath;
+    }
 
     public String getFbaEId() {
         return fbaEId;

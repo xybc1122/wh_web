@@ -20,7 +20,6 @@ public class ParentConfTable {
     /**
      * 备注
      */
-    @TableField(exist = false)
     private String remark;
 
     /**

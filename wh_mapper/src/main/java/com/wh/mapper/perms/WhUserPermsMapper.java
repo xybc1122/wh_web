@@ -21,6 +21,23 @@ public interface WhUserPermsMapper extends BaseMapper<WhUserPerms> {
 
 
     /**
+     * 查询 权限配置组
+     *
+     * @return
+     */
+    @SelectProvider(type = WhUserPermsProvider.class, method = "getPermissionAndOperating")
+    List<WhUserPerms> getPermissionAndOperating(@Param("entity") WhUserPerms whUserPerms);
+
+
+    /**
+     * 查询 权限配置组
+     *
+     * @return
+     */
+    @Select("SELECT`p_id`,`p_name`FROM `wh_user_perms` where is_delete=0 ")
+    List<WhUserPerms> roleQueryPermission();
+
+    /**
      * 通过角色 api url 去查询对应的 菜单权限
      *
      * @param rids
@@ -28,24 +45,6 @@ public interface WhUserPermsMapper extends BaseMapper<WhUserPerms> {
      */
     @SelectProvider(type = WhUserPermsProvider.class, method = "getPermission")
     Set<String> getPermission(@Param("rids") String rids, @Param("apiUrl") String apiUrl);
-
-
-    /**
-     * 查询 权限配置组
-     *
-     * @return
-     */
-    @SelectProvider(type = WhUserPermsProvider.class, method = "getPermissionAndOperating")
-    List<WhUserPerms> getPermissionAndOperating(@Param("entity") WhUserPerms whUserPerms, @Param("rids") String rids);
-
-
-    /**
-     * 查询 权限配置组
-     *
-     * @return
-     */
-    @SelectProvider(type = WhUserPermsProvider.class, method = "roleQueryPermission")
-    List<WhUserPerms> roleQueryPermission(@Param("rids") String rids);
 
 
 }

@@ -72,6 +72,7 @@ public class MybatisConfig {
         return globalConfig;
 
     }
+
     /**
      * 这个配置 sql 打印
      *

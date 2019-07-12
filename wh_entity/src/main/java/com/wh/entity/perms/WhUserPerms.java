@@ -51,7 +51,6 @@ public class WhUserPerms extends ParentConfTable implements Serializable {
     private List<WhUserPermsOperating> permsOperatingList;
 
 
-
     public List<WhUserPermsOperating> getPermsOperatingList() {
         return permsOperatingList;
     }

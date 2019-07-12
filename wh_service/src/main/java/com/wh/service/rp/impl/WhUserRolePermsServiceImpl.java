@@ -46,9 +46,12 @@ public class WhUserRolePermsServiceImpl extends ServiceImpl<WhUserRolePermsMappe
         //先新增角色
         WhUserRole role = new WhUserRole();
         role.setrName(rolePerms.getrName());
-        boolean roleResult = roleService.save(role);
-        CheckUtils.saveResult(roleResult);
-        CheckUtils.saveResult(this.saveBatch(setWhUserRolePerms(rolePerms.getrId(), rolePerms.getPerms())));
+
+        CheckUtils.saveResult(roleService.save(role));
+        //配置权限
+        CheckUtils.saveResult(this.saveBatch(setWhUserRolePerms(role.getRid(), rolePerms.getPerms())));
+
+
         return JsonData.setResultSuccess("success");
     }
 

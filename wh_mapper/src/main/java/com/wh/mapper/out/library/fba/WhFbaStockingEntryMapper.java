@@ -6,7 +6,7 @@ import com.wh.entity.out.library.fba.entry.WhFbaStockingEntry;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author 陈恩惠

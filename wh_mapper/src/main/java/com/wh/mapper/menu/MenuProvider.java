@@ -18,11 +18,7 @@ public class MenuProvider {
     public String findQueryMenuList() {
         SQL sql = new SQL();
         sql.SELECT(sqlKey + " FROM `wh_user_menu` AS m");
-        if (ReqUtils.getCAdmin()) {
-            //如果是admin 走这里
-            return sql.toString();
-        }
-        sql.LEFT_OUTER_JOIN("(SELECT m_id,r_id,t_id FROM `wh_user_role_menu` WHERE is_delete=0) AS rm ON m.menu_id=rm.m_id");
+        sql.LEFT_OUTER_JOIN("(SELECT m_id,r_id FROM `wh_user_role_menu` WHERE is_delete=0) AS rm ON m.menu_id=rm.m_id");
         sql.LEFT_OUTER_JOIN("(SELECT r_id FROM `wh_user_role` WHERE is_delete=0) AS r ON r.r_id=rm.r_id");
         sql.WHERE(StrUtils.in(ReqUtils.getRoleId(), "rm.r_id"));
         sql.WHERE("m.is_delete =0");

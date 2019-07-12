@@ -26,12 +26,12 @@ public interface WhUserRoleMapper extends BaseMapper<WhUserRole> {
      * @return
      */
     @SelectProvider(type = WhUserRoleProvider.class, method = "selRoleAndPerm")
-    List<WhUserRole> selRoleAndPerm(@Param("entity") WhUserRole role, @Param("rids") String rids);
+    List<WhUserRole> selRoleAndPerm(@Param("entity") WhUserRole role);
 
 
-    @SelectProvider(type = WhUserRoleProvider.class, method = "selRole")
-    List<WhUserRole> selRole(@Param("uid") Long uid, @Param("tid") Integer tid);
+    @Select("select `r_id`,`r_name`FROM `wh_user_role` where is_delete=0")
+    List<WhUserRole> selRole();
 
     @SelectProvider(type = WhUserRoleProvider.class, method = "selSignList")
-    Set<String> selSignList(String rids);
+    Set<String> selSignList(@Param("rids") String rids);
 }

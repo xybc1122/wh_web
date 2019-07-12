@@ -33,6 +33,6 @@ public class WhLogisticsServiceImpl extends ServiceImpl<WhLogisticsMapper, WhLog
     @Override
     public ResponseBase serviceGetLogisticsIdAndName() {
         List<WhLogistics> logisticsList = this.lambdaQuery().select(WhLogistics::getId, WhLogistics::getTransport).list();
-        return JsonData.setResultSuccess( mapperFacade.mapAsList(logisticsList, LogisticsDto.class));
+        return JsonData.setResultSuccess(mapperFacade.mapAsList(logisticsList, LogisticsDto.class));
     }
 }

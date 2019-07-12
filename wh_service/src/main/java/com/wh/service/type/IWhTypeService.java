@@ -5,7 +5,7 @@ import com.wh.entity.type.WhType;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author 陈恩惠

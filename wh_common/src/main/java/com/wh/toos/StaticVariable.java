@@ -36,11 +36,29 @@ public class StaticVariable {
      * 接口幂等token
      */
     public static String IDE_TOKEN;
+
+
     /**
      * 管理员reid key
      */
     public static String ADMIN;
 
+
+    /**
+     * 文件上传存放地址
+     */
+    public static String SAVE_FILE_PATH;
+
+
+    /**
+     * windows 模板路径
+     */
+    public static String FILE_W;
+
+    /**
+     * windows Linux 模板路径
+     */
+    public static String FILE_L;
 
     /**
      * 加载配置文件
@@ -53,5 +71,8 @@ public class StaticVariable {
         IDE_TOKEN = constantsConfig.getIdeToken();
         DB_E_ID = constantsConfig.getDbEId();
         FBA_E_ID = constantsConfig.getFbaEId();
+        SAVE_FILE_PATH = constantsConfig.getSaveFilePath();
+        FILE_W = constantsConfig.getFileW();
+        FILE_L = constantsConfig.getFileL();
     }
 }

@@ -16,11 +16,6 @@ public class LogisticsDto {
     private String transport;
 
 
-
-
-
-
-
     public Long getId() {
         return id;
     }

@@ -25,6 +25,16 @@ public interface Constants {
     String TRANSFER_KE = "transfer_ke";
 
     /**
+     * 开发者超级管理员 redis key
+     */
+    String SUPER_ADMIN = "super-admin";
+
+    /**
+     * 开发者超级管理员 redis key
+     */
+    String PERMISSION = "permission";
+
+    /**
      * 幂等key 到期时间
      */
     long EXPIRE_TIME_MINUTE = 60 * 3L;
@@ -82,15 +92,14 @@ public interface Constants {
      */
     String DELETE = "DELETE";
 
-    String SUPER_ADMIN = "super-admin";
     /**
-     * 文件上传存放地址
+     * feign请求php接口地址
      */
-    String SAVE_FILE_PATH = "E:/file/";
-//    /**
-//     * Linux文件上传存放地址
-//     */
-//    String SAVE_FILE_PATH = "/usr/local/filter/filePath/";
+    String PHP_ADD = "http://192.168.1.232:85";
+    /**
+     * feign请求php名称
+     */
+    String PHP_NAME = "php";
 
 
 }

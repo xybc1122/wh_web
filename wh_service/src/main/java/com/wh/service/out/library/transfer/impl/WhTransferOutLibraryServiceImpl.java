@@ -115,16 +115,8 @@ public class WhTransferOutLibraryServiceImpl extends ServiceImpl<WhTransferOutLi
         try {
             identifier = redisService.lockRedis(tNumber, Constants.maxWait, Constants.timeout);
 
-            //1先查询我的订单状态 如果正在执行流程中 不给更新状态
-            Integer executionStatus = outLibraryMapper.selExecutionStatus(tNumber);
-            if (executionStatus == null) {
-                //如果==null 说明没有此单号
-                return JsonData.setResultError("没有此单号");
-            }
-            if (executionStatus == 1) {
-                //如果==1 说明已经在执行流程
-                return JsonData.setResultError("此单正在流程执行中,不能修改状态");
-            }
+
+            cheNumber(tNumber);
 
             QueryWrapper<WhTransferOutLibraryEntry> eQuery;
             //如果 子id 不是null 或者 长度是0  就代表删除子表数据
@@ -154,6 +146,8 @@ public class WhTransferOutLibraryServiceImpl extends ServiceImpl<WhTransferOutLi
     @Override
     @Transactional
     public ResponseBase serviceUpOutLibraryStatus(WhTransferOutLibrary outLibrary) {
+        cheNumberIsNull(outLibrary.gettNumber(), outLibrary.getVersion());
+
         if (StringUtils.isBlank(outLibrary.gettNumber()) || outLibrary.getVersion() == null) {
             return JsonData.setResultError("参数 is null");
         }
@@ -161,20 +155,13 @@ public class WhTransferOutLibraryServiceImpl extends ServiceImpl<WhTransferOutLi
         try {
             identifier = redisService.lockRedis(outLibrary.gettNumber(), Constants.maxWait, Constants.timeout);
 
-            //1先查询我的订单状态 如果正在执行流程中 不给更新状态
-            Integer executionStatus = outLibraryMapper.selExecutionStatus(outLibrary.gettNumber());
-            if (executionStatus == null) {
-                //如果==null 说明没有此单号
-                return JsonData.setResultError("没有此单号");
-            }
-            if (executionStatus == 1) {
-                //如果==1 说明已经在执行流程
-                return JsonData.setResultError("此单正在流程执行中,不能修改状态");
-            }
-            UpdateWrapper<WhTransferOutLibrary> upWrapper = new UpdateWrapper<>();
-            final Integer version = outLibrary.getVersion();
+            cheNumber(outLibrary.gettNumber());
 
-            upWrapper.set("status", 1).set("modify_user", ReqUtils.getUserName()).
+
+            UpdateWrapper<WhTransferOutLibrary> upWrapper = new UpdateWrapper<>();
+            Integer version = outLibrary.getVersion();
+
+            upWrapper.set("status", 1).set("modify_user", ReqUtils.getUserName()).set("way_number", outLibrary.getWayNumber()).
                     set("modify_date", new Date().getTime()).set("version", version + 1).set("execution_status", 1);
             upWrapper.eq("t_number", outLibrary.gettNumber()).eq("version", version);
             CheckUtils.saveResult(this.update(null, upWrapper));
@@ -210,27 +197,9 @@ public class WhTransferOutLibraryServiceImpl extends ServiceImpl<WhTransferOutLi
         List<WhTransferOutLibraryEntry> entryList = outLibrary.getEntry();
         // P1 先调用php 接口查询一下库存是否充足
         for (WhTransferOutLibraryEntry e : entryList) {
-            ResponseBase base = feignService.checkAsinQ(e.getSku(), outLibrary.getrWarId());
-            //如果是-1 说明没找到
-            if (base.getCode() == -1) {
-                return JsonData.setResultError(base.getMsg());
-            }
-            //如果不是 校验下 数目
-            JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(base.getData()));
-
-            if (!(jsonObject.containsKey("stock"))) {
-                //如果没有
-                return JsonData.setResultError("stock is null");
-            }
-
-            if (!(jsonObject.get("stock") instanceof String)) {
-                return JsonData.setResultError("stock 类型 转换异常 期待的是String ");
-            }
-
-            String stock = (String) jsonObject.get("stock");
-            //这里判断 是否有足够的库存转出
-            if (e.getQuantity() > Integer.parseInt(stock)) {
-                return JsonData.setResultError(e.getSku() + "的数量不足,操作数量:" + e.getQuantity() + "库存数量:" + stock);
+            String cheResult = cheSkuQuantity(e.getQuantity(), e.getSku());
+            if (cheResult != null) {
+                return JsonData.setResultError(cheResult);
             }
         }
 
@@ -248,6 +217,54 @@ public class WhTransferOutLibraryServiceImpl extends ServiceImpl<WhTransferOutLi
         CheckUtils.saveResult(outLibraryEntryService.saveBatch(entryList));
 
         return JsonData.setResultSuccess("success");
+    }
+
+
+    public void cheNumberIsNull(String tNumber, Integer version) {
+        if (StringUtils.isBlank(tNumber) || version == null) {
+            throw new LsException("参数 is null");
+        }
+    }
+
+
+    public String cheSkuQuantity(Integer quantity, String sku) {
+        ResponseBase base = feignService.checkAsinQ(sku);
+        //如果是-1 说明没找到
+        if (base.getCode() == -1) {
+            return base.getMsg();
+        }
+        //如果不是 校验下 数目
+        JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(base.getData()));
+
+        if (!(jsonObject.containsKey("stock"))) {
+            //如果没有
+            return "stock is null";
+        }
+
+        if (!(jsonObject.get("stock") instanceof String)) {
+            return "stock 类型 转换异常 期待的是String ";
+        }
+
+        String stock = (String) jsonObject.get("stock");
+        //这里判断 是否有足够的库存转出
+        if (quantity > Integer.parseInt(stock)) {
+            return sku + "的数量不足,操作数量:" + quantity + "库存数量:" + stock;
+        }
+        return null;
+    }
+
+
+    public void cheNumber(String tNumber) {
+        //1先查询我的订单状态 如果正在执行流程中 不给更新状态
+        Integer executionStatus = outLibraryMapper.selExecutionStatus(tNumber);
+        if (executionStatus == null) {
+            //如果==null 说明没有此单号
+            throw new LsException("没有此单号");
+        }
+        if (executionStatus == 1) {
+            //如果==1 说明已经在执行流程
+            throw new LsException("此单正在流程执行中,不能修改状态");
+        }
     }
 
 }

@@ -30,7 +30,6 @@ import java.util.List;
 public class WhUserRoleMenuServiceImpl extends ServiceImpl<WhUserRoleMenuMapper, WhUserRoleMenu> implements IWhUserRoleMenuService {
 
 
-
     @Override
     public ResponseBase saveRoleMenu(Long rid, List<Integer> menus) {
         WhUserRoleMenu whUserRoleUser;

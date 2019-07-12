@@ -31,8 +31,4 @@ public interface IWhSiteService extends IService<WhSite> {
     Integer serviceSelIdByName(String site);
 
 
-
-
-
-
 }

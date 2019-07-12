@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
+import com.wh.entity.box.Box;
 import com.wh.entity.out.library.fba.WhFbaStocking;
 import com.wh.entity.out.library.fba.entry.WhFbaStockingEntry;
 import com.wh.mapper.out.library.fba.WhFbaStockingMapper;
@@ -13,13 +14,13 @@ import com.wh.service.out.library.fba.IWhFbaStockingService;
 import com.wh.store.BindingResultStore;
 import com.wh.toos.StaticVariable;
 import com.wh.utils.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -67,17 +68,48 @@ public class WhFbaStockingServiceImpl extends ServiceImpl<WhFbaStockingMapper, W
         if (!CollectionUtils.isList(stockingEntries)) {
             return whFbaStockings;
         }
-        //5设置属性 返回集合
-        for (int i = 0; i < fidList.size(); i++) {
+        //这里拼接  成箱号集合
+        List<Box> boxList = new ArrayList<>();
+        for (WhFbaStockingEntry sEntry : stockingEntries) {
+            if (StringUtils.isNotBlank(sEntry.getTrackingNumber())) {
+                boxList.add(new Box(sEntry.getTrackingNumber(), sEntry.getSpecification(), sEntry.getSn()));
+            }
+        }
+        // 继续判断 箱号是否有数据
+        if (!CollectionUtils.isList(boxList)) {
+            return whFbaStockings;
+        }
+
+        //TODO 这里去重   这里后期都要封装掉
+        Map<String, Box> map = new HashMap<>();
+        for (Box box : boxList) {
+            map.put(box.getTrackingNumber(), box);
+        }
+        boxList.clear();
+        boxList.addAll(map.values());
+
+
+        //5设置 箱号跟sku列表数据 返回集合
+        for (Box b : boxList) {
             List<WhFbaStockingEntry> listNe = new ArrayList<>();
-            String nid = fidList.get(i);
             for (WhFbaStockingEntry se : stockingEntries) {
-                if (nid.equals(se.getSn())) {
+                if (b.getSn().equals(se.getSn()) && b.getTrackingNumber().equals(se.getTrackingNumber())) {
                     listNe.add(se);
                 }
             }
-            whFbaStockings.get(i).setEntry(listNe);
+            b.setEntry(listNe);
         }
+        //6 返回最终集合
+        for (int i = 0; i < fidList.size(); i++) {
+            List<Box> newBox = new ArrayList<>();
+            for (Box b : boxList) {
+                if (fidList.get(i).equals(b.getSn())) {
+                    newBox.add(b);
+                }
+            }
+            whFbaStockings.get(i).setBoxes(newBox);
+        }
+
         return whFbaStockings;
     }
 

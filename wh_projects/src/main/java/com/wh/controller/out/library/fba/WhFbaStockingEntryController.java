@@ -57,7 +57,6 @@ public class WhFbaStockingEntryController {
     @PermissionCheck(type = Constants.MODIFY)
     @PutMapping("/upOrDelFbaStockingEntry")
     public ResponseBase upFbaStocking(@RequestBody Map<String, Object> objectMap) {
-
         return entryService.upOrWhFbaStockingEntry(objectMap);
     }
 

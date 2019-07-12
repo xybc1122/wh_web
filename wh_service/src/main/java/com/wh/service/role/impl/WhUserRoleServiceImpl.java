@@ -59,7 +59,7 @@ public class WhUserRoleServiceImpl extends ServiceImpl<WhUserRoleMapper, WhUserR
 
     @Override
     public ResponseBase serviceSelRole() {
-        return JsonData.setResultSuccess(roleMapper.selRole(ReqUtils.getUid(), ReqUtils.getTid()));
+        return JsonData.setResultSuccess(roleMapper.selRole());
     }
 
     @Override
@@ -109,7 +109,7 @@ public class WhUserRoleServiceImpl extends ServiceImpl<WhUserRoleMapper, WhUserR
     @Override
     public ResponseBase serviceSelRoleAndPerm(WhUserRole role) {
         PageInfoUtils.setPage(role.getPageSize(), role.getCurrentPage());
-        return PageInfoUtils.pageResult(roleMapper.selRoleAndPerm(role, ReqUtils.getRoleId()), null);
+        return PageInfoUtils.pageResult(roleMapper.selRoleAndPerm(role), null);
     }
 
     @Override
@@ -146,21 +146,24 @@ public class WhUserRoleServiceImpl extends ServiceImpl<WhUserRoleMapper, WhUserR
             return false;
         }
         String adminKey = RedisService.redisAdminKey(uName, tenant);
-        //TODO 1 先去redis 拿看看有没有数据
-        setRole = CollectionUtils.cStr(redisService.setMembers(adminKey));
-        // TODO 2 如果没有 去数据库查
-        if (setRole == null) {
+        // 1 先去redis 拿看看有没有数据
+        setRole = redisService.setMembers(adminKey);
+        // 2 如果没有 去数据库查
+        if (setRole == null || setRole.size() == 0) {
             //查询数据库
             setRole = roleMapper.selSignList(rids);
             if (setRole == null) {
                 return false;
             }
-            //放到redis
-            redisService.sPush(adminKey, setRole);
+            for (String sign : setRole) {
+                //放到redis set
+                redisService.sPush(adminKey, sign);
+            }
         }
+
         for (String sign : setRole) {
             //拿到之后比较是否是超级管理员
-            if (sign.equals("superAdmin")) {
+            if (sign.equals("super-admin")) {
                 return true;
             }
         }

@@ -17,6 +17,7 @@ public class JwtUtils {
     private static final String APP_SECRET = "wh-df2e8562-49f5-48bf-a554-806efd5f2fe7";
 
     private static final String SERVICE = "sso_server";
+
     /**
      * 校验token 解密
      *

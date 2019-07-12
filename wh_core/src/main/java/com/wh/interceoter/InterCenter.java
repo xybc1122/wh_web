@@ -57,6 +57,9 @@ public class InterCenter implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
+        String ip = IpUtils.getIpAddr(request);
+        //这里判断频繁请求 api  限制
+        if (!accessLimit(request, response, ip)) return false;
 
         //判斷地址栏中是否有携带token参数
         String token = request.getHeader(StaticVariable.SSO_TOKEN);
@@ -77,8 +80,6 @@ public class InterCenter implements HandlerInterceptor {
 
                 String rids = claim.get("rids") == null ? "" : claim.get("rids").asString();
 
-                boolean cAdmin = false;
-
 
                 String stringKey = interCenter.redisService.getStringKey(RedisService.redisTokenKey(uid.toString(), tenant));
                 if (StringUtils.isBlank(stringKey) || !token.equals(stringKey)) {
@@ -86,22 +87,16 @@ public class InterCenter implements HandlerInterceptor {
                             setResultError(Constants.HTTP_RESP_CODE, "令牌过期/已有人登陆此账号,请重新登陆"));
                     return false;
                 }
-                //这里判断频繁请求 api  限制
-                if (!accessLimit(request, response, uid)) return false;
-
                 //如果是用户logout
                 if (request.getRequestURI().equals(SSOClientUtils.LOGOUT_PATH)) {
                     response.sendRedirect(SSOClientUtils.SERVER_URL + SSOClientUtils.LOGOUT_PATH + "?uid=" + uid + "&tenant=" + tenant);
                     return false;
                 }
+                //切换租户
+                DynamicDataSourceContextHolder.setDataSourceKey(tenant);
 
                 // 这里校验是否是admin 如果返回是true 那就是说明他说admin
-                //里面逻辑还没写 下周验证
-                if (interCenter.roleService.cAdmin(tenant, userName, rids)) {
-                    cAdmin = true;
-                }
-                //设置局部request
-                ReqUtils.set(request, uid, userName, rids, tenant, tid, cAdmin);
+                boolean cAdmin = interCenter.roleService.cAdmin(tenant, userName, rids);
 
                 //如果请求的是超级管理员配置接口
                 if (request.getRequestURI().contains("/api/v1/admin") ||
@@ -112,10 +107,8 @@ public class InterCenter implements HandlerInterceptor {
                         return false;
                     }
                 }
-                if (!tenant.equals("the-host")) {
-                    //切换租户
-                    DynamicDataSourceContextHolder.setDataSourceKey(tenant);
-                }
+                //设置局部request
+                ReqUtils.set(request, uid, userName, rids, tenant, tid,token);
 
                 return true;
             }
@@ -126,13 +119,13 @@ public class InterCenter implements HandlerInterceptor {
         return false;
     }
 
-    private boolean accessLimit(HttpServletRequest request, HttpServletResponse response, Long uid) {
+    private boolean accessLimit(HttpServletRequest request, HttpServletResponse response, String ip) {
         // seconds是多少秒内可以访问多少次
         long seconds = 10;
         //5次
         int maxCount = 5;
         String key = request.getRequestURI();
-        String tKey = key + "_" + uid;
+        String tKey = key + "_" + ip;
         //从redis中获取用户访问的次数
         String count = interCenter.redisService.getStringKey(tKey);
         if (count == null) {
@@ -148,7 +141,6 @@ public class InterCenter implements HandlerInterceptor {
         }
         return true;
     }
-
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {

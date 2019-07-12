@@ -5,7 +5,7 @@ import com.wh.entity.upload.WhUserUpload;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author 陈恩惠

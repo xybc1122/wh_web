@@ -21,6 +21,7 @@ import java.util.List;
 public class JsonUtils {
 
     private static Gson gson = new Gson();
+
     /**
      * 响应数据给前端
      *
@@ -37,6 +38,7 @@ public class JsonUtils {
             e.printStackTrace();
         }
     }
+
     /**
      * 上传文件 文件跟数据库对比失败 前端设置返回
      *

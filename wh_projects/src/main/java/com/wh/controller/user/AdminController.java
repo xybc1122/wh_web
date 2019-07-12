@@ -3,7 +3,6 @@ package com.wh.controller.user;
 import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
 import com.wh.customize.IdempotentCheck;
-import com.wh.customize.PermissionCheck;
 import com.wh.customize.RedisLock;
 import com.wh.entity.dto.DelIdsDto;
 import com.wh.entity.dto.UserDto;
@@ -11,6 +10,8 @@ import com.wh.entity.perms.WhUserPerms;
 import com.wh.entity.role.WhUserRole;
 import com.wh.entity.rp.WhUserRolePerms;
 import com.wh.entity.user.UserInfo;
+import com.wh.service.api.IWhUserApiService;
+import com.wh.service.ot.IWhUserOperatingTypeService;
 import com.wh.service.perms.IWhUserPermsService;
 import com.wh.service.po.IWhUserPermsOperatingService;
 import com.wh.service.role.IWhUserRoleService;
@@ -54,6 +55,32 @@ public class AdminController {
     @Autowired
     private IWhUserPermsOperatingService permsOperatingService;
 
+    @Autowired
+    private IWhUserOperatingTypeService operatingTypeService;
+
+    @Autowired
+    private IWhUserApiService apiService;
+
+    /**
+     * 查询通过角色获得权限列表类型
+     *
+     * @return
+     */
+    @GetMapping("/selOperatingType")
+    public ResponseBase selOperatingType() {
+        return JsonData.setResultSuccess(operatingTypeService.selOperatingType());
+    }
+
+    /**
+     * 查询通过权限列表获得配置的权限的操作路径
+     *
+     * @return
+     */
+    @GetMapping("/selApiList")
+    public ResponseBase selApiList() {
+        return JsonData.setResultSuccess(apiService.serviceSelApiInfo());
+    }
+
 
     /**
      * @api {POST} api/v1/admin/getByUserInfoList 查询用户信息
@@ -85,7 +112,6 @@ public class AdminController {
      * {"code":"-1","msg":"error","data":"{}"}
      */
     @PostMapping("/getByUserInfoList")
-    @PermissionCheck(type = Constants.VIEW)
     public ResponseBase getByUserInfoList(@RequestBody UserDto userDto) {
         return userService.getByUserInfoList(userDto);
     }
@@ -148,7 +174,6 @@ public class AdminController {
      */
     @PutMapping("/upUserAndRole")
     @IdempotentCheck(type = Constants.IDEMPOTENT_CHECK_HEADER)
-    @PermissionCheck(type = Constants.MODIFY)
     public ResponseBase upUserAndRole(@RequestBody UserInfo user) {
         return ruService.upUserAndRole(user);
     }
@@ -176,7 +201,6 @@ public class AdminController {
      * {"code":"-1","msg":"error","data":"{}"}
      */
     @DeleteMapping("/delUserAndRole")
-    @PermissionCheck(type = Constants.DELETE)
     public ResponseBase delUserAndRole(@RequestBody DelIdsDto delIdsDto) {
         return userService.delUserInfo(delIdsDto.getIdDelList());
     }
@@ -211,7 +235,6 @@ public class AdminController {
      */
     @PostMapping("/insertUserInfo")
     @IdempotentCheck(type = Constants.IDEMPOTENT_CHECK_HEADER)
-    @PermissionCheck(type = Constants.SAVE)
     @RedisLock(key = Constants.SAVE_USER, maxWait = Constants.maxWait, timeout = Constants.timeout)
     public ResponseBase insertUserInfo(@Valid @RequestBody UserInfo userInfo, BindingResult bindingResult) {
         return userService.insertUserInfo(userInfo, bindingResult);
@@ -240,7 +263,6 @@ public class AdminController {
      * {"code":"-1","msg":"error","data":"{}"}
      */
     @GetMapping("/getByRoleList")
-    @PermissionCheck(type = Constants.VIEW)
     public ResponseBase getByRoleList() {
         return roleService.serviceSelRole();
     }
@@ -269,7 +291,6 @@ public class AdminController {
      * {"code":"-1","msg":"error","data":"{}"}
      */
     @DeleteMapping("/dleRole")
-    @PermissionCheck(type = Constants.DELETE)
     public ResponseBase dleRole(@RequestBody DelIdsDto delIdsDto) {
         return roleService.serviceDleRole(delIdsDto.getIdDelList());
     }
@@ -300,7 +321,6 @@ public class AdminController {
      * {"code":"-1","msg":"error","data":"{}"}
      */
     @PostMapping("/saveRoleAndMenu")
-    @PermissionCheck(type = Constants.SAVE)
     @IdempotentCheck(type = Constants.IDEMPOTENT_CHECK_HEADER)
     public ResponseBase saveRoleAndMenu(@RequestBody WhUserRole role) {
         return roleService.serviceSaveRoleAndMenu(role);
@@ -335,7 +355,6 @@ public class AdminController {
      * {"code":"-1","msg":"error","data":"{}"}
      */
     @PutMapping("/upRoleAndMenu")
-    @PermissionCheck(type = Constants.MODIFY)
     @IdempotentCheck(type = Constants.IDEMPOTENT_CHECK_HEADER)
     public ResponseBase upRoleAndMenu(@RequestBody WhUserRole role) {
         return roleService.serviceUpRoleAndMenu(role);
@@ -367,7 +386,6 @@ public class AdminController {
      * {"code":"-1","msg":"error","data":"{}"}
      */
     @PostMapping("/saveRoleAndPerms")
-    @PermissionCheck(type = Constants.SAVE)
     @IdempotentCheck(type = Constants.IDEMPOTENT_CHECK_HEADER)
     public ResponseBase saveRoleAndPerms(@RequestBody WhUserRolePerms rolePerms) {
         return rolePermsService.serviceSaveRoleAndPerms(rolePerms);
@@ -399,7 +417,6 @@ public class AdminController {
      * {"code":"-1","msg":"error","data":"{}"}
      */
     @PutMapping("/upAndDelRoleAndPerms")
-    @PermissionCheck(type = Constants.MODIFY)
     @IdempotentCheck(type = Constants.IDEMPOTENT_CHECK_HEADER)
     public ResponseBase upAdnDelRoleAndPerms(@RequestBody WhUserRolePerms rolePerms) {
         return rolePermsService.serviceUpAdnDelRoleAndPerms(rolePerms);
@@ -428,7 +445,6 @@ public class AdminController {
      * {"code":"-1","msg":"error","data":"{}"}
      */
     @PostMapping("/getPermissionAndOperating")
-    @PermissionCheck(type = Constants.VIEW)
     public ResponseBase getPermissionAndOperating(@RequestBody WhUserPerms whUserPerms) {
         return permsService.serviceGetPermissionAndOperating(whUserPerms);
     }
@@ -455,7 +471,6 @@ public class AdminController {
      * {"code":"-1","msg":"error","data":"{}"}
      */
     @PostMapping("/getRoleAndPerm")
-    @PermissionCheck(type = Constants.VIEW)
     public ResponseBase getRoleAndPerm(@RequestBody WhUserRole role) {
         return roleService.serviceSelRoleAndPerm(role);
     }
@@ -483,7 +498,6 @@ public class AdminController {
      * {"code":"-1","msg":"error","data":"{}"}
      */
     @GetMapping("/findByRoleQueryPermission")
-    @PermissionCheck(type = Constants.VIEW)
     public ResponseBase roleQueryPermission() {
         return permsService.serviceRoleQueryPermission();
     }
@@ -512,7 +526,6 @@ public class AdminController {
      * {"code":"-1","msg":"error","data":"{}"}
      */
     @DeleteMapping("/delPermsAndOperating")
-    @PermissionCheck(type = Constants.DELETE)
     public ResponseBase dlePermsAndOperating(@RequestBody DelIdsDto delIdsDto) {
         return permsService.serviceDelPermissionAndOperating(delIdsDto.getIdDelList());
     }
@@ -542,7 +555,6 @@ public class AdminController {
      * {"code":"-1","msg":"error","data":"{}"}
      */
     @PostMapping("/savePermissionOperating")
-    @PermissionCheck(type = Constants.SAVE)
     @IdempotentCheck(type = Constants.IDEMPOTENT_CHECK_HEADER)
     public ResponseBase savePermissionOperating(@RequestBody WhUserPerms userPerms) {
         return permsOperatingService.serviceSavePermsOperating(userPerms);
@@ -579,7 +591,6 @@ public class AdminController {
      */
     @PutMapping("/upPermsAndOperating")
     @IdempotentCheck(type = Constants.IDEMPOTENT_CHECK_HEADER)
-    @PermissionCheck(type = Constants.MODIFY)
     public ResponseBase upPermsAndOperating(@RequestBody WhUserPerms whUserPerms) {
         return permsOperatingService.serviceUpPermsAndOperating(whUserPerms);
     }

@@ -75,7 +75,6 @@ public class FileDealWithController {
     @IdempotentCheck(type = Constants.IDEMPOTENT_CHECK_HEADER)
     @PostMapping("/fileDealWith")
     public List<ResponseBase> fileDealWith(@RequestBody WhUserUpload upload) {
-
         return fileDealWithService.serviceFileDealWith(upload);
     }
 }

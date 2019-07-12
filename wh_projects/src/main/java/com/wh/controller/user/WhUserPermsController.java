@@ -33,4 +33,5 @@ public class WhUserPermsController {
         return JsonData.setResultSuccess(userPermsService.serviceGetPermission(ReqUtils.getRoleId(), apiUrl));
 
     }
+
 }

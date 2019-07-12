@@ -14,7 +14,7 @@ public class WhFbaStockingProvider {
     public String findQueryFbaList(WhFbaStocking whFbaStocking) {
         SQL sql = new SQL();
         String alias = "fs";
-        sql.SELECT("l.transport,s.`site`,a.`account`,"+alias+".create_date," + alias + ".account_id," + alias + ".site_id,"
+        sql.SELECT("l.transport,s.`site`,a.`account`," + alias + ".create_date," + alias + ".account_id," + alias + ".site_id,"
                 + alias + ".version," + alias + ".`id`, `single_number`, `fs_state`," +
                 "`d_information`," + alias + ".`transport_id`,`n_of_boxes`," + alias + ".total_amount," +
                 "" + alias + ".total_price," + alias + ".record_no\n" +

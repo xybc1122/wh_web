@@ -157,18 +157,19 @@ public class WhTransferOutLibraryController {
     @PutMapping("/upTransferState")
     @PermissionCheck(type = Constants.MODIFY)
     @IdempotentCheck(type = Constants.IDEMPOTENT_CHECK_HEADER)
-    @HystrixCommand(fallbackMethod = "getPhpHystrix")
+    @HystrixCommand(fallbackMethod = "upTransferStateHystrix")
     public ResponseBase upTransferState(@RequestBody WhTransferOutLibrary outLibrary) {
         return outLibraryService.serviceUpOutLibraryStatus(outLibrary);
     }
 
     //注意，方法签名一定要要和api方法一致  熔断
-    private ResponseBase getPhpHystrix(WhTransferOutLibrary outLibrary) {
+    private ResponseBase upTransferStateHystrix(WhTransferOutLibrary outLibrary) {
 
         System.out.println("这里可以配置 redis 发送短信 异常报警");
 
-        return JsonData.setResultError("操作人数太多，您被挤出来了，稍等重试");
+        return JsonData.setResultError("调用php接口 失败");
     }
+
 
 
 }

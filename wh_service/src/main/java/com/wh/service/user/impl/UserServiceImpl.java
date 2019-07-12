@@ -46,7 +46,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserInfo> implement
     private MapperFacade mapperFacade;
 
 
-
     @Autowired
     private IWhUserRoleUserService ruUserService;
 
@@ -125,25 +124,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserInfo> implement
         return JsonData.setResultSuccess("success");
     }
 
-    @Override
-    public String insertUserInfoAndTenant(UserInfo user, BindingResult bindingResult) {
-        //校验参数
-        String strBinding = BindingResultStore.bindingResult(bindingResult);
-        if (strBinding != null) return strBinding;
-        if (user.gettId() == null || StringUtils.isBlank(user.getTenant())) {
-
-            return "租户id/租户标识 is null";
-        }
-        //到这里先去查查看有没有名字相同的
-        if (userMapper.selUserIsDelete(user.getUserName()) != null) {
-            return "添加名字重复";
-        }
-
-        //新增用户
-        CheckUtils.saveResult(userMapper.insert(user));
-
-        return null;
-    }
 
     @Override
     @Transactional

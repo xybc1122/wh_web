@@ -55,32 +55,6 @@ public class FbaStockingEntryDto {
      */
     private Integer version;
 
-
-    /**
-     * 跟踪号
-     */
-    private String trackingNumber;
-    /**
-     * 规格
-     */
-    private String specification;
-
-    public String getTrackingNumber() {
-        return trackingNumber;
-    }
-
-    public void setTrackingNumber(String trackingNumber) {
-        this.trackingNumber = trackingNumber;
-    }
-
-    public String getSpecification() {
-        return specification;
-    }
-
-    public void setSpecification(String specification) {
-        this.specification = specification;
-    }
-
     public Integer getVersion() {
         return version;
     }

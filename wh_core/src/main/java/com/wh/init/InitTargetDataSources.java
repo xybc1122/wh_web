@@ -1,18 +1,21 @@
 package com.wh.init;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.wh.base.ApplicationContextRegister;
+import com.wh.base.ResponseBase;
 import com.wh.dds.DynamicDataSource;
-import com.wh.entity.tenant.WhWarehouseTenant;
-import com.wh.service.tenant.IWhWarehouseTenantService;
+import com.wh.service.feign.TenantFeignClient;
+import com.wh.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import javax.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @ClassName com.wh.init.InitTargetDataSources
@@ -26,27 +29,42 @@ public class InitTargetDataSources implements CommandLineRunner {
 
 
     @Autowired
-    private IWhWarehouseTenantService tenantService;
+    private TenantFeignClient feignClient;
+
+    @Autowired
+    private DynamicDataSource dynamicDataSource;
+
+    private static InitTargetDataSources targetDataSources;
+    //通过@PostConstruct实现初始化bean之前进行的操作
+    @PostConstruct
+    public void init() {
+
+        targetDataSources = this;
+    }
+
+    //通过@PostConstruct实现初始化bean之前进行的操作
 
 
     @Override
     public void run(String... args) {
-        System.out.println("测试");
-        List<WhWarehouseTenant> tenantList = tenantService.list();
-        DynamicDataSource dynamicDataSource = ApplicationContextRegister.getBean(DynamicDataSource.class);
-        Map<Object, Object> dataSourceMap = tenantList.stream().collect(Collectors.toMap(
-                WhWarehouseTenant::getTenant, tenant -> {
-                    DruidDataSource druidDataSource = new DruidDataSource();
-                    druidDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-                    druidDataSource.setUrl(tenant.getDbUrl());
-                    druidDataSource.setUsername(tenant.getDbName());
-                    druidDataSource.setPassword(tenant.getDbPwd());
-                    druidDataSource.setDbType("com.alibaba.druid.pool.DruidDataSource");
-                    return druidDataSource;
-                }
-        ));
-        dynamicDataSource.setDataSources(dataSourceMap);
-        dynamicDataSource.afterPropertiesSet();
-        System.out.println(dynamicDataSource);
+        ResponseBase tenantList = feignClient.getTenantList();
+        JSONArray jsonList = JsonUtils.getJsonArr(tenantList.getData());
+        Map<Object, Object> dataSourceMap = new HashMap<>();
+        for (Object obj : jsonList) {
+            JSONObject t = JSONObject.parseObject(JsonUtils.getJsonObj(obj));
+            DruidDataSource druidDataSource = new DruidDataSource();
+            druidDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+            String URL = "jdbc:mysql://%s/%s?useUnicode=true&nullCatalogMeansCurrent=true&characterEncoding=utf-8&useSSL=false";
+            druidDataSource.setUrl(String.format(URL, t.get("dbIp"), t.get("dbDatabase")));
+            druidDataSource.setUsername(t.get("dbName").toString());
+            druidDataSource.setPassword(t.get("dbPwd").toString());
+            druidDataSource.setDbType("com.alibaba.druid.pool.DruidDataSource");
+            dataSourceMap.put(t.get("tenant"), druidDataSource);
+
+        }
+        targetDataSources.dynamicDataSource.setDataSources(dataSourceMap);
+        targetDataSources.dynamicDataSource.afterPropertiesSet();
+        System.out.println(dataSourceMap);
     }
+
 }

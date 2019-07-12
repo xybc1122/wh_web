@@ -1,4 +1,5 @@
 package com.wh.base;
+
 import com.wh.toos.Constants;
 import org.springframework.stereotype.Component;
 

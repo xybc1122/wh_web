@@ -10,6 +10,7 @@ import com.wh.entity.rp.WhUserRolePerms;
 import com.wh.mapper.perms.WhUserPermsMapper;
 import com.wh.service.perms.IWhUserPermsService;
 import com.wh.service.po.IWhUserPermsOperatingService;
+import com.wh.service.redis.RedisService;
 import com.wh.service.rp.IWhUserRolePermsService;
 import com.wh.utils.CheckUtils;
 import com.wh.utils.PageInfoUtils;
@@ -39,25 +40,45 @@ public class WhUserPermsServiceImpl extends ServiceImpl<WhUserPermsMapper, WhUse
     private IWhUserRolePermsService rolePermsService;
     @Autowired
     private IWhUserPermsOperatingService permsOperatingService;
+    @Autowired
+    private RedisService redisService;
 
     @Override
     public ResponseBase serviceRoleQueryPermission() {
 
 
-        return JsonData.setResultSuccess(permsMapper.roleQueryPermission(ReqUtils.getRoleId()));
-    }
-
-    @Override
-    public Set<String> serviceGetPermission(String rids, String apiUrl) {
-        return permsMapper.getPermission(rids, apiUrl);
+        return JsonData.setResultSuccess(permsMapper.roleQueryPermission());
     }
 
     @Override
     public ResponseBase serviceGetPermissionAndOperating(WhUserPerms whUserPerms) {
         PageInfoUtils.setPage(whUserPerms.getPageSize(), whUserPerms.getCurrentPage());
-        return PageInfoUtils.pageResult(permsMapper.getPermissionAndOperating(whUserPerms, ReqUtils.getRoleId()), null);
+        //
+
+
+        return PageInfoUtils.pageResult(permsMapper.getPermissionAndOperating(whUserPerms), null);
     }
 
+    @Override
+    public Set<String> serviceGetPermission(String rids, String apiUrl) {
+        //这里放入缓存
+
+        String permKey = RedisService.redisPermKey(ReqUtils.getUid(), ReqUtils.getTenant());
+
+        Set<String> setRedis = redisService.setMembers(permKey);
+        if (setRedis == null || setRedis.size() <= 0) {
+            //去数据库查询
+            Set<String> setSql = permsMapper.getPermission(rids, apiUrl);
+            if (setSql == null) {
+                return null;
+            }
+            for (String str : setSql) {
+                redisService.sPush(permKey, str);
+            }
+            return setSql;
+        }
+        return setRedis;
+    }
 
     @Override
     public ResponseBase serviceDelPermissionAndOperating(List<Integer> pids) {

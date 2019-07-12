@@ -74,9 +74,9 @@ public class FbaStockingDto {
 
 
     /**
-     * 条目表
+     * 箱子表
      */
-    private List<FbaStockingEntryDto> entry;
+    private List<BoxDto> boxes;
 
     /**
      * 账号
@@ -241,12 +241,12 @@ public class FbaStockingDto {
         this.shippingTime = shippingTime;
     }
 
-    public List<FbaStockingEntryDto> getEntry() {
-        return entry;
+    public List<BoxDto> getBoxes() {
+        return boxes;
     }
 
-    public void setEntry(List<FbaStockingEntryDto> entry) {
-        this.entry = entry;
+    public void setBoxes(List<BoxDto> boxes) {
+        this.boxes = boxes;
     }
 
     public String getAccount() {

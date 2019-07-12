@@ -4,6 +4,7 @@ package com.wh.service.rp;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wh.base.ResponseBase;
 import com.wh.entity.rp.WhUserRolePerms;
+
 /**
  * <p>
  * 服务类
@@ -28,8 +29,6 @@ public interface IWhUserRolePermsService extends IService<WhUserRolePerms> {
      * @return
      */
     ResponseBase serviceUpAdnDelRoleAndPerms(WhUserRolePerms rolePerms);
-
-
 
 
 }

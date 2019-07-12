@@ -71,21 +71,6 @@ public class ReqUtils {
     }
 
     /**
-     * 获得是否是超级管理员
-     *
-     * @return
-     */
-    public static boolean getCAdmin() {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
-                .getRequestAttributes();
-        if (requestAttributes != null) {
-            HttpServletRequest request = requestAttributes.getRequest();
-            return (boolean) request.getAttribute("cAdmin");
-        }
-        return false;
-    }
-
-    /**
      * 获得用户名称
      *
      * @return
@@ -116,6 +101,24 @@ public class ReqUtils {
             String rId = (String) request.getAttribute("rids");
             if (StringUtils.isNotBlank(rId)) {
                 return rId;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获得用户角色ID
+     *
+     * @return
+     */
+    public static String getSsoToken() {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes();
+        if (requestAttributes != null) {
+            HttpServletRequest request = requestAttributes.getRequest();
+            String ssoToken = (String) request.getAttribute("ssoToken");
+            if (StringUtils.isNotBlank(ssoToken)) {
+                return ssoToken;
             }
         }
         return null;
@@ -181,12 +184,12 @@ public class ReqUtils {
      * @param uId
      * @param uName
      */
-    public static void set(HttpServletRequest request, Long uId, String uName, String rId, String tenant, Integer tId, boolean cAdmin) {
+    public static void set(HttpServletRequest request, Long uId, String uName, String rId, String tenant, Integer tId,String token) {
         request.setAttribute("uid", uId);
         request.setAttribute("userName", uName);
         request.setAttribute("rids", rId);
         request.setAttribute("tenant", tenant);
         request.setAttribute("tid", tId);
-        request.setAttribute("cAdmin", cAdmin);
+        request.setAttribute("ssoToken", token);
     }
 }

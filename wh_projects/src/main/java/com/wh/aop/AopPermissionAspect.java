@@ -3,6 +3,7 @@ package com.wh.aop;
 
 import com.wh.customize.PermissionCheck;
 import com.wh.exception.LsException;
+import com.wh.service.ot.IWhUserOperatingTypeService;
 import com.wh.service.perms.IWhUserPermsService;
 import com.wh.utils.ReqUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -39,6 +40,7 @@ public class AopPermissionAspect {
 
     @Autowired
     private IWhUserPermsService permsService;
+
 
     //定义切点
     @Pointcut("@annotation(com.wh.customize.PermissionCheck)")
@@ -101,7 +103,7 @@ public class AopPermissionAspect {
             if (requestAttributes != null) {
                 HttpServletRequest request = requestAttributes.getRequest();
                 // System.out.println(request.getRequestURI());
-                //先去查一下是不是admin  这里到时候都要写到缓存
+                //先去查一下是不是admin 并且是否赋值了 所有操作权限 这里到时候都要写到缓存
                 Set<String> permsSetAdmin = permsService.serviceGetPermission(ReqUtils.getRoleId(), "/*");
                 if (permsSetAdmin != null && permsSetAdmin.size() > 0) {
                     for (String p : permsSetAdmin) {

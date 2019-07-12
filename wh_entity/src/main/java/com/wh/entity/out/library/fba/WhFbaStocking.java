@@ -4,6 +4,7 @@ package com.wh.entity.out.library.fba;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.wh.entity.box.Box;
 import com.wh.entity.out.library.fba.entry.WhFbaStockingEntry;
 import com.wh.entity.parent.ParentConfTable;
 
@@ -102,12 +103,18 @@ public class WhFbaStocking extends ParentConfTable implements Serializable {
 
 
     /**
-     * 条目表
+     * 新增 条目表 对象使用
      */
     @TableField(exist = false)
     @Size(min = 1, message = "is null or length =0")
     @Valid
     private List<WhFbaStockingEntry> entry;
+
+    /**
+     * 查询返回对象 使用
+     */
+    @TableField(exist = false)
+    private List<Box> boxes;
 
     /**
      * 账号
@@ -126,6 +133,22 @@ public class WhFbaStocking extends ParentConfTable implements Serializable {
     @TableField(exist = false)
     private String transport;
 
+
+    public List<WhFbaStockingEntry> getEntry() {
+        return entry;
+    }
+
+    public void setEntry(List<WhFbaStockingEntry> entry) {
+        this.entry = entry;
+    }
+
+    public List<Box> getBoxes() {
+        return boxes;
+    }
+
+    public void setBoxes(List<Box> boxes) {
+        this.boxes = boxes;
+    }
 
     public Integer getTotalAmount() {
         return totalAmount;
@@ -229,14 +252,6 @@ public class WhFbaStocking extends ParentConfTable implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public List<WhFbaStockingEntry> getEntry() {
-        return entry;
-    }
-
-    public void setEntry(List<WhFbaStockingEntry> entry) {
-        this.entry = entry;
     }
 
     public static long getSerialVersionUID() {

@@ -4,7 +4,7 @@ package com.wh.service.redis;
 import com.wh.exception.LsException;
 import com.wh.toos.Constants;
 import com.wh.toos.StaticVariable;
-import com.wh.utils.UuIDUtils;
+import com.wh.utils.SnowflakeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
@@ -22,6 +22,49 @@ public class RedisService {
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private SnowflakeUtils snowflakeUtils;
+
+
+//
+//    @Bean
+//    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
+//        RedisTemplate<String, String> redisTemplate = new RedisTemplate<String, String>();
+//        redisTemplate.setConnectionFactory(factory);
+//        // 使用Jackson2JsonRedisSerialize 替换默认序列化
+//        /**Jackson序列化  json占用的内存最小 */
+//        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+//        ObjectMapper om = new ObjectMapper();
+//        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+//        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+//        jackson2JsonRedisSerializer.setObjectMapper(om);
+//        /**Jdk序列化   JdkSerializationRedisSerializer是最高效的*/
+////      JdkSerializationRedisSerializer jdkSerializationRedisSerializer = new JdkSerializationRedisSerializer();
+//        /**String序列化*/
+//        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+//        /**将key value 进行stringRedisSerializer序列化*/
+//        redisTemplate.setKeySerializer(stringRedisSerializer);
+//        redisTemplate.setValueSerializer(stringRedisSerializer);
+//        /**将HashKey HashValue 进行序列化*/
+//        redisTemplate.setHashKeySerializer(stringRedisSerializer);
+//        redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
+//        redisTemplate.afterPropertiesSet();
+//
+//        return redisTemplate;
+//    }
+
+
+//    @Bean
+//    public RedisTemplate<String, Object> stringSerializerRedisTemplate() {
+//        RedisSerializer<String> stringSerializer = new StringRedisSerializer();
+//        redisTemplate.setKeySerializer(stringSerializer);
+//        redisTemplate.setValueSerializer(stringSerializer);
+//        redisTemplate.setHashKeySerializer(stringSerializer);
+//        redisTemplate.setHashValueSerializer(stringSerializer);
+//        return redisTemplate;
+//    }
+
 //
 //    private static double size = Math.pow(2, 32);
 //    /**
@@ -195,8 +238,8 @@ public class RedisService {
      * @param key
      * @param value
      */
-    public void sPush(String key, Object value) {
-        SetOperations<String, Object> set = redisTemplate.opsForSet();
+    public void sPush(String key, String value) {
+        SetOperations<String, String> set = stringRedisTemplate.opsForSet();
         set.add(key, value);
     }
 
@@ -206,8 +249,8 @@ public class RedisService {
      * @param key
      * @return
      */
-    public Set<Object> setMembers(String key) {
-        SetOperations<String, Object> set = redisTemplate.opsForSet();
+    public Set<String> setMembers(String key) {
+        SetOperations<String, String> set = stringRedisTemplate.opsForSet();
         return set.members(key);
     }
 
@@ -356,6 +399,17 @@ public class RedisService {
     }
 
     /**
+     * 生成Permission key
+     *
+     * @param key
+     * @return
+     */
+    public static String redisPermKey(Object key, String tenant) {
+
+        return tenant + ":" + Constants.PERMISSION + ":" + key;
+    }
+
+    /**
      * 生成user key
      *
      * @param key
@@ -374,7 +428,7 @@ public class RedisService {
     public String lockRedis(String lockKey, Long acquireTimeout, Long timeOut) {
         String retIdentifierValue;
         // 随机生成一个value
-        String identifierValue = UuIDUtils.uuId();
+        String identifierValue = "v" + snowflakeUtils.nextId();
         // 定义锁的名称
         String lockName = "redis_lock" + lockKey;
         //获得锁的超时时间

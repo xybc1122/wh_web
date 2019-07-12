@@ -1,6 +1,6 @@
 package com.wh.utils;
 
-import com.wh.exception.LsException;
+import com.wh.utils.excel.XlsUtils;
 import org.apache.poi.ss.usermodel.Cell;
 
 import java.util.List;
@@ -46,16 +46,31 @@ public class StrUtils {
         return sb.substring(0, sb.length() - 1) + ")";
     }
 
-    public static Integer cInt(Cell cell) {
-        String value = XlsUtils.getCellValue(cell);
+    /**
+     * 去除 ﻿"\uFEFF"
+     *
+     * @param str
+     * @return
+     */
+    public static String specialUnicode(String str) {
+        if (str.startsWith("\uFEFF")) {
+            str = str.replace("\uFEFF", "");
+        } else if (str.endsWith("\uFEFF")) {
+            str = str.replace("\uFEFF", "");
+        }
+        return str;
+    }
+
+
+
+    public static Integer cInt(String value) {
         if (value == null) {
             return null;
         }
         return (int) Double.parseDouble(value);
     }
 
-    public static Long cLon(Cell cell) {
-        String value = XlsUtils.getCellValue(cell);
+    public static Long cLon(String value) {
         if (value == null) {
             return null;
         }
@@ -68,8 +83,7 @@ public class StrUtils {
      * @return
      */
 
-    public static String cStr(Cell cell) {
-        String value = XlsUtils.getCellValue(cell);
+    public static String cStr(String value) {
         if (value == null) {
             return null;
         }

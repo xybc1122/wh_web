@@ -1,7 +1,6 @@
 package com.wh.controller.out.library.fba;
 
 
-import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
 import com.wh.customize.IdempotentCheck;
 import com.wh.customize.PermissionCheck;
@@ -62,6 +61,7 @@ public class WhFbaStockingController {
     @PermissionCheck(type = Constants.VIEW)
     public ResponseBase findByFbaAndEntry(@RequestBody WhFbaStocking stocking) {
         List<WhFbaStocking> whFbaStockings = stockingService.serviceSelListWhFbaStocking(stocking);
+
         //这里转换成DTO
         List<FbaStockingDto> fbaStockingDtoList = mapperFacade.mapAsList(whFbaStockings, FbaStockingDto.class);
 
@@ -132,7 +132,6 @@ public class WhFbaStockingController {
      * {
      * "id":1, 必须有
      * "version":0, 必须有
-     * "aNumber":"修改测试"
      * }
      * @apiSuccess (success) {Object} data 请求的数据
      * @apiSuccess (success) {String} msg 信息

@@ -8,6 +8,7 @@ import com.wh.entity.upload.WhUserUpload;
 import com.wh.mapper.upload.WhUserUploadMapper;
 import com.wh.service.upload.IWhUserUploadService;
 import com.wh.toos.Constants;
+import com.wh.toos.StaticVariable;
 import com.wh.utils.CheckUtils;
 import com.wh.utils.FileUtils;
 import com.wh.utils.ReqUtils;
@@ -50,7 +51,7 @@ public class WhUserUploadServiceImpl extends ServiceImpl<WhUserUploadMapper, WhU
             String fileName = file.getOriginalFilename();//图片||文件名字
             String uuId = UuIDUtils.fileUuId(fileName);
             try {
-                FileUtils.uploadFile(file.getBytes(), Constants.SAVE_FILE_PATH, uuId);
+                FileUtils.uploadFile(file.getBytes(), StaticVariable.SAVE_FILE_PATH, uuId);
                 msg = "上传成功";
             } catch (Exception e) {
                 isUpload = false;
@@ -60,7 +61,7 @@ public class WhUserUploadServiceImpl extends ServiceImpl<WhUserUploadMapper, WhU
             }
             //记录用户上传信息 ~
             int uStatus = isUpload ? 0 : 1;
-            WhUserUpload upload = new WhUserUpload(ReqUtils.getUid(), uuId, fileName, Constants.SAVE_FILE_PATH, uStatus, ReqUtils.getUserName(), msg);
+            WhUserUpload upload = new WhUserUpload(ReqUtils.getUid(), uuId, fileName, StaticVariable.SAVE_FILE_PATH, uStatus, ReqUtils.getUserName(), msg);
             if (isUpload) {
                 uploadList.add(upload);
             }

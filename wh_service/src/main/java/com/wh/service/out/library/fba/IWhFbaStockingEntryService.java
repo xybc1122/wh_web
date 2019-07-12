@@ -19,7 +19,7 @@ public interface IWhFbaStockingEntryService extends IService<WhFbaStockingEntry>
 
 
     /**
-     * 修改/删除 fba 箱号
+     * 修改/删除/新增 fba 箱号
      *
      * @param objectMap
      * @return

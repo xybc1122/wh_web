@@ -3,6 +3,7 @@ package com.wh.entity.po;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.wh.entity.parent.ParentConfTable;
+
 import java.io.Serializable;
 
 /**

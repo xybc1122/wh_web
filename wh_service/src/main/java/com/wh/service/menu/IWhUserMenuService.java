@@ -22,5 +22,4 @@ public interface IWhUserMenuService extends IService<WhUserMenu> {
     ResponseBase serviceSelTreeList();
 
 
-
 }

@@ -42,6 +42,9 @@ public interface IWhTransferOutLibraryService extends IService<WhTransferOutLibr
      */
     ResponseBase serviceUpOutLibraryStatus(WhTransferOutLibrary outLibrary);
 
+
+
+
     /**
      * 新增调拨出库 AND sku条目信息
      *

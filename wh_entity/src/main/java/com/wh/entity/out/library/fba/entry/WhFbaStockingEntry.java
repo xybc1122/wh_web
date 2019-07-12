@@ -69,10 +69,12 @@ public class WhFbaStockingEntry extends ParentConfTable implements Serializable 
     /**
      * 跟踪号
      */
+    @NotBlank(message = "is null")
     private String trackingNumber;
     /**
      * 规格
      */
+    @NotBlank(message = "is null")
     private String specification;
 
 

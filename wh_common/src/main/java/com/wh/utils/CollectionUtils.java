@@ -2,12 +2,11 @@ package com.wh.utils;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 
+import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.lang.reflect.Method;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -18,27 +17,6 @@ import static java.util.stream.Collectors.toList;
  * @Date 2019/6/19 14:38
  **/
 public class CollectionUtils {
-
-
-    /**
-     * set Obj 转换 str
-     *
-     * @param set
-     */
-    public static Set<String> cStr(Set<Object> set) {
-        if (set == null || set.size() <= 0) {
-            return null;
-        }
-        Set<String> strSet = new HashSet<>();
-        for (Object obj : set) {
-            if (obj instanceof String) {
-                strSet.add((String) obj);
-            }
-
-        }
-        return strSet;
-    }
-
 
     /**
      * 交集 一样的值
@@ -69,6 +47,27 @@ public class CollectionUtils {
         return objList != null && objList.size() > 0;
     }
 
+
+    /**
+     * 两个List比较 顺序也必须一样
+     *
+     * @return
+     */
+    public static boolean eqOrderList(List<String> sqlList, List<String> fileList) {
+        if (fileList == null) {
+            return false;
+        }
+        if (sqlList.size() != fileList.size()) {
+            return false;
+        }
+        for (int i = 0; i < sqlList.size(); i++) {
+            System.out.println(fileList.get(i).trim());
+            if (!(sqlList.get(i).trim()).equals(StrUtils.specialUnicode(fileList.get(i).trim()))) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * 设置in 查询  id 集合

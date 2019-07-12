@@ -43,7 +43,7 @@ public class WhUserRoleUserServiceImpl extends ServiceImpl<WhUserRoleUserMapper,
      */
     @Override
     public void saveListRole(Long uid, String rids) {
-        Collection<WhUserRoleUser> roleUserList = new ArrayList<>();
+        List<WhUserRoleUser> roleUserList = new ArrayList<>();
         WhUserRoleUser whUserRoleUser;
         boolean isResult;
         //新增角色
