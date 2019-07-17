@@ -35,13 +35,13 @@ public class DynamicDataSourceContextHolder {
      *
      * @param key
      */
-    public static void setDataSourceKey(String key) {
+    public static boolean setDataSourceKey(String key) {
         //如果不是null 切换
         if (containDataSourceKey(key)) {
             contextHolder.set(key);
-            return;
+            return true;
         }
-        throw new LsException("预先加载没有此租户标识");
+        return false;
     }
 
     /**

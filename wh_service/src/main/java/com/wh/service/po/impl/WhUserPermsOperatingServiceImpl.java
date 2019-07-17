@@ -14,6 +14,7 @@ import com.wh.entity.po.WhUserPermsOperating;
 import com.wh.mapper.po.WhUserPermsOperatingMapper;
 import com.wh.service.perms.IWhUserPermsService;
 import com.wh.service.po.IWhUserPermsOperatingService;
+import com.wh.service.redis.RedisService;
 import com.wh.toos.Constants;
 import com.wh.utils.CheckUtils;
 import com.wh.utils.ReqUtils;
@@ -40,6 +41,8 @@ public class WhUserPermsOperatingServiceImpl extends ServiceImpl<WhUserPermsOper
         implements IWhUserPermsOperatingService {
     @Autowired
     private IWhUserPermsService permsService;
+    @Autowired
+    private RedisService redisService;
 
     @Override
     @Transactional
@@ -74,6 +77,9 @@ public class WhUserPermsOperatingServiceImpl extends ServiceImpl<WhUserPermsOper
         if (userPerms == null || userPerms.getpId() == null || userPerms.getVersion() == null) {
             return JsonData.setResultError("version / pid  is null");
         }
+        //先删除这个租户下的所有  用户权限缓存数据
+        redisService.delKeyAll(RedisService.redisPermKeys(ReqUtils.getTenant()));
+
         //1先更新 权限名称
         if (StringUtils.isNotBlank(userPerms.getpName())) {
             Integer version = userPerms.getVersion();

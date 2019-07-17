@@ -2,21 +2,27 @@ package com.wh.controller.out.library.transfer;
 
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.wh.base.JsonData;
 import com.wh.base.ResponseBase;
 import com.wh.customize.IdempotentCheck;
 import com.wh.customize.PermissionCheck;
 import com.wh.customize.RedisLock;
 import com.wh.entity.out.library.transfer.WhTransferOutLibrary;
+import com.wh.exception.LsException;
 import com.wh.service.out.library.transfer.IWhTransferOutLibraryService;
+import com.wh.service.redis.RedisService;
 import com.wh.toos.Constants;
 import com.wh.utils.PageInfoUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -33,7 +39,8 @@ public class WhTransferOutLibraryController {
 
     @Autowired
     private IWhTransferOutLibraryService outLibraryService;
-
+    @Autowired
+    private RedisService redisService;
 
     /**
      * @api {POST} api/v1/wh-transfer-out-library/findByTransferInfo 查询调拨出库跟条目
@@ -157,19 +164,39 @@ public class WhTransferOutLibraryController {
     @PutMapping("/upTransferState")
     @PermissionCheck(type = Constants.MODIFY)
     @IdempotentCheck(type = Constants.IDEMPOTENT_CHECK_HEADER)
-    @HystrixCommand(fallbackMethod = "upTransferStateHystrix")
-    public ResponseBase upTransferState(@RequestBody WhTransferOutLibrary outLibrary) {
+    @HystrixCommand(fallbackMethod = "upTransferStateHystrix",
+            commandProperties = @HystrixProperty(name = "execution.isolation.strategy", value = "SEMAPHORE"),
+            ignoreExceptions = {LsException.class, ArithmeticException.class})
+    //TODO commandProperties = @HystrixProperty 如果发生找不到上下文运行时异常(如果 reqUtils.getToken =null)，可考虑将隔离策略设置为SEMAPHORE（信号量隔离）。 默认是THREAD(线程隔离）
+    //TODO ignoreExceptions 服务LsException异常不降级
+    public ResponseBase upTransferState(@RequestBody WhTransferOutLibrary outLibrary, HttpServletRequest request) {
         return outLibraryService.serviceUpOutLibraryStatus(outLibrary);
     }
 
     //注意，方法签名一定要要和api方法一致  熔断
-    private ResponseBase upTransferStateHystrix(WhTransferOutLibrary outLibrary) {
+    private ResponseBase upTransferStateHystrix(WhTransferOutLibrary outLibrary, HttpServletRequest request) {
 
         System.out.println("这里可以配置 redis 发送短信 异常报警");
 
-        return JsonData.setResultError("调用php接口 失败");
-    }
+        //监控报警
+        String saveOrderKye = "save-order";
+        // TODO 这里是一个示例
+        String sendValue = redisService.getStringKey(saveOrderKye);
+        final String ip = request.getRemoteAddr();
+        new Thread(() -> {
+            if (StringUtils.isBlank(sendValue)) {
+                System.out.println("紧急短信，调用php接口，请离开查找原因,ip地址是=" + ip);
+                //发送一个http请求，调用短信服务 TODO
+                redisService.setString(saveOrderKye, "save-order-fail", 20L);
 
+            } else {
+                System.out.println("已经发送过短信，20秒内不重复发送");
+            }
+
+        }).start();
+
+        return JsonData.setResultError("请求php接口超时,请重新操作");
+    }
 
 
 }

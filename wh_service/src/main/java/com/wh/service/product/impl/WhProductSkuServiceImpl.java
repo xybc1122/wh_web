@@ -7,14 +7,16 @@ import com.wh.service.product.IWhProductSkuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class WhProductSkuServiceImpl extends ServiceImpl<WhProductSkuMapper, WhProductSku> implements IWhProductSkuService {
 
     @Autowired
     private WhProductSkuMapper whProductSkuMapper;
     @Override
-    public WhProductSku selectProductSku(String asin) {
-        WhProductSku productSku=whProductSkuMapper.selectProductSku(asin);
+    public List<WhProductSku> selectProductSku(String asin) {
+        List<WhProductSku> productSku=whProductSkuMapper.selectProductSku(asin);
         return productSku;
     }
 }

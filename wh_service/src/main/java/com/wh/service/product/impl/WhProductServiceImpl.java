@@ -46,9 +46,9 @@ public class WhProductServiceImpl  extends ServiceImpl<WhProductMapper, WhProduc
     //List<ProductDto> productDtos=new ArrayList<>();
     List<WhProduct> products;
     @Override
-    @PermissionCheck(type = Constants.MODIFY)
+   // @PermissionCheck(type = Constants.MODIFY)
     @Transactional
-    public List<ProductDto> selectProduct(String type, String content,int pageSize,int currentPage) {
+    public List<ProductDto> selectProduct(int type, String content,int pageSize,int currentPage) {
         PageInfoUtils.setPage(pageSize,currentPage);
         List<ProductDto> list=new ArrayList<>();
         List<ProductDto> productDtos=new ArrayList<>();
@@ -59,14 +59,14 @@ public class WhProductServiceImpl  extends ServiceImpl<WhProductMapper, WhProduc
 
         //根据条件查询
         for(int i=0;i<datas.length;i++){
-            if(type.equals("sku")){
+            if(type==1){
                 productDtos= selectProductByOption(content);
-            }else if (type.equals("option")){
+            }else if (type==2){
                 productDtos=selectProductByPostion(content);
-            }else if (type.equals("name")){
+            }else if (type==3){
                 products=whProductMapper.selectProductByName(content);
                 productDtos= selectProductByNameOrPurchaser(products);
-            }else if(type.equals("purchaser")){
+            }else if(type==4){
                 products=whProductMapper.selectProductByPurchaser(content);
                 productDtos= selectProductByNameOrPurchaser(products);
             }
@@ -122,17 +122,19 @@ public class WhProductServiceImpl  extends ServiceImpl<WhProductMapper, WhProduc
         List<ProductDto> productDtos=new ArrayList<>();
         for(WhProduct product:products){
             //获取sku
-            WhProductSku whProductSku=iWhProductSkuService.selectProductSku(product.getAsin());
-            // 获取仓位
-            List<WhPosition> whPositions=whPositionMapper.getBaseByProductId(whProductSku.getAsin());
-            for (WhPosition whPosition:whPositions) {
-                ProductDto pd = getProductDto(product);
-                // WhPosition whPosition=whPositionService.getBaseByProductId(whProductSku.getAsin());
-                pd.setOption_id(whPosition.getPositionName());
-                pd.setSku(whProductSku.getAsin());
-                //获取库存数据
-                pd = getInventory(pd);
-                productDtos.add(pd);
+            List<WhProductSku> whProductSkus=iWhProductSkuService.selectProductSku(product.getAsin());
+            for(WhProductSku whProductSku:whProductSkus) {
+                // 获取仓位
+                List<WhPosition> whPositions = whPositionMapper.getBaseByProductId(whProductSku.getAsin());
+                for (WhPosition whPosition : whPositions) {
+                    ProductDto pd = getProductDto(product);
+                    // WhPosition whPosition=whPositionService.getBaseByProductId(whProductSku.getAsin());
+                    pd.setOption_id(whPosition.getPositionName());
+                    pd.setSku(whProductSku.getAsin());
+                    //获取库存数据
+                    pd = getInventory(pd);
+                    productDtos.add(pd);
+                }
             }
         }
         return productDtos;

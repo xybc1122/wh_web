@@ -90,10 +90,7 @@ static:
     fbaEId: FBAEID
     ideToken: ide-token
     saveFilePath: /usr/local/file/path/
-    fileW: D://template/fba导入模板.xlsx
-    fileL: /usr/local/file/template/
-
-
+    fileTemplate: /usr/local/file/template/fba导入模板.xlsx
 
 
 

@@ -6,6 +6,7 @@ import com.wh.base.JsonData;
 import com.wh.dds.DynamicDataSourceContextHolder;
 import com.wh.service.redis.RedisService;
 import com.wh.service.role.IWhUserRoleService;
+import com.wh.service.tenant.TenantService;
 import com.wh.toos.Constants;
 import com.wh.toos.StaticVariable;
 import com.wh.utils.*;
@@ -35,6 +36,9 @@ public class InterCenter implements HandlerInterceptor {
 
     @Autowired
     private IWhUserRoleService roleService;
+
+    @Autowired
+    private TenantService tenantService;
 
 
     private static InterCenter interCenter;
@@ -93,7 +97,8 @@ public class InterCenter implements HandlerInterceptor {
                     return false;
                 }
                 //切换租户
-                DynamicDataSourceContextHolder.setDataSourceKey(tenant);
+                interCenter.tenantService.switchTenant(tenant);
+
 
                 // 这里校验是否是admin 如果返回是true 那就是说明他说admin
                 boolean cAdmin = interCenter.roleService.cAdmin(tenant, userName, rids);
@@ -103,16 +108,16 @@ public class InterCenter implements HandlerInterceptor {
                         request.getRequestURI().contains("/api/v1/super-admin")) {
                     if (!cAdmin) {
                         //这里做控制
-                        JsonUtils.sendJsonMsg(response, JsonData.setResultError(Constants.HTTP_RESP_CODE, "你不是admin/无权操作"));
+                        JsonUtils.sendJsonMsg(response, JsonData.setResultError("你不是admin/无权操作"));
                         return false;
                     }
                 }
                 //设置局部request
-                ReqUtils.set(request, uid, userName, rids, tenant, tid,token);
+                ReqUtils.set(request, uid, userName, rids, tenant, tid, token, cAdmin);
 
                 return true;
             }
-            JsonUtils.sendJsonMsg(response, JsonData.setResultError(Constants.HTTP_RESP_CODE, "令牌转换异常,请重新登陆"));
+            JsonUtils.sendJsonMsg(response, JsonData.setResultError("令牌转换异常,请重新登陆"));
             return false;
         }
         JsonUtils.sendJsonMsg(response, JsonData.setResultError(Constants.HTTP_RESP_CODE, "请登录"));
@@ -136,7 +141,7 @@ public class InterCenter implements HandlerInterceptor {
             interCenter.redisService.setEx(tKey, 1);
         } else {
             //超出访问次数
-            JsonUtils.sendJsonMsg(response, JsonData.setResultError(Constants.HTTP_RESP_CODE, "访问太频繁,请稍后在试"));
+            JsonUtils.sendJsonMsg(response, JsonData.setResultError("访问太频繁,请稍后在试"));
             return false;
         }
         return true;

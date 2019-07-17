@@ -78,6 +78,7 @@ public class WhFbaStockingEntry extends ParentConfTable implements Serializable 
     private String specification;
 
 
+
     public String getTrackingNumber() {
         return trackingNumber;
     }

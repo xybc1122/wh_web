@@ -31,7 +31,7 @@ public class ReqUtils {
                 return uId;
             }
         }
-        return null;
+        return 0L;
     }
 
     /**
@@ -49,7 +49,7 @@ public class ReqUtils {
                 return tenant;
             }
         }
-        return null;
+        return "";
     }
 
     /**
@@ -67,7 +67,7 @@ public class ReqUtils {
                 return tId;
             }
         }
-        return null;
+        return 0;
     }
 
     /**
@@ -85,7 +85,7 @@ public class ReqUtils {
                 return uName;
             }
         }
-        return null;
+        return "";
     }
 
     /**
@@ -103,11 +103,26 @@ public class ReqUtils {
                 return rId;
             }
         }
-        return null;
+        return "";
     }
 
     /**
-     * 获得用户角色ID
+     * 获得用户是否是amind
+     *
+     * @return
+     */
+    public static boolean getcAdmin() {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes();
+        if (requestAttributes != null) {
+            HttpServletRequest request = requestAttributes.getRequest();
+            return (boolean) request.getAttribute("cAdmin");
+        }
+        return false;
+    }
+
+    /**
+     * 获得用户token令牌
      *
      * @return
      */
@@ -121,7 +136,7 @@ public class ReqUtils {
                 return ssoToken;
             }
         }
-        return null;
+        return "";
     }
 
     /**
@@ -173,7 +188,7 @@ public class ReqUtils {
             }
             return new String(buffer, charEncoding);
         }
-        return null;
+        return "";
     }
 
 
@@ -184,12 +199,15 @@ public class ReqUtils {
      * @param uId
      * @param uName
      */
-    public static void set(HttpServletRequest request, Long uId, String uName, String rId, String tenant, Integer tId,String token) {
+    public static void set(HttpServletRequest request, Long uId, String uName, String rId, String tenant,
+                           Integer tId, String token, boolean cAdmin) {
         request.setAttribute("uid", uId);
         request.setAttribute("userName", uName);
         request.setAttribute("rids", rId);
         request.setAttribute("tenant", tenant);
         request.setAttribute("tid", tId);
         request.setAttribute("ssoToken", token);
+        request.setAttribute("ssoToken", token);
+        request.setAttribute("cAdmin", cAdmin);
     }
 }

@@ -1,3 +1,4 @@
+E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\order\WhOrderMainMapper.java
 E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\role\WhUserRoleMapper.java
 E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\out\library\transfer\WhTransferOutLibraryProvider.java
 E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\menu\MenuProvider.java
@@ -17,10 +18,13 @@ E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\rm\WhUserRoleMenuMap
 E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\perms\WhUserPermsProvider.java
 E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\rp\WhUserRolePermsMapper.java
 E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\product\WhProductProvider.java
+E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\received\WhReceivedBatchMapper.java
 E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\product\WhProductMapper.java
 E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\ot\WhUserOperatingTypeProvider.java
 E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\out\library\fba\WhFbaStockingProvider.java
+E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\received\WhReceivedMapper.java
 E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\out\library\fba\WhFbaStockingMapper.java
+E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\order\WhOrderItemsMapper.java
 E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\template\WhTemplateMapper.java
 E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\position\WhPositionMapper.java
 E:\dev3\wh_web_gitlab\wh_mapper\src\main\java\com\wh\mapper\role\WhUserRoleProvider.java

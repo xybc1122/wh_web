@@ -15,6 +15,39 @@ public class WhPostionSku {
      * 配货库存
      */
     private int scanStock;
+    /**
+     * 批次号
+     */
+    private String batchNo;
+    /**
+     * 批次子类id
+     */
+    private Integer batchItemId;
+
+    public String getBatchNo() {
+        return batchNo;
+    }
+
+    public void setBatchNo(String batchNo) {
+        this.batchNo = batchNo;
+    }
+
+    public Integer getBatchItemId() {
+        return batchItemId;
+    }
+
+    public void setBatchItemId(Integer batchItemId) {
+        this.batchItemId = batchItemId;
+    }
+
+    public WhPostionSku(int id, String asin, int stock, int scanStock, String batchNo, int batchItemId) {
+        this.id = id;
+        this.asin = asin;
+        this.stock = stock;
+        this.scanStock = scanStock;
+        this.batchNo = batchNo;
+        this.batchItemId = batchItemId;
+    }
 
     public WhPostionSku() {
     }

@@ -16,7 +16,7 @@ public interface IWhProductService extends IService<WhProduct> {
      * @Return com.wh.base.ResponseBase
      */
 
-    List<ProductDto> selectProduct(String type, String content, int pageSize, int currentPage);
+    List<ProductDto> selectProduct(int type, String content, int pageSize, int currentPage);
 
     /**
      *根据sku查询产品详情

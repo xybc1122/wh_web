@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
  * Description TODO
  * @Author 陈恩惠
  * @Date 2019/6/29 8:58
+ *
  **/
 @Component
 @ConfigurationProperties(prefix = "static.variable")
@@ -53,29 +54,17 @@ public class ConstantsConfig {
     private String saveFilePath;
 
     /**
-     * windows Linux 模板路径
+     * 模板路径
      */
-    private String fileW;
-    /**
-     * windows Linux 模板路径
-     */
-    private String fileL;
+    private String fileTemplate;
 
 
-    public String getFileW() {
-        return fileW;
+    public String getFileTemplate() {
+        return fileTemplate;
     }
 
-    public void setFileW(String fileW) {
-        this.fileW = fileW;
-    }
-
-    public String getFileL() {
-        return fileL;
-    }
-
-    public void setFileL(String fileL) {
-        this.fileL = fileL;
+    public void setFileTemplate(String fileTemplate) {
+        this.fileTemplate = fileTemplate;
     }
 
     public String getSaveFilePath() {

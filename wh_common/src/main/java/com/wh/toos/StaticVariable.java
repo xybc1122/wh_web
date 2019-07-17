@@ -51,14 +51,9 @@ public class StaticVariable {
 
 
     /**
-     * windows 模板路径
+     * 模板路径
      */
-    public static String FILE_W;
-
-    /**
-     * windows Linux 模板路径
-     */
-    public static String FILE_L;
+    public static String FILE_TEMPLATE;
 
     /**
      * 加载配置文件
@@ -72,7 +67,6 @@ public class StaticVariable {
         DB_E_ID = constantsConfig.getDbEId();
         FBA_E_ID = constantsConfig.getFbaEId();
         SAVE_FILE_PATH = constantsConfig.getSaveFilePath();
-        FILE_W = constantsConfig.getFileW();
-        FILE_L = constantsConfig.getFileL();
+        FILE_TEMPLATE = constantsConfig.getFileTemplate();
     }
 }

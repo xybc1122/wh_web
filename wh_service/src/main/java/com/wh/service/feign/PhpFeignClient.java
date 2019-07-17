@@ -25,7 +25,7 @@ public interface PhpFeignClient {
      * @return
      */
     @GetMapping(value = "/api/base/position/asin/stock")
-    ResponseBase checkAsinQ(@RequestParam("asin") String sku);
+    ResponseBase checkAsinQ(@RequestParam("asin") String asin);
 
     /**
      * 调用php 新增调拨入库

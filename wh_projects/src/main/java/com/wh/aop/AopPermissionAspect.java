@@ -3,7 +3,6 @@ package com.wh.aop;
 
 import com.wh.customize.PermissionCheck;
 import com.wh.exception.LsException;
-import com.wh.service.ot.IWhUserOperatingTypeService;
 import com.wh.service.perms.IWhUserPermsService;
 import com.wh.utils.ReqUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -12,18 +11,17 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -40,6 +38,9 @@ public class AopPermissionAspect {
 
     @Autowired
     private IWhUserPermsService permsService;
+    //自定义日志
+    private Logger aopLogger = LoggerFactory.getLogger("aopLogger");
+
 
 
     //定义切点
@@ -102,16 +103,9 @@ public class AopPermissionAspect {
                     .getRequestAttributes();
             if (requestAttributes != null) {
                 HttpServletRequest request = requestAttributes.getRequest();
-                // System.out.println(request.getRequestURI());
-                //先去查一下是不是admin 并且是否赋值了 所有操作权限 这里到时候都要写到缓存
-                Set<String> permsSetAdmin = permsService.serviceGetPermission(ReqUtils.getRoleId(), "/*");
-                if (permsSetAdmin != null && permsSetAdmin.size() > 0) {
-                    for (String p : permsSetAdmin) {
-                        //代表所有操作权限集合
-                        if ("ANY".equals(p)) {
-                            return;
-                        }
-                    }
+                //先去查一下是不是admin
+                if (ReqUtils.getcAdmin()) {
+                    return;
                 }
                 //如果不是 在去查查有没有权限
                 Set<String> permsSet = permsService.serviceGetPermission(ReqUtils.getRoleId(), request.getRequestURI());

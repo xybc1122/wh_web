@@ -1,6 +1,0 @@
-com\wh\init\InitTargetDataSources.class
-com\wh\fiter\CORSFilter.class
-com\wh\interceoter\FeignRequestInterceptor.class
-com\wh\interceoter\InterCenter.class
-com\wh\fiter\SsoTokenFilter.class
-com\wh\interceoter\IntercepterConfig.class

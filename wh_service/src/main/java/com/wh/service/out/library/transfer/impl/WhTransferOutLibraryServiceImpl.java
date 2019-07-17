@@ -156,11 +156,9 @@ public class WhTransferOutLibraryServiceImpl extends ServiceImpl<WhTransferOutLi
             identifier = redisService.lockRedis(outLibrary.gettNumber(), Constants.maxWait, Constants.timeout);
 
             cheNumber(outLibrary.gettNumber());
-
-
             UpdateWrapper<WhTransferOutLibrary> upWrapper = new UpdateWrapper<>();
             Integer version = outLibrary.getVersion();
-
+            System.out.println(ReqUtils.getUserName());
             upWrapper.set("status", 1).set("modify_user", ReqUtils.getUserName()).set("way_number", outLibrary.getWayNumber()).
                     set("modify_date", new Date().getTime()).set("version", version + 1).set("execution_status", 1);
             upWrapper.eq("t_number", outLibrary.gettNumber()).eq("version", version);

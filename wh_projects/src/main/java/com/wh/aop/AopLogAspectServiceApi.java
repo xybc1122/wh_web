@@ -22,7 +22,8 @@ import java.util.Arrays;
 public class AopLogAspectServiceApi {
     private JSONObject jsonObject = new JSONObject();
 
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    //自定义日志
+    private Logger aopLogger =LoggerFactory.getLogger("aopLogger");
 
 
     // 申明一个切点 里面是 execution表达式
@@ -37,21 +38,21 @@ public class AopLogAspectServiceApi {
                 .getRequestAttributes();
         if (requestAttributes != null) {
             HttpServletRequest request = requestAttributes.getRequest();
-            log.info("===============请求内容===============");
+            aopLogger.info("===============请求内容===============");
             try {
                 String ip = IpUtils.getIpAddr(request);
                 // 打印请求内容
-                log.info("请求地址:" + request.getRequestURL().toString());
-                log.info("请求的IP:" + ip);
-                log.info("请求方式:" + request.getMethod());
-                log.info("请求类方法:" + joinPoint.getSignature());
-                log.info("请求类方法参数:" + Arrays.toString(joinPoint.getArgs()));
+                aopLogger.info("请求地址:" + request.getRequestURL().toString());
+                aopLogger.info("请求的IP:" + ip);
+                aopLogger.info("请求方式:" + request.getMethod());
+                aopLogger.info("请求类方法:" + joinPoint.getSignature());
+                aopLogger.info("请求类方法参数:" + Arrays.toString(joinPoint.getArgs()));
             } catch (Exception e) {
-                log.error("###LogAspectServiceApi.class methodBefore() ### ERROR:", e);
+                aopLogger.error("###LogAspectServiceApi.class methodBefore() ### ERROR:", e);
             }
-            log.info("===============请求内容===============");
+            aopLogger.info("===============请求内容===============");
         } else {
-            log.error("###LogAspectServiceApi.class methodBefore() ### ERROR:" + requestAttributes);
+            aopLogger.error("###LogAspectServiceApi.class methodBefore() ### ERROR:" + requestAttributes);
         }
 
     }
@@ -59,12 +60,12 @@ public class AopLogAspectServiceApi {
     // 在方法执行完结后打印返回内容
     @AfterReturning(returning = "o", pointcut = "controllerAspect()")
     public void methodAfterReturing(Object o) {
-        log.info("--------------返回内容----------------");
+        aopLogger.info("--------------返回内容----------------");
         try {
-            log.info("Response内容:" + jsonObject.toJSONString(o));
+            aopLogger.info("Response内容:" + jsonObject.toJSONString(o));
         } catch (Exception e) {
-            log.error("###LogAspectServiceApi.class methodAfterReturing() ### ERROR:", e);
+            aopLogger.error("###LogAspectServiceApi.class methodAfterReturing() ### ERROR:", e);
         }
-        log.info("--------------返回内容----------------");
+        aopLogger.info("--------------返回内容----------------");
     }
 }

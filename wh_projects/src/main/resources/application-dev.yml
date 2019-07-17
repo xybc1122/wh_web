@@ -19,8 +19,8 @@ spring:
       max-file-size:  100MB
       max-request-size: 100MB
   application:
-    name: web-service
-  redis:
+    name: web-service  #微服务名称
+  redis: #redis 配置
     database: 0
     #连接的地址
     host: 192.168.1.230
@@ -67,11 +67,11 @@ pagehelper:
   params: count=countSql
 
 #sso.server: http://192.168.1.231:9001
-sso.server: http://192.168.208.109:9001 # sso登陆服务器
-sso.login.path: /api/v1/sso/login #登陆url
+sso.server: http://10.27.129.114:9001 # sso登陆服务器
+sso.login.path: /api/v1/sso/login #登陆url 暂时没用到
 sso.logout.path: /api/v1/sso/logout #登出url
-sso.logout.workerId: 0  #雪花算法机器标识
-sso.logout.datacenterId: 0 #雪花算法机器标识
+sso.logout.workerId: 0  #雪花算法机器集群标识
+sso.logout.datacenterId: 0 #雪花算法机器集群标识
 
 #生成订单一些前缀
 transfer.db: DB_ #调拨key
@@ -91,10 +91,4 @@ static:
     fbaEId: FBAEID
     ideToken: ide-token
     saveFilePath: E:/file/
-    fileW: D://template/fba导入模板.xlsx
-    fileL: /usr/local/file/template/
-
-
-
-
-
+    fileTemplate: D://template/fba导入模板.xlsx

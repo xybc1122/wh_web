@@ -101,5 +101,10 @@ public interface Constants {
      */
     String PHP_NAME = "php";
 
+    /**
+     * 租户key
+     */
+    String TENANT_KEY = "tenant_key";
+
 
 }

@@ -43,7 +43,7 @@ public interface WhProductMapper extends BaseMapper<WhProduct> {
      * @return
      */
     @ResultMap("productMap")
-    @Select("select * from wh_product where name_cn like CONCAT('%',#{name},'%')")
+    @Select("select id,pic_json,weight,is_new,supplier_id,good_status,purchase_user,name_cn,asin,price_purchase from wh_product where name_cn like CONCAT('%',#{name},'%')")
     List<WhProduct> selectProductByName(String name);
 
     /**
@@ -51,7 +51,7 @@ public interface WhProductMapper extends BaseMapper<WhProduct> {
      * @param purchaser
      * @return
      */
-    @Select("select * from wh_product where purchase_user  like CONCAT('%',#{purchaser},'%')")
+    @Select("select id,pic_json,weight,is_new,supplier_id,good_status,purchase_user,name_cn,asin,price_purchase from wh_product where purchase_user  like CONCAT('%',#{purchaser},'%')")
     @ResultMap("productMap")
     List<WhProduct> selectProductByPurchaser(String purchaser);
 

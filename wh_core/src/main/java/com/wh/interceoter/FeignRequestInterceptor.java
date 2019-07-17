@@ -19,7 +19,8 @@ public class FeignRequestInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate requestTemplate) {
-        System.out.println("feign");
+//        System.out.println("feign");
+//        System.out.println(ReqUtils.getSsoToken());
         requestTemplate.header(StaticVariable.SSO_TOKEN, ReqUtils.getSsoToken());
     }
 }

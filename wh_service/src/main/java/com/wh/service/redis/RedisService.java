@@ -410,6 +410,17 @@ public class RedisService {
     }
 
     /**
+     * 生成Permission keys
+     *
+     * @param tenant
+     * @return
+     */
+    public static String redisPermKeys(String tenant) {
+
+        return tenant + ":" + Constants.PERMISSION ;
+    }
+
+    /**
      * 生成user key
      *
      * @param key
@@ -438,7 +449,7 @@ public class RedisService {
         while (System.currentTimeMillis() < endTime) {
             // 6.使用setNx方法设置锁值
             if (setNx(lockName, identifierValue)) {
-                System.out.println("上锁成功......");
+               // System.out.println("上锁成功......");
                 // 7.判断返回结果如果为1,则可以成功获取锁,并且设置锁的超时时间
                 stringRedisTemplate.expire(lockName, expireLock, TimeUnit.SECONDS);
                 retIdentifierValue = identifierValue;
@@ -551,7 +562,16 @@ public class RedisService {
         }
         return null;
     }
+    /**
+     * 生成 keys
+     *
+     * @param tenant
+     * @return
+     */
+    public static String redisTenantKey(String tenant) {
 
+        return Constants.TENANT_KEY + ":" + tenant;
+    }
 
     public StringRedisTemplate stringRedisTemplate() {
         return stringRedisTemplate;
@@ -566,7 +586,11 @@ public class RedisService {
      */
     public Boolean setNx(String key, String value) {
         if (key != null) {
-            return stringRedisTemplate.opsForValue().setIfAbsent(key, value);
+            try {
+                return stringRedisTemplate.opsForValue().setIfAbsent(key, value);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
         return false;
     }

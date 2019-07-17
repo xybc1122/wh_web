@@ -47,4 +47,7 @@ public interface UserMapper extends BaseMapper<UserInfo> {
             "WHERE r.`r_name`=#{rName}")
     List<UserInfo> selUserByRName(@Param("rName") String rName);
 
+    @Select("select * from wh_user_info where uid=#{id}")
+    UserInfo selectUserNameByUserId(@Param("id") int id);
+
 }

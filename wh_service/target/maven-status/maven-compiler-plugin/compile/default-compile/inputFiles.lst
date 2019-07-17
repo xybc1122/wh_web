@@ -2,6 +2,7 @@ E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\menu\impl\WhUserMe
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\rp\IWhUserRolePermsService.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\execl\impl\ExeclServiceImpl.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\po\IWhUserPermsOperatingService.java
+E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\tenant\impl\TenantServiceImpl.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\po\impl\WhUserPermsOperatingServiceImpl.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\file\impl\FileDealWithServiceImpl.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\rm\impl\WhUserRoleMenuServiceImpl.java
@@ -10,6 +11,7 @@ E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\site\impl\WhSiteSe
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\product\IWhProductService.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\product\impl\WhProductSkuServiceImpl.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\user\UserService.java
+E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\product\impl\WhProductDetailServiceImpl.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\ot\impl\WhUserOperatingTypeServiceImpl.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\received\impl\WhReceivedBatchItemServiceImpl.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\api\impl\WhUserApiServiceImpl.java
@@ -27,6 +29,7 @@ E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\ot\IWhUserOperatin
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\role\IWhUserRoleService.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\ur\IWhUserRoleUserService.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\rm\IWhUserRoleMenuService.java
+E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\tenant\TenantService.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\product\IWhProductSkuService.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\feign\TenantFeignClient.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\out\library\transfer\IWhTransferOutLibraryService.java
@@ -56,6 +59,7 @@ E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\out\library\transf
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\token\TokenService.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\upload\IWhUserUploadService.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\out\library\fba\impl\WhFbaStockingEntryServiceImpl.java
+E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\product\WhProductDetailService.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\out\library\transfer\IWhTransferOutLibraryEntryService.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\template\impl\WhTemplateServiceImpl.java
 E:\dev3\wh_web_gitlab\wh_service\src\main\java\com\wh\service\out\library\fba\IWhFbaStockingEntryService.java

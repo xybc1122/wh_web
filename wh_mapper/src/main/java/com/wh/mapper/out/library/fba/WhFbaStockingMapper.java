@@ -2,6 +2,7 @@ package com.wh.mapper.out.library.fba;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wh.entity.out.library.fba.WhFbaStocking;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 
 import java.util.List;
@@ -24,5 +25,8 @@ public interface WhFbaStockingMapper extends BaseMapper<WhFbaStocking> {
      */
     @SelectProvider(type = WhFbaStockingProvider.class, method = "findQueryFbaList")
     List<WhFbaStocking> selFbaInfo(WhFbaStocking whFbaStocking);
+
+    @Select("select record_no from wh_fba_stocking where single_number=#{single_number}")
+    List<WhFbaStocking> selectFbaInfo(String single_number);
 
 }

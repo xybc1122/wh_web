@@ -38,15 +38,7 @@ public class FileUtils {
     }
 
     public static String tempFilePath() {
-        String filePath;
-        String os = System.getProperty("os.name");
-        if (os.contains("Windows")) {
-            //TODO 这里要封装
-            filePath = StaticVariable.FILE_W;
-        } else {
-            filePath = StaticVariable.FILE_L;
-        }
-        return filePath;
+        return StaticVariable.FILE_TEMPLATE;
     }
 
     // 判断文件夹是否存在

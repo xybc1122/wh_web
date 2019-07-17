@@ -3,7 +3,9 @@ package com.wh.service.product;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wh.entity.product.WhProductSku;
 
+import java.util.List;
+
 public interface IWhProductSkuService extends IService<WhProductSku> {
 
-    WhProductSku selectProductSku(String asin);
+    List<WhProductSku> selectProductSku(String asin);
 }

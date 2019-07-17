@@ -16,7 +16,7 @@ import java.util.Map;
 @Component
 public class PhpClientFallback implements PhpFeignClient {
     @Override
-    public ResponseBase checkAsinQ(String sku) {
+    public ResponseBase checkAsinQ(String asin) {
 
         System.out.println("checkAsinQ error 打印日志");
         return null;

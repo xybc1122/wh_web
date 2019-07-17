@@ -37,4 +37,7 @@ public interface WhTransferOutLibraryMapper extends BaseMapper<WhTransferOutLibr
     @Select("SELECT `execution_status` FROM `wh_transfer_out_library` WHERE t_number=#{tNumber}")
     Integer selExecutionStatus(@Param("tNumber") String tNumber);
 
+    @Select("select  way_number from wh_transfer_out_library where t_number=#{t_number}")
+    List<WhTransferOutLibrary> selectOutLibraryBySku(String t_number);
+
 }
